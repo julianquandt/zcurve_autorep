@@ -1,0 +1,5 @@
+secret_vars.R
+renv/library/      # Exclude the package library
+renv/staging/      # Exclude staging area
+!renv/activate.R   # Include the activate.R script
+*src

@@ -315,6 +315,10 @@ retrieve_journal_metadata <- function(issn_list) {
     journal_citestats_df <- NULL
 
     # Iterate through the citestats data that is returned for each year and different subject areas
+    if(is.null(journal_citestats)){
+      message(paste0("no citestats for journal with ISSN: ", issn, ". Skipping..."))
+      next
+    }
     for (i in seq_along(journal_citestats)) {
       tmp_citescores <- journal_citestats[[i]]
 
@@ -342,7 +346,7 @@ retrieve_journal_metadata <- function(issn_list) {
     journal_citestats_df$publisher <- journal_metadata_body$`dc:publisher`
     journal_citestats_df$journal_coverageStartYear <- journal_metadata_body$`coverageStartYear`
     journal_citestats_df$journal_coverageEndYear <- journal_metadata_body$`coverageEndYear`
-    journal_citestats_df$journal_issn <- gsub("-", "", journal_metadata_body$`prism:issn`)
+    journal_citestats_df$journal_issn <- ifelse(is.null(journal_metadata_body$`prism:issn`), gsub("-", "", journal_metadata_body$`prism:eIssn`), gsub("-", "", journal_metadata_body$`prism:issn`))
     journal_citestats_df$journal_is_openAccess <- ifelse(is.null(journal_metadata_body$`openaccess`), 0, 1)
     journal_citestats_df$openAccess_articles <- ifelse(is.null(journal_metadata_body$`openAccessArticle`), 0, journal_metadata_body$`openAccessArticle`)
     journal_citestats_df$openArchive_articles <- ifelse(is.null(journal_metadata_body$`openArchiveArticle`), 0, journal_metadata_body$`openArchiveArticle`)
@@ -457,7 +461,7 @@ process_queried_items_df <- function(queried_items_df, vars_to_keep = c()) {
   # should you need to change it, you can do so by providing a vector of column names to the function
   processed_df_final <- processed_df[, which(names(processed_df) %in% vars_to_keep)]
 
-  processed_df_final$journal_issn <- processed_df$`prism:issn`
+  processed_df_final$journal_issn <- ifelse(is.null(processed_df$`prism:issn`), processed_df$`prism:eIssn`, processed_df$`prism:issn`)
   processed_df_final$title <- title_apa
   processed_df_final$authors <- authors_apa
   processed_df_final$journal <- journal_apa
@@ -542,15 +546,16 @@ After executing all of the above code chunks once, we can now finally run the ex
 
 ```{r, eval = TRUE, class.source = "fold-show"}
 issn_list <- c(
-  "0001-4273",
-  "0002-8282"
+  "2666-7991",
+  "1638-9808",
+  "0956-7976"
 )
 
 publications_2022_to_2023 <- query_and_process(
-  pubyear_start = 2022,
+  pubyear_start = 2010,
   pubyear_end = 2023,
   issn_list = issn_list,
-  max_count = 20
+  max_count = 50
 )
 ```
 

@@ -53,7 +53,7 @@ The following sections will guide you through the process of setting up grobid a
 
 The easiest way (which is still not really "easy") to install grobid is to use docker.
 Docker is a program that allows you to run programs in a virtual environment.
-As grobid does not run on windows computers, this is the only way for us to run it on windows.
+As grobid does not run on Windows computers, this is the only way for us to run it on Windows.
 When installing docker, it will set up a virtual linux environment on your computer (or at least walk you through the process during installation).
 This virtual environment is then used to run grobid.
 
@@ -62,7 +62,7 @@ Once the installer is downloaded, run it and follow the instructions.
 When asked, select "Linux containers" or "WSL 2" and not "Windows containers". 
 You might need to activate some Windows features, which the installer will tell you about.
 Once docker is installed, you should see a little whale icon in your task bar.
-If there is no wale icon, you can start docker by starting the program "Docker Desktop" from the Windows start menu.
+If there is no whale icon, you can start docker by starting the program "Docker Desktop" from the Windows start menu.
 If you click on it and the application started, you should see a screen like this (if you do not see this screen, select "Images on the upper right of the window"):
 
 ![Docker Desktop](src/img/docker_startscreen.png)

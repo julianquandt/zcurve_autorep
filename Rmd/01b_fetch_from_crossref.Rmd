@@ -99,15 +99,30 @@ The function takes the following parameters:
 fetchPublications <- function(journalISSN, startYear, endYear, cursor = "*", clean_unpublished = FALSE) {
 
     # Make the request
-    res <- cr_journals(
-        issn = journalISSN,
-        filter = c(from_pub_date = startYear, until_pub_date = endYear), works = TRUE,
-        # works = TRUE means that we want to fetch the publications of the journal
-        cursor = cursor, 
-        # cursor = "*" means that we want to fetch the first batch of publications
-        .progress = TRUE
-        # .progress = TRUE means that we want to see a progress bar
-    )
+    res <- tryCatch({
+        cr_journals(
+            issn = journalISSN,
+            filter = c(from_pub_date = startYear, until_pub_date = endYear), works = TRUE,
+            # works = TRUE means that we want to fetch the publications of the journal
+            cursor = cursor, 
+            # cursor = "*" means that we want to fetch the first batch of publications
+            .progress = TRUE
+            # .progress = TRUE means that we want to see a progress bar
+        )
+        #catch case where there is only 1 page and hence progress bar would throw error
+    }, error = function(e) {
+        if (grepl("must have 'max' > 'min'", e$message)) {
+            message("Error with progress bar. This means there is probably only 1 page of results... retrying without progress bar...")
+            cr_journals(
+                issn = journalISSN,
+                filter = c(from_pub_date = startYear, until_pub_date = endYear), works = TRUE,
+                cursor = cursor, 
+                .progress = FALSE
+            )
+        } else {
+            stop(e)
+        }
+    })
 
     # after finishing the initial fetching, we want to format the authors as a single string (they are stored in data-sets within each publication entry by default)
     author_strings <- lapply(res$data$author, concatenate_authors)
@@ -155,7 +170,7 @@ fetchPublications <- function(journalISSN, startYear, endYear, cursor = "*", cle
 Let's fetch all publications of the journal *Academy of Management Journal* from 2011 to 2023.
 
 ```{r}
-publications <- fetchPublications('0001-4273', '2011', '2023', clean_unpublished = FALSE)
+publications <- fetchPublications('2940-1445', '2011', '2023', clean_unpublished = FALSE)
 publications_df <- data.frame(publications)
 ```
 

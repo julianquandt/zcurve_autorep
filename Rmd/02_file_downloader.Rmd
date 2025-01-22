@@ -67,11 +67,6 @@ if (!require(bib2df)) {
   library(bib2df)
 }
 
-if (!require(httr)) {
-  install.packages("httr")
-  library(httr)
-}
-
 if (!require(googledrive)) {
   install.packages("googledrive")
   library(googledrive)
@@ -185,7 +180,7 @@ download_file <- function(row, oa_email_key, journal_path = "", use_proxy = FALS
 }
 ```
 
-# Different ways to load a list of DOIS for downloading
+# Different ways to load a list of DOIs for downloading
 
 The code below is how we actually download the pdfs. 
 We can either load a list of DOIs from a bibtex file or from a google sheet.
