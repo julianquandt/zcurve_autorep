@@ -3,3 +3,8 @@ renv/library/      # Exclude the package library
 renv/staging/      # Exclude staging area
 !renv/activate.R   # Include the activate.R script
 *src
+notes
+.venv
+downloads
+*.csv
+grobid_build/src

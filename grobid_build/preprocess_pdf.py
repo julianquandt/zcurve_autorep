@@ -20,7 +20,7 @@ def process_folder(client, folder, n):
         client.process("processFulltextDocument", folder, n=n)
 
 def main():
-    input_path = "./downloads/Psychological_Science"
+    input_path = "/mnt/downloads"
 
     # Get the number of CPU cores and subtract 2
     default_n = max(1, os.cpu_count() - 2)
@@ -29,7 +29,7 @@ def main():
 
     recursive = input("Do you want to process folders recursively? (y/n): ").lower() == 'y'
 
-    client = GrobidClient(config_path="/home/julian/projects/grobid_client_python/config.json")
+    client = GrobidClient(config_path="/app/grobid_config.json")
 
     if recursive:
         for root, dirs, files in os.walk(input_path):

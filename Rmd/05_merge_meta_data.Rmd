@@ -1,0 +1,89 @@
+---
+title: "Merging the Meta Data with Test Statistics Data"
+author: "Julian Quandt"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document:
+    theme: cerulean
+    highlight: tango
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    self_contained: true
+---
+
+
+```{r, include = FALSE}
+# set options to not knit code chunks
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE, include = TRUE, warning = FALSE, message = FALSE)
+if (!require(kableExtra)) {
+  install.packages("kableExtra")
+  library(kableExtra)
+}
+library(XML)
+```
+
+# Get overview of potential missing conversions
+
+```{r}
+# iterate through files in a folder, extract the p-values and save them to a data frame
+# set path to folder with xml files
+path <- "downloads/Psychological_Science/"
+# find all .xml
+files_pdf <- list.files(path, pattern = "*.pdf", full.names = TRUE)
+files_xml <- list.files(path, pattern = "*.xml", full.names = TRUE)
+
+# Extract the base names (without extensions) from the file paths
+base_pdf <- sub("\\.pdf$", "", basename(files_pdf))
+base_xml <- sub("\\.grobid.tei.xml$", "", basename(files_xml))
+
+# Find PDF files that do not have corresponding XML files
+missing_xml <- base_pdf[!base_pdf %in% base_xml]
+
+# Print the PDF files that are missing conversions
+missing_xml_files <- files_pdf[basename(files_pdf) %in% paste0(missing_xml, ".pdf")]
+```
+
+# Load the Meta Data and Test Statistics Data
+
+```{r}
+
+metadata <- read.csv("PS_2024_metadata.csv")
+
+testdata <- read.csv("PS_2024_testdata.csv")
+
+```
+
+
+```{r}
+# create doi column from filenames in test data
+
+testdata$doi_match <- gsub(".*/([0-9]+)\\..*", "\\1", testdata$file)
+
+# strip everything but numbers from the dois in the metadata
+
+metadata$doi_match <- gsub("[^0-9]", "", metadata$doi)
+
+# merge the metadata with the test data
+
+merged_data <- merge(metadata, testdata, by = "doi_match", all.x = TRUE)
+```
+
+
+# Clean merged data by only selecting valid p-value rows
+
+```{r}
+
+# remove rows with missing p-values
+analysis_data <- merged_data[!is.na(merged_data$p_value), ]
+
+# remove rows that have non-exact p-values which could not be calculated from test statistics
+analysis_data <- analysis_data[!analysis_data$p_value_reporting == "limit",]
+View(analysis_data)
+
+
+# add a p-value_analysis column, that compiles the p_value_numeric and p_value_calc columns
+analysis_data$p_value_analysis <- ifelse(analysis_data$p_value_reporting == "exact", analysis_data$p_value_num, analysis_data$p_value_calc)
+
+write.csv(analysis_data, "PS_2024_analysis.csv")
+```

@@ -1,0 +1,104 @@
+---
+title: "Running Z-Curve Analysis on the extracted data"
+author: "Julian Quandt"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document:
+    theme: cerulean
+    highlight: tango
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    self_contained: true
+---
+
+
+```{r, include = FALSE}
+# set options to not knit code chunks
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE, include = TRUE, warning = FALSE, message = FALSE)
+if (!require(kableExtra)) {
+  install.packages("kableExtra")
+  library(kableExtra)
+}
+library(XML)
+```
+
+# Load the analysis data
+
+```{r}
+
+analysis_data <- read.csv("PS_2024_analysis.csv")
+View(analysis_data)
+```
+
+# Now calculate z-curve across the entire data
+
+```{r}
+
+# load the zcurve package
+if (!require(zcurve)) {
+  install.packages("zcurve")
+  library(zcurve)
+}
+
+# calculate the z-curve
+zcurve_results <- zcurve(p = analysis_data$p_value_analysis)
+plot(zcurve_results)
+summary(zcurve_results)
+```
+
+
+```{r}
+# do median split on n_authors
+
+analysis_data$n_author_ms <- ifelse(analysis_data$n_authors > median(unique(analysis_data$n_authors)), "high", "low")
+
+z_curve_n_author_high <- zcurve(p = analysis_data$p_value_analysis[analysis_data$n_author_ms == "high"])
+plot(z_curve_n_author_high)
+summary(z_curve_n_author_high)
+
+z_curve_n_author_low <- zcurve(p = analysis_data$p_value_analysis[analysis_data$n_author_ms == "low"])
+plot(z_curve_n_author_low)
+summary(z_curve_n_author_low)
+
+```
+
+## Do a significance test on the split z-curve
+
+```{r}
+ERR_bt_coef_n_author_high <- z_curve_n_author_high$coefficients_boot$ERR
+ERR_bt_coef_n_author_low <- z_curve_n_author_low$coefficients_boot$ERR
+
+# 1) calculate the difference
+ERR_diff_n_authors <- ERR_bt_coef_n_author_high - ERR_bt_coef_n_author_low
+
+# 2) Obtain a 95% confidence interval for the difference
+(ci_diff_n_authors <- quantile(ERR_diff_n_authors, probs = c(0.025, 0.975)))
+
+# 3) Compute a two-sided p-value (fraction of times diff_vals crosses zero)
+(p_val <- 2 * min(mean(ERR_diff_n_authors  <= 0), mean(ERR_diff_n_authors  >= 0)))
+```
+
+# Do the same for USA vs. outside USA first author affiliations
+
+```{r}
+
+analysis_data$fa_affil_is_usa <- ifelse(analysis_data$first_author_country == "United States", "USA", "outside USA")
+
+z_curve_USA <- zcurve(p = analysis_data$p_value_analysis[analysis_data$fa_affil_is_usa == "USA"])
+
+z_curve_outside_USA <- zcurve(p = analysis_data$p_value_analysis[analysis_data$fa_affil_is_usa == "outside USA"])
+
+ERR_bt_coef_USA <- z_curve_USA$coefficients_boot$ERR
+ERR_bt_coef_outside_USA <- z_curve_outside_USA$coefficients_boot$ERR
+
+# 1) calculate the difference
+ERR_diff_USA <- ERR_bt_coef_USA - ERR_bt_coef_outside_USA
+
+# 2) Obtain a 95% confidence interval for the difference
+(ci_diff_USA <- quantile(ERR_diff_USA, probs = c(0.025, 0.975)))
+
+# 3) Compute a two-sided p-value (fraction of times diff_vals crosses zero)
+(p_val <- 2 * min(mean(ERR_diff_USA  <= 0), mean(ERR_diff_USA  >= 0)))
+```
+

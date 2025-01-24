@@ -170,7 +170,12 @@ fetchPublications <- function(journalISSN, startYear, endYear, cursor = "*", cle
 Let's fetch all publications of the journal *Academy of Management Journal* from 2011 to 2023.
 
 ```{r}
-publications <- fetchPublications('2940-1445', '2011', '2023', clean_unpublished = FALSE)
+publications <- fetchPublications('0956-7976', '2024', '2024', clean_unpublished = FALSE)
 publications_df <- data.frame(publications)
+
+# save to csv file
+write.csv(publications_df, "example_publications.csv")
+
+
 ```
 

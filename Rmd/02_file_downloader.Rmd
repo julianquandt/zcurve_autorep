@@ -84,7 +84,7 @@ This function is used to download a file from a given DOI, and is the main workh
 
 
 ```{r}
-download_file <- function(row, oa_email_key, journal_path = "", use_proxy = FALSE, proxy_address = "socks5://localhost:9051", use_sci_hub = FALSE, source_overview = TRUE) {
+download_file <- function(row, oa_email_key, journal_path = "", use_proxy = FALSE, proxy_address = "socks5://localhost:9051", source_overview = TRUE) {
   # The URL of the page containing the download link
 
   doi_filename <- gsub("[^[:alnum:]]", "", row$doi)
@@ -186,7 +186,8 @@ The code below is how we actually download the pdfs.
 We can either load a list of DOIs from a bibtex file or from a google sheet.
 The google sheet needs to be defined in the secret_vars.R file. 
 
-## From a bibtex list
+## Option 1: From a bibtex list
+
 ```{r}
 bib <- bib2df("bibtex_file.bib")
 names(bib)[which(names(bib) == "DOI")] <- "doi"
@@ -201,7 +202,7 @@ last_i <- 1
 }
 ```
 
-## From a google sheet
+## Option 2: From a google sheet
 
 For details on Google Sheet use see the `fetch_from_scopus.Rmd` file. 
 First we authenticate, then we get the google sheet and then we download the papers.
@@ -230,7 +231,7 @@ for (name in names(pubdata_dfs)) {
       writeLines(bib_file, paste0("./downloads/", journal_path, "/", "manual_download_list.bib"))
       next
     }
-    download_file(bib[i, ], oa_email_key, journal_path = journal_path, use_proxy = TRUE, proxy_address = "socks5://localhost:9050", use_sci_hub = TRUE)
+    download_file(bib[i, ], oa_email_key, journal_path = journal_path, use_proxy = TRUE, proxy_address = "socks5://localhost:9050")
     print(paste0("downloaded (or added to manual download list) paper ", i, " of ", nrow(bib), " with doi: ", bib$doi[i]))
     # Sys.sleep(5)
   }
@@ -250,12 +251,12 @@ for (name in names(pubdata_dfs)) {
 
 ```
 
-## from a csv file
+## Option 3: from a csv file
 
 ```{r}
 
-pubdata_dfs <- read.csv("mydata.csv") 
-
+pubdata_dfs <- read.csv("PS_2024_metadata.csv") 
+bib <- pubdata_dfs
 last_i <- 1
 for (i in last_i:nrow(bib)) {
   journal_path <- str_replace_all(bib$journal[i], " ", "_")
@@ -271,7 +272,7 @@ for (i in last_i:nrow(bib)) {
     writeLines(bib_file, paste0("./downloads/", journal_path, "/", "manual_download_list.bib"))
     next
   }
-  download_file(bib[i, ], oa_email_key, journal_path = journal_path, use_proxy = TRUE, proxy_address = "socks5://localhost:9050", use_sci_hub = TRUE)
+  download_file(bib[i, ], oa_email_key, journal_path = journal_path, use_proxy = FALSE, proxy_address = "socks5://localhost:9051")
   print(paste0("downloaded (or added to manual download list) paper ", i, " of ", nrow(bib), " with doi: ", bib$doi[i]))
   # Sys.sleep(5)
 }
@@ -297,7 +298,7 @@ sum(source_overview$V2 == "open_access")
 
 
 
-# Manual downloads
+# Manually adding failed downloads using Zotero
 
 In case the automatic download fails, we can download the papers manually from Zotero.
 

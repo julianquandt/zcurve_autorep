@@ -335,7 +335,7 @@ It then extracts the p-values by looking for patterns like "p = 0.05" or "p < 0.
 The context is defined as the text surrounding the p-value that provides additional test statistics.
 
 ```{r}
-extract_tests <- function(path, files, select_results_only = FALSE) {
+extract_tests <- function(path, files, select_results_only = FALSE, filter_phrases = c("hypothes", "prediction", "predicted", "anticipated", "surpris")) {
   # create empty data frame
   df <- data.frame()
   # iterate through files
@@ -393,11 +393,15 @@ extract_tests <- function(path, files, select_results_only = FALSE) {
 
     # Within each "result" section, select paragraphs containing the specified patterns
     # Patterns to search for to filter out paragraphs that discuss hypotheses / predictions
-    patterns <- c("hypothes", "prediction", "predicted", "anticipated")
+    patterns <- filter_phrases
     selected_paragraphs <- list()
     for (name in names(result_sections)) {
       paragraphs <- result_sections[[name]]
-      selected_paragraphs[[name]] <- Filter(function(paragraph) contains_patterns(paragraph, patterns), paragraphs)
+      if(!is.null(patterns)){
+        selected_paragraphs[[name]] <- Filter(function(paragraph) contains_patterns(paragraph, patterns), paragraphs)
+      } else {
+        selected_paragraphs[[name]] <- paragraphs
+      }
     }
     # Apply the function to your selected_paragraphs list
     extracted_p_values_contexts <- extract_p_values_with_context(selected_paragraphs)
@@ -410,7 +414,8 @@ extract_tests <- function(path, files, select_results_only = FALSE) {
     df <- rbind(df, data.frame(file = file, test_report = unlist(extracted_p_values_contexts[[1]]), p_value = unlist(extracted_p_values_contexts[[2]])))
   }
   df$p_value_reporting <- ifelse(grepl("=", df$p_value), "exact", "limit")
-  df$p_value_num <- suppressWarnings(as.numeric(gsub("p[_[:alnum:]]* *[<>=] *", "", df$p_value)))
+  df$p_value_num <- readr::parse_number(df$p_value)
+  # df$p_value_num <- suppressWarnings(as.numeric(gsub("p[_[:alnum:]]* *[<>=] *", "", df$p_value)))
   return(df)
 }
 ```
@@ -978,10 +983,10 @@ calculate_exact_p <- function(extracted_data) {
 This is how you would pass a list of files to get a table containing all p-values and the corresponding test reports.
 
 ```{r}
-path <- "path/to/xml_files"
+path <- "downloads/Psychological_Science"
 files_xml <- list.files(path, pattern = "*.xml", full.names = TRUE)
 
-extracted_data <- extract_tests(path, files_xml)
+extracted_data <- extract_tests(path, files_xml, filter_phrases = c())
 
 # number of total papers
 length(unique(extracted_data$file))
@@ -990,10 +995,7 @@ length(unique(extracted_data$file))
 nrow(extracted_data)
 
 # number of papers that do report any sort of result
-nrow(extracted_data)-sum(extracted_data$p_value == "no p-values found; paper might be qualitative?")
-
-#number of papers that do report p-values
-length(unique(extracted_data$file[which(!(extracted_data$p_value == "no p-values found; paper might be qualitative?"))]))
+length(unique(extracted_data$file))-sum(extracted_data$p_value == "no p-values found; paper might be qualitative?")
 
 # make indicator for which p-values to use
 for(i in 1:nrow(extracted_data)){
@@ -1029,4 +1031,11 @@ sum(grepl("calc", extracted_data$p_value_reporting))
 
 #number of all usable p-values
 sum(grepl("calc", extracted_data$p_value_reporting)) + sum(grepl("exact", extracted_data$p_value_reporting))
+```
+
+# Save Extracted P-value Data to file
+
+```{r}
+write.csv(extracted_data, "PS_2024_pvals.csv")
+
 ```

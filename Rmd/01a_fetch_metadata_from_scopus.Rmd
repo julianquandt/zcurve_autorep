@@ -546,17 +546,18 @@ After executing all of the above code chunks once, we can now finally run the ex
 
 ```{r, eval = TRUE, class.source = "fold-show"}
 issn_list <- c(
-  "2666-7991",
-  "1638-9808",
   "0956-7976"
 )
 
-publications_2022_to_2023 <- query_and_process(
-  pubyear_start = 2010,
-  pubyear_end = 2023,
+PS_2024 <- query_and_process(
+  pubyear_start = 2024,
+  pubyear_end = 2024,
   issn_list = issn_list,
-  max_count = 50
+  max_count = 500
 )
+
+#save to csv
+write.csv(PS_2024, "PS_2024.csv")
 ```
 
 When running this, you will see that you got some warning messages about not all papers being retrieved:
