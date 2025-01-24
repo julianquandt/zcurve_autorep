@@ -7,4 +7,3 @@ notes
 .venv
 downloads
 *.csv
-grobid_build/src
