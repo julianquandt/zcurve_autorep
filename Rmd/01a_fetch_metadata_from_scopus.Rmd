@@ -263,7 +263,7 @@ The function works in the following way:
 For convenience, there is a function that does all of these steps simultaneously. Thus, the only thing that you need to do in the end is to provide a list of ISSNs for all journals you are interested in and the time period for which you want to query the data.
 
 This piece of code will look like this:
-
+<!-- this code block is just for demonstration, it does not run, because the functions are not loaded yet. -->
 ```{r, eval = FALSE, class.source = "fold-show"}
 issn_list <- c(
   "0001-4273",
@@ -557,7 +557,7 @@ PS_2024 <- query_and_process(
 )
 
 #save to csv
-write.csv(PS_2024, "PS_2024.csv")
+write.csv(PS_2024, "PS_2024_metadata.csv")
 ```
 
 When running this, you will see that you got some warning messages about not all papers being retrieved:
@@ -708,7 +708,6 @@ gs_worksheet <- gs4_create(paste0("publication_data_", Sys.time()), sheets = jou
 
 # save local R data frame copy
 saveRDS(journal_dfs, file = paste0("publication_data_", str_replace_all(Sys.time(), ":", ""), ".rds"))
-```
 ```
 
 Thats it. 

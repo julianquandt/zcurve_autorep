@@ -175,7 +175,5 @@ publications_df <- data.frame(publications)
 
 # save to csv file
 write.csv(publications_df, "example_publications.csv")
-
-
 ```
 
