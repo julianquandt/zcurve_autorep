@@ -290,8 +290,7 @@ method_args <- lapply(download_methods, function(x) formals(get(x)))
 download_methods <- c("oa_dl", "selenium_api_dl", "scihub_dl")
 download_methods <- c("oa_dl", "selenium_api_dl")
 
-# # #time request 
-# # st <- Sys.time()
+### tests for different publishers
 
 # url_apa <- "https://dx.doi.org/10.1037/xge0001697"
 # url_mdpi <- "https://dx.doi.org/10.3390/agriculture15030291"
@@ -317,7 +316,6 @@ download_methods <- c("oa_dl", "selenium_api_dl")
 # response <- GET(paste0("http://127.0.0.1:8000/download?url=", URLencode(url_taylor), "&doi_filename=test_taylor"))
 # response <- GET(paste0("http://127.0.0.1:8000/download?url=", URLencode(url_wiley), "&doi_filename=test_wiley"))
 
-# # # Sys.time() - st
 
 
 response <- GET(paste0("http://127.0.0.1:8000/rotate"))
