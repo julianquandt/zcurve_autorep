@@ -6,9 +6,13 @@
 # access. For now the selenium method will only work if you have a NordVPN subscription,# 
 # as I had one and it can easily be used to rotate IP addresses, something that is abso-#
 # lutely necessary when downloading from publishers, as they will block your IP address #
-# after a few downloads. !!!!!!TAKE NOTE!!!!!! IF YOU ARE NOT CERTAIN THE VPN ROTATION  #
-# WORKS, DO NOT USE THIS METHOD AS YOU (OR YOUR ENTIRE INSTITUTE!) MIGHT BE BLOCKED     #
-# FROM THE PUBLISHERS WEBSITES. Despite this dramatic warning, the selenium method is   #
+# after a few downloads.                                                                #
+#                                                                                       #                          
+#                   !!!!!!!!!!!!!!!!TAKE NOTE!!!!!!!!!!!!!!!!                           #        
+# IF YOU ARE NOT CERTAIN THE VPN ROTATION WORKS, DO NOT USE THIS METHOD AS YOU (OR YOUR #
+# ENTIRE DEPARTMENT!) MIGHT BE BLOCKED FROM THE PUBLISHERS WEBSITES                     #
+#                                                                                       #
+# Despite this dramatic warning, the selenium method is                                 #
 # very useful and can be used to download files from publishers who provide PDFS open   #
 # access, but do not allow direct download using headless browser requests.             #
 # This method is illegal as far as I know, it is just a little bit of a workaround.     #
@@ -22,8 +26,10 @@
 # the first element being either "Success" or "Failed" and the second element being the #
 # method used to download the file (e.g. "oadoi" or "selenium") and the third element   #
 # being the URL from which the file was downloaded, e.g.:                               #
+#                                                                                       #
 # return(c("Success", "mymethod", url))                                                 #
 # the second and third argument are optional, you can also just return (c("Success"))   #
+#                                                                                       #
 #########################################################################################
 
 
