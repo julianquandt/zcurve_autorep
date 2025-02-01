@@ -1,0 +1,170 @@
+---
+title: "Project Manual"
+author: "Julian Quandt"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document:
+    theme: cerulean
+    highlight: tango
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    self_contained: true
+    code_folding: show
+    code_download: false
+---
+
+<div style="border: 1px solid #999; border-radius: 5px; padding: 20px; margin-top: 20px; background-color: #ffffe0;">
+  <h3 style="color: #0056b3; margin-top: 0;">There is no R-code in this document</h3>
+  This document aims to provide an overview over the project and the tasks that need to be done. It does not involve any R-code. Therefore, downloading or inspecting the .Rmd version of this file does not really make sense, it was only used to produce the respective html manual.
+</div>
+
+```{r, include = FALSE}
+# set options to not knit code chunks
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE, include = TRUE, warning = FALSE, message = FALSE)
+if (!require(kableExtra)) {
+  install.packages("kableExtra")
+  library(kableExtra)
+}
+```
+
+#  Software 
+
+This project aims to make use of R as much as possible, as it's usually most familiar to (social) scientists.
+However, some tasks, especially when it comes to web-scraping and pdf-conversion, are close to impossible to do in R.
+Therefore, we will use a combination of R and Python to achieve our goals.
+The following software will be used in this project:
+
+- R
+- Python
+- Docker
+- Grobid
+  
+## R
+
+You know what R is. However, to make sure that all my R code provided here works (now and also in 3 months or years), I am using `renv` with this project.
+`renv` is a package that allows you to save the state of your R-environment and to restore it later.
+This means that you can always go back to the state of the project when you last worked on it.
+It's basically like venvs in Python, but for R.
+
+## Python
+
+Python is a programming language that is often used for web-scraping and other tasks that are difficult to do in R.
+In this project, we will use Python to scrape the DOIs from the journal websites using selenium and to convert the pdfs to xml files using grobid.
+
+## Docker
+
+Docker is a program that allows you to run programs in a virtual environment.
+As grobid does not run on Windows computers, this is the only way for us to run it on Windows.
+When installing docker, it will set up a virtual linux environment on your computer (or at least walk you through the process during installation).
+This virtual environment is then used to run grobid.
+There is an extra manual on how to relatively easily achieve this.
+
+## Grobid
+
+[grobid](https://grobid.readthedocs.io/en/latest/) is a machine learning library for extracting text from pdfs and converting it to xml.
+While a pdf document often looks like a bunch of text, it is actually a collection of objects that are positioned on a page.
+Grobid uses machine learning to identify the different objects and their position on the page.
+It then extracts the text from the objects and converts it to xml.
+The xml files can then be used to extract the information that is contained in the pdfs.
+For us, this means that we can use the xml to extract p-values and other test statistics from the document.
+
+# Project Structure
+
+The project is structured as follows:
+
+- `Rmd`: This folder contains the Rmarkdown files that are used to produce the html files.
+- `html`: This folder contains the html files that are produced from the Rmarkdown files.
+- `data`: This folder contains the data that is used in the project.
+- `downloads`: This folder contains the pdf files that are downloaded from the DOIs.
+- `grobid_build`: This folder contains the grobid build that is used to convert the pdf files to xml files.
+- `R_addons`: This folder contains the R scripts that are used in the project. For now only the download methods that we want to define for file downloading
+
+# Project Workflow
+
+The project workflow is as follows:
+
+1. Scrape the DOIs from the journal websites.
+2. Download the pdf files from the DOIs.
+3. Convert the pdf files to xml files using grobid.
+4. Extract the information from the xml files.
+5. Analyze the information.
+
+# Getting started
+
+## Setting up R with renv
+
+To set up R with renv, you need to install the `renv` package.
+You can do this by running the following code in R:
+
+```r
+install.packages("renv")
+```
+
+After you have installed the `renv` package, you can set up the project with the following code:
+
+```r
+renv::restore()
+```
+
+This will install all the packages that are needed for the project, as defined in the `renv.lock` file.
+This should basically already make sure you have all the packages needed for this project.
+
+Should somewhere during installation an error occur, this might be because you dont have Rtools (for Windows); for unix it should not be a problem.
+You can download Rtools from the [Rtools website](https://cran.r-project.org/bin/windows/Rtools/).
+
+
+## Setting up Python
+
+To set up Python (in order to use selenium - it's not needed for grobid), you will need to download and install Python Version 3.10 from the [Python website](https://www.python.org/downloads/release/python-31011/).
+Once installed, set up a virtual environment inside the project folder. 
+You can do this by running the following code in the terminal (e.g. in RStudio or other terminal *INSIDE* the project folder):
+
+```bash
+python -m venv .venv
+```
+
+This will create a virtual environment in the project folder.
+
+If the above comment does not work try either `python3 -m venv .venv` or `python3.10 -m venv .venv`. 
+If none of these work, try to find where the python executable is located on your computer and use that to create the virtual environment.
+
+To activate the virtual environment, run the following code in the terminal:
+
+```bash
+.venv\Scripts\activate # if you are on windows
+
+source .venv/bin/activate # if you are on unix
+```
+Both of the above need to be run from terminal in the project folder (so make sure the terminal path that you see shows you are in that folder).
+
+This will activate the virtual environment.
+You can now install the packages that are needed for the project.
+To install the packages, run the following code in the terminal:
+
+```bash
+pip install -r python\requirements.txt # if you are on windows
+
+pip install -r python/requirements.txt # if you are on unix
+```
+
+This will install the packages that are needed for the project, as defined in the `requirements.txt` file.
+This should be all you need to make sure selenium runs correctly *in principle*.
+I say in principle, because you will need to have a NordVPN subscription and the NordVPN app installed on your computer.
+This is because for webscraping with selenium, you just need a IP rotation tool and definitely don't want to use your actual IP address.
+The NordVPN app is the easiest way to achieve this and I already have a subscription, so I will use it for this project.
+I'm not super happy with this solution either, but that is how it is for now. 
+One other option would be to use TOR as a free IP rotation tool, but the problem is that it will be slow and cause lots of captchas to appear, which means we need to rotate even more.
+
+If you are a little techy, you can set up your own IP rotation method in the `selenium_server.py` file, or even delete the rotation stuff so that you can run the code without a VPN.
+I would not recommend this though, as I also included some functionality to try downloading stuff from Annas Archive, which might be considered a legal grey area or even illegal depnding on your country. So long story short, protect yourself and get a ip rotation tool if you want to use selenium, or just don't use the method - which is why I made that the default.
+
+## Setting up Docker
+
+To set up Docker for file conversion, follow the docker manual in the `Rmd/03_pdf_conversion_manual.Rmd` file.
+This will guide you through the process of setting up Docker and running grobid in a container.
+
+
+
+
+
