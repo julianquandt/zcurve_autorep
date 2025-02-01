@@ -544,6 +544,8 @@ query_and_process <- function(pubyear_start, pubyear_end, issn_list, max_count =
 
 After executing all of the above code chunks once, we can now finally run the example from the beginning. This time we will only use 20 papers per journal to make sure that the code runs quickly. If you want to fetch all papers, you can set the `max_count` parameter to a very high number (e.g. 1e5 = 100,000)
 
+Note that This code will only run from within University VPN or on campus, as the "COMPLETE" Scopus API is only accessible from there.
+
 ```{r, eval = TRUE, class.source = "fold-show"}
 issn_list <- c(
   "0956-7976"
@@ -553,7 +555,7 @@ PS_2024 <- query_and_process(
   pubyear_start = 2024,
   pubyear_end = 2024,
   issn_list = issn_list,
-  max_count = 500
+  max_count = 50
 )
 
 #save to csv

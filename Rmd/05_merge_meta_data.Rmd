@@ -85,5 +85,11 @@ View(analysis_data)
 # add a p-value_analysis column, that compiles the p_value_numeric and p_value_calc columns
 analysis_data$p_value_analysis <- ifelse(analysis_data$p_value_reporting == "exact", analysis_data$p_value_num, analysis_data$p_value_calc)
 
+# see whether there are any impossible p-values and if so, remove those rows (for now without checking why this might happen)
+if (any(analysis_data$p_value_analysis > 1 | analysis_data$p_value_analysis < 0)){
+  analysis_data <- analysis_data[-which(analysis_data$p_value_analysis > 1 | analysis_data$p_value_analysis < 0),]
+
+}
+
 write.csv(analysis_data, "PS_2024_analysis.csv")
 ```
