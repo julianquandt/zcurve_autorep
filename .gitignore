@@ -7,3 +7,6 @@ notes
 .venv
 downloads
 *.csv
+selenium.log
+python/sel_download_dir.txt
+page.html

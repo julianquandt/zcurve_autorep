@@ -27,7 +27,7 @@ if (!require(kableExtra)) {
   library(kableExtra)
 }
 
-#source("secret_vars.R") this needs to be activated and the file created
+source("secret_vars.R") # this needs to be activated and the file created
 ```
 
 
@@ -78,6 +78,11 @@ if (!require(googlesheets4)) {
   install.packages("googlesheets4")
   library(googlesheets4)
 }
+
+if (!require(processx)) {
+  install.packages("processx")
+  library(processx)
+}
 ```
 
 # The code
@@ -86,100 +91,114 @@ This function is used to download a file from a given DOI, and is the main workh
 
 
 ```{r}
-download_file <- function(row, oa_email_key, journal_path = "", use_proxy = FALSE, proxy_address = "socks5://localhost:9051", source_overview = TRUE) {
-  # The URL of the page containing the download link
+# Check if file already exists and is a valid PDF
+file_already_downloaded <- function(download_dir, journal_path, doi_filename) {
+  file_path <- paste0(download_dir, journal_path, "/", doi_filename, ".pdf")
+  return(file.exists(file_path) && file.size(file_path) > 20000)
+}
 
-  doi_filename <- gsub("[^[:alnum:]]", "", row$doi)
-  # check if directory for journal exists and create it if not
-  if (!dir.exists(paste0("./downloads/", journal_path))) {
-    dir.create(paste0("./downloads/", journal_path), recursive = TRUE)
+# Load external download methods
+load_external_methods <- function() {
+  if (!exists("download_methods_loaded")) {
+    source("./R_addons/file_download_methods.R")
   }
-  # check if file already exists and is larger than 40 kb (which hints at a valid pdf file)
-  if (file.exists(paste0("./downloads/", journal_path, "/", doi_filename, ".pdf")) && file.size(paste0("./downloads/", journal_path, "/", doi_filename, ".pdf")) > 20000) {
+}
+
+# Find and evaluate argument values from available environments
+find_values <- function(arg_name, env_list) {
+  for (env in rev(env_list)) {
+    if (exists(arg_name, envir = env, inherits = FALSE)) {
+      return(get(arg_name, envir = env))
+    }
+  }
+  if (exists(arg_name, envir = .GlobalEnv, inherits = FALSE)) {
+    return(get(arg_name, envir = .GlobalEnv))
+  }
+  return(NULL)
+}
+
+# Execute all available download methods
+run_download_methods <- function(download_methods, doi) {
+  env_list <- sys.frames() # Capture active environments
+  for (method in download_methods) {
+    if (exists(method) && is.function(get(method))) {
+      function_args <- names(formals(get(method)))
+      arg_values <- setNames(lapply(function_args, find_values, env_list), function_args)
+      res <- do.call(method, arg_values)
+      print(paste0("Method ", method, " returned: ", res[1]))
+      # TODO: when "Method oa_dl returned: OA_Failed" i get: Error: the condition has length > 1
+      if (res[1] == "Success") {
+        return(res)
+      }
+    } else {
+      message("Download addon ", method, " does not exist or is not a correct function call")
+      return("Failed")
+    }
+  }
+  return("Failed")
+}
+
+append_source_overview <- function(dl_method, doi, journal_path, download_dir) {
+  write.table(data.frame(doi = doi, method = dl_method),
+    paste0(download_dir, journal_path, "/source_overview.csv"),
+    append = TRUE, row.names = FALSE, col.names = FALSE
+  )
+}
+
+# Handle the fallback case (manual download)
+handle_download_error <- function(row, journal_path, download_dir, source_overview) {
+  if (source_overview) {
+    append_source_overview("manual", row$doi, journal_path, download_dir)
+  }
+  df2bib(row, file = paste0(download_dir, journal_path, "/manual_download_list.bib"), append = TRUE)
+  message("No open access version found. Appending it to overview for manual download")
+}
+
+# Main function
+download_file <- function(row, journal_path = "", download_dir = "./downloads/",
+                          source_overview = TRUE, load_external_methods = TRUE) {
+  doi_filename <- gsub("[^[:alnum:]]", "", row$doi)
+
+  # Ensure journal directory exists
+  dir.create(file.path(download_dir, journal_path), recursive = TRUE, showWarnings = FALSE)
+
+  # Skip download if file already exists
+  if (file_already_downloaded(download_dir, journal_path, doi_filename)) {
     message("File already exists")
     return()
   } else {
-    Sys.sleep(5)
+    Sys.sleep(1)
   }
 
-  # get open access version from roadoi
-  oadoi_fetch <- oadoi_fetch(
-    dois = row$doi,
-    email = oa_email_key
-  )
-  # check if open access version exists
-  best_url <- oadoi_fetch$best_oa_location[[1]]$url
-  # if not, set best url to empty string
-  if(is.null(best_url)){
-    best_url = ""
-  }
-  # try download file from best url and fall back to other urls if not possible
-  if(length(oadoi_fetch$best_oa_location[[1]]) > 0){
-    tryCatch(
-        {
-          # download file from best url
-          suppressWarnings(download.file(url = best_url, destfile = paste0("./downloads/", journal_path, "/", doi_filename, ".pdf"), mode = "wb"))
-          # check if file is larger than 40 kb
-          if (file.size(paste0("./downloads/", journal_path, "/", doi_filename, ".pdf")) < 20000) {
-            stop("File is too small, falling back on other urls")
-          } else {
-            message("Download successful from ", best_url)
-            if(source_overview == TRUE){
-              write.table(data.frame(doi = row$doi, method = "open_access"),paste0("./downloads/", journal_path, "/", "source_overview", ".csv"), append = TRUE, row.names = FALSE, col.names = FALSE)
-            }
-            return()
-          }
-        },
-        # Handle the error
-        error = function(e) {
-          message("Error: ", e)
-          message("Trying other urls")
-          for (i in 1:length(oadoi_fetch$oa_locations)) {
-            Sys.sleep(1)
-            tryCatch(
-              { 
-                # download file from other urls if previous ones failed
-                download.file(url = oadoi_fetch$oa_locations[[i]]$url, destfile = paste0("./downloads/", journal_path, "/", doi_filename, ".pdf"), mode = "wb")
-                message("Download successful from ", oadoi_fetch$oa_locations[[i]]$url)
-                if (file.size(paste0("./downloads/", journal_path, "/", doi_filename, ".pdf")) < 20000) {
-                  stop("File is too small, falling back on other urls")
-                } else {
-                  message("Download successful from ", oadoi_fetch$oa_locations[[i]]$url)
-                  return()
-                }
-              },
-              error = function(e) {
-                message("Error: ", e)
-                message("Trying next url")
-              }
-            )
-          }
-        }
-      )
-  } else {
-    message("no open access URLS found...")
-  }
   tryCatch(
     {
-        if(source_overview == TRUE){
-          write.table(data.frame(doi = row$doi, method = "manual"),paste0("./downloads/", journal_path, "/", "source_overview", ".csv"), append = TRUE, row.names = FALSE, col.names = FALSE)
-        }        
-        df2bib(row, file = paste0("./downloads/", journal_path, "/", "manual_download_list.bib"), append = TRUE)
-        message("No open access version found. Appending it to overview for manual download")
-    },
-    # if all activated options failed, append the paper to a bibtex file for manual download
-    error = function(e) {
-      if(source_overview == TRUE){
-        write.table(data.frame(doi = row$doi, method = "manual"),paste0("./downloads/", journal_path, "/", "source_overview", ".csv"), append = TRUE, row.names = FALSE, col.names = FALSE)
+      if (load_external_methods) {
+        load_external_methods()
+        doi <- row$doi
+        dl_method <- run_download_methods(download_methods, doi)
+        if(dl_method[1] == "Failed") {
+          handle_download_error(row, journal_path, download_dir, source_overview)
+        } else {
+          if(source_overview){
+            print("Appending source overview")
+            print(dl_method)
+            append_source_overview(dl_method[2], row$doi, journal_path, download_dir)
+          }
+        }
+      } else {
+        handle_download_error(row, journal_path, download_dir, source_overview)
       }
-      message("Failed to download files from any source. Appending it to overview for manual download")
-      df2bib(row, file = paste0("./downloads/", journal_path, "/", "manual_download_list.bib"), append = TRUE)
+    },
+    error = function(e) {
+      message("Error: ", e$message)
+      handle_download_error(row, journal_path, download_dir, source_overview)
     },
     warning = function(w) {
       message("Warning: ", w$message)
     }
   )
 }
+
 ```
 
 # Different ways to load a list of DOIs for downloading
@@ -199,7 +218,7 @@ last_i <- 1
  for(i in last_i:nrow(bib)){
       last_i <- i
       Sys.sleep(1)
-      download_file(bib[i,], oa_email_key, journal_path = "", use_proxy = TRUE, proxy_address = "socks5://127.0.0.1:9051")
+      download_file(bib[i,], oa_email_key, journal_path = "", use_proxy = TRUE, proxy_address = "socks5://127.0.0.1:9050")
       print(paste0("downloaded (or added to manual download list) paper ", i, " of ", nrow(bib), " with doi: ", bib$doi[i]))
 }
 ```
@@ -259,7 +278,7 @@ for (name in names(pubdata_dfs)) {
 
 pubdata_dfs <- read.csv("PS_2024_metadata.csv") 
 bib <- pubdata_dfs
-last_i <- 1
+last_i <- 17
 for (i in last_i:nrow(bib)) {
   journal_path <- str_replace_all(bib$journal[i], " ", "_")
   last_i <- i
@@ -274,7 +293,7 @@ for (i in last_i:nrow(bib)) {
     writeLines(bib_file, paste0("./downloads/", journal_path, "/", "manual_download_list.bib"))
     next
   }
-  download_file(bib[i, ], oa_email_key, journal_path = journal_path, use_proxy = FALSE, proxy_address = "socks5://localhost:9051")
+  download_file(bib[i, ], journal_path = journal_path)
   print(paste0("downloaded (or added to manual download list) paper ", i, " of ", nrow(bib), " with doi: ", bib$doi[i]))
   # Sys.sleep(5)
 }
