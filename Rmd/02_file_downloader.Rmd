@@ -44,41 +44,51 @@ These manual downloads, can be done in Zotero (see below for instructions).
 ## Defining and installing packages
 
 ```{r}
+# this is a list of packages that are needed for the script to run.
+
+# httr is used for http requests
 if (!require(httr)) {
   install.packages("httr")
   library(httr)
 }
 
+# xml2 is used for parsing xml files
 if (!require(xml2)) {
   install.packages("xml2")
   library(xml2)
 }
 
+# stringr is used for string manipulation
 if (!require(stringr)) {
   install.packages("stringr")
   library(stringr)
 }
 
+# roadoi is used to find open access versions of papers using unpaywall
 if (!require(roadoi)) {
   install.packages("roadoi")
   library(roadoi)
 }
 
+# bib2df is used to convert bibtex files to dataframes and vice versa
 if (!require(bib2df)) {
   install.packages("bib2df")
   library(bib2df)
 }
 
+# googledrive is used to access, save to and load from google drive
 if (!require(googledrive)) {
   install.packages("googledrive")
   library(googledrive)
 }
 
+# googlesheets4 is used to access, save to and load from google sheets
 if (!require(googlesheets4)) {
   install.packages("googlesheets4")
   library(googlesheets4)
 }
 
+# processx is used to start the selenium server for the respective download method in the background
 if (!require(processx)) {
   install.packages("processx")
   library(processx)
@@ -87,8 +97,19 @@ if (!require(processx)) {
 
 # The code
 
-This function is used to download a file from a given DOI, and is the main workhorse of this script.
+The functions below are the main functions that are used to download the papers.
 
+## The main functions
+
+The main functions are the following:
+
+1. `file_already_downloaded`: This function checks if the file already exists and is a valid PDF.
+2. `load_external_methods`: This function loads the external download methods that are defined in the `file_download_methods.R` file. This function is is where you would add additional download methods that you think would be useful, or adjust the existing ones. They would automatically be loaded here so no need to change stuff in this script.
+3. `find_values`: This function finds and evaluates argument values from available environments.
+4. `run_download_methods`: This function executes all available download methods.
+5. `append_source_overview`: This function appends the source overview to a csv file.
+6. `handle_download_error`: This function handles the fallback case (manual download).
+7. `download_file`: This function is the main function that downloads the file. It first checks if the file already exists and if not, it tries to download the file. If the download fails, it adds the DOI to a bibtex file for manual download.
 
 ```{r}
 # Check if file already exists and is a valid PDF
@@ -126,7 +147,6 @@ run_download_methods <- function(download_methods, doi) {
       arg_values <- setNames(lapply(function_args, find_values, env_list), function_args)
       res <- do.call(method, arg_values)
       print(paste0("Method ", method, " returned: ", res[1]))
-      # TODO: when "Method oa_dl returned: OA_Failed" i get: Error: the condition has length > 1
       if (res[1] == "Success") {
         return(res)
       }
@@ -213,13 +233,23 @@ The google sheet needs to be defined in the secret_vars.R file.
 bib <- bib2df("bibtex_file.bib")
 names(bib)[which(names(bib) == "DOI")] <- "doi"
 names(bib)[which(names(bib) == "URL")] <- "link"
+download_dir = "./downloads/" # you want to change this to the path where you want to parent folder of the journal folders with the files to be downloaded to. Make sure to have a trailing slash (because I am currently to lazy to deal with R's file handling)
 
 last_i <- 1
  for(i in last_i:nrow(bib)){
       last_i <- i
       Sys.sleep(1)
-      download_file(bib[i,], oa_email_key, journal_path = "", use_proxy = TRUE, proxy_address = "socks5://127.0.0.1:9050")
+      download_file(bib[i, ], journal_path = journal_path)
       print(paste0("downloaded (or added to manual download list) paper ", i, " of ", nrow(bib), " with doi: ", bib$doi[i]))
+}
+if (file.exists(paste0(download_dir, journal_path, "/", "manual_download_list.bib"))) {
+  bib_file <- readLines(paste0(download_dir, journal_path, "/", "manual_download_list.bib"))
+  # replace @ with @article
+  bib_file <- gsub("@{", "@article{", fixed = TRUE, bib_file)
+  # write file
+  writeLines(bib_file, paste0(download_dir, journal_path, "/", "manual_download_list.bib"))
+} else {
+  message("No manual_download_list.bib file found, probably all papers were downloaded")
 }
 ```
 
@@ -227,44 +257,55 @@ last_i <- 1
 
 For details on Google Sheet use see the `fetch_from_scopus.Rmd` file. 
 First we authenticate, then we get the google sheet and then we download the papers.
+By default, this loop will read the Journal_path from the name of the sheet. If you want all different journals in one folder, you could change that line to a fixed value.
 
 ```{r}
 # get the google sheet with the publication data
-drive_auth()
-gs4_auth(token = drive_token())
-gs_sheets <- gs4_get(google_sheet_url)
-pubdata_dfs <- sapply(gs_sheets$sheets$name[5], function(x) read_sheet(gs_sheets, sheet = x), simplify = FALSE)
+drive_auth(email = my_gmail)
+gs_sheets <- gs4_get(google_sheet_id)
+pubdata_dfs <- sapply(gs_sheets$sheets$name, function(x) read_sheet(gs_sheets, sheet = x), simplify = FALSE)
+
+download_dir = "./downloads/" # you want to change this to the path where you want to parent folder of the journal folders with the files to be downloaded to. Make sure to have a trailing slash (because I am currently to lazy to deal with R's file handling)
 
 for (name in names(pubdata_dfs)) {
   bib <- data.frame(pubdata_dfs[[name]])
-  journal_path <- str_replace_all(name, " ", "_")
-  last_i <- 1
+  journal_path <- str_replace_all(name, " ", "_") # <- this is the line that you would change if you want all files in the same folder, just give it a fixed value
+  last_i <- 1 # so loop can be restarted at other place more easily, mostly for debugging
   for (i in last_i:nrow(bib)) {
+    # make a journal path based on the journal name. Note that this should just be a fixed value, i you are doing a project on multiple journals and want all files in the same folder
+    journal_path <- str_replace_all(bib$journal[i], " ", "_")
     last_i <- i
+
+    # this is the download part. Print some info first
     print("#################################################################")
     print(paste0("Downloading paper ", i, " of ", nrow(bib), " with doi: ", bib$doi[i]))
-    if(is.na(bib[i,])){
+
+    # if the doi is NA, we skip the download and mark it for manual download
+    if(is.na(bib$doi[i])){
       print("doi is NA, skipping and marking for manual download") 
-      bib_file <- readLines(paste0("./downloads/", journal_path, "/", "manual_download_list.bib"))
-      # replace @ with @article
-      bib_file <- gsub("@", "@article", bib_file)
-      # write file
-      writeLines(bib_file, paste0("./downloads/", journal_path, "/", "manual_download_list.bib"))
+      bib_file <- readLines(paste0(download_dir, journal_path, "/", "manual_download_list.bib")) # if multiple journals are used (e.g. when querying papers differently, journal_path might instead be a project path)
+      # replace @ with @article because somehow df2bib does this incorrectly.
+      bib_file <- gsub("@{", "@article{", fixed = TRUE, bib_file)
+      # write the changes back to the bib file
+      writeLines(bib_file, paste0(download_dir, journal_path, "/", "manual_download_list.bib"))
       next
     }
-    download_file(bib[i, ], oa_email_key, journal_path = journal_path, use_proxy = TRUE, proxy_address = "socks5://localhost:9050")
+    # if doi is not NA, we download the file using the download_file function above
+    download_file(bib[i, ], journal_path = journal_path)
     print(paste0("downloaded (or added to manual download list) paper ", i, " of ", nrow(bib), " with doi: ", bib$doi[i]))
-    # Sys.sleep(5)
+    # to be fair, we wait a second before downloading the next file (but honestly, as all the other stuff takes long anyway, this could be omitted)
+    Sys.sleep(1)
   }
-  # to make the manual_download_list.bib file importable by Zotero, we need to replace all @ with @article
+
+  # to make the manual_download_list.bib file importable by Zotero, we need to replace all @ with @article for the articles that were added for manual download
   # read file
   # check if file exists
-  if (file.exists(paste0("./downloads/", journal_path, "/", "manual_download_list.bib"))) {
-    bib_file <- readLines(paste0("./downloads/", journal_path, "/", "manual_download_list.bib"))
+  if (file.exists(paste0(download_dir, journal_path, "/", "manual_download_list.bib"))) {
+    bib_file <- readLines(paste0(download_dir, journal_path, "/", "manual_download_list.bib"))
     # replace @ with @article
-    bib_file <- gsub("@", "@article", bib_file)
+    bib_file <- gsub("@{", "@article{", fixed = TRUE, bib_file)
     # write file
-    writeLines(bib_file, paste0("./downloads/", journal_path, "/", "manual_download_list.bib"))
+    writeLines(bib_file, paste0(download_dir, journal_path, "/", "manual_download_list.bib"))
   } else {
     message("No manual_download_list.bib file found, probably all papers were downloaded")
   }
@@ -278,43 +319,52 @@ for (name in names(pubdata_dfs)) {
 
 pubdata_dfs <- read.csv("PS_2024_metadata.csv") 
 bib <- pubdata_dfs
-last_i <- 17
+
+download_dir = "./downloads/" # you want to change this to the path where you want to parent folder of the journal folders with the files to be downloaded to. Make sure to have a trailing slash (because I am currently to lazy to deal with R's file handling)
+
+last_i <- 1 # so loop can be restarted at other place more easily, mostly for debugging
 for (i in last_i:nrow(bib)) {
+  # make a journal path based on the journal name. Note that this should just be a fixed value, i you are doing a project on multiple journals and want all files in the same folder
   journal_path <- str_replace_all(bib$journal[i], " ", "_")
   last_i <- i
+
+  # this is the download part. Print some info first
   print("#################################################################")
   print(paste0("Downloading paper ", i, " of ", nrow(bib), " with doi: ", bib$doi[i]))
+
+  # if the doi is NA, we skip the download and mark it for manual download
   if(is.na(bib$doi[i])){
     print("doi is NA, skipping and marking for manual download") 
-    bib_file <- readLines(paste0("./downloads/", journal_path, "/", "manual_download_list.bib"))
-    # replace @ with @article
-    bib_file <- gsub("@", "@article", bib_file)
-    # write file
-    writeLines(bib_file, paste0("./downloads/", journal_path, "/", "manual_download_list.bib"))
+    bib_file <- readLines(paste0(download_dir, journal_path, "/", "manual_download_list.bib")) # if multiple journals are used (e.g. when querying papers differently, journal_path might instead be a project path)
+    # replace @ with @article because somehow df2bib does this incorrectly.
+    bib_file <- gsub("@{", "@article{", fixed = TRUE, bib_file)
+    # write the changes back to the bib file
+    writeLines(bib_file, paste0(download_dir, journal_path, "/", "manual_download_list.bib"))
     next
   }
+  # if doi is not NA, we download the file using the download_file function above
   download_file(bib[i, ], journal_path = journal_path)
   print(paste0("downloaded (or added to manual download list) paper ", i, " of ", nrow(bib), " with doi: ", bib$doi[i]))
-  # Sys.sleep(5)
+  # to be fair, we wait a second before downloading the next file (but honestly, as all the other stuff takes long anyway, this could be omitted)
+  Sys.sleep(1)
 }
-# to make the manual_download_list.bib file importable by Zotero, we need to replace all @ with @article
+
+# to make the manual_download_list.bib file importable by Zotero, we need to replace all @ with @article for the articles that were added for manual download
 # read file
 # check if file exists
-if (file.exists(paste0("./downloads/", journal_path, "/", "manual_download_list.bib"))) {
-  bib_file <- readLines(paste0("./downloads/", journal_path, "/", "manual_download_list.bib"))
+if (file.exists(paste0(download_dir, journal_path, "/", "manual_download_list.bib"))) {
+  bib_file <- readLines(paste0(download_dir, journal_path, "/", "manual_download_list.bib"))
   # replace @ with @article
-  bib_file <- gsub("@{,", "@article{,", bib_file, fixed = TRUE)
+  bib_file <- gsub("@{", "@article{", fixed = TRUE, bib_file)
   # write file
-  writeLines(bib_file, paste0("./downloads/", journal_path, "/", "manual_download_list.bib"))
+  writeLines(bib_file, paste0(download_dir, journal_path, "/", "manual_download_list.bib"))
 } else {
   message("No manual_download_list.bib file found, probably all papers were downloaded")
 }
 
 # lets see how many files were downloaded from open access:
-source_overview <- read.table(paste0("./downloads/", journal_path, "/source_overview.csv"))
-sum(source_overview$V2 == "open_access")
-
-
+source_overview <- read.table(paste0(download_dir, journal_path, "/source_overview.csv"))
+table(source_overview$V2)
 ```
 
 

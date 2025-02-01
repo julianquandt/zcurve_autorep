@@ -114,6 +114,11 @@ async def force_pdf_download(doi_filename: str, url: str):
         bool: True if the PDF was successfully downloaded or navigated to, False otherwise.
     """
     global current_page_url
+
+    if "https://annas-archive.org/search" in current_page_url:
+        print("not found on annas archive")
+        return "SKIP_REST"
+
     try:
         # Find an anchor element that might be a download button.
         xpath_expr = (
@@ -164,13 +169,18 @@ async def force_pdf_download(doi_filename: str, url: str):
                         pdf_url = "https://www.tandfonline.com/doi/pdf/" + doi
                     elif "pnas.org" in current_page_url:
                         pdf_url = "https://www.pnas.org/doi/pdf/" + doi
+                    elif "dx.doi.org" in current_page_url:
+                        # If the current URL is still a DOI resolver, this means doi cannot be resolved.
+                        print("DOI cannot be resolved.")
+                        return "DOI_NOT_RESOLVED"
                     print(f"Rewritten PDF URL: {current_page_url}")
+                elif "annas-archive.org/scidb" in url:
+                    print("annas archive is here")
+                    try:
+                        return await download_pdf_via_requests(pdf_url, doi_filename)
+                    except Exception as req_e:
+                        print(f"Download via requests failed: {req_e}. Attempting to navigate to the PDF URL.")
 
-                # # Attempt to download the PDF using the requests-based function.
-                # try:
-                #     return await download_pdf_via_requests(pdf_url, doi_filename)
-                # except Exception as req_e:
-                #     print(f"Download via requests failed: {req_e}. Attempting to navigate to the PDF URL.")
                 try:
                     await browser.get(pdf_url)
                     return True
@@ -237,7 +247,7 @@ with file_path.open("r") as f:
 
 # DOWNLOAD_DIR = "/home/julian/projects/auto_rep_dgps/downloads"
 options = Options()
-# options.add_argument("--headless")
+options.add_argument("--headless")
 prefs = {
     "download.default_directory": DOWNLOAD_DIR,
     "plugins.always_open_pdf_externally": True
@@ -278,7 +288,7 @@ async def startup_event():
     """Initialize Selenium when the server starts."""
     await init_browser()
 
-async def wait_for_download(before_files, timeout=120):
+async def wait_for_download(before_files, timeout=20):
     """
     Wait for a new file to appear in the download directory.
 
@@ -396,8 +406,13 @@ async def download_pdf(url: str, doi_filename: str = Query(..., description="Fil
 
         # **Try downloading via the button click method**
         print("force pdf download")
-        if not await force_pdf_download(doi_filename, url):
+        force_dl = await force_pdf_download(doi_filename, url)
+        if not force_dl:
             print("No explicit download button found, relying on auto-download settings.")
+        elif force_dl == "SKIP_REST":
+            return {"status": "Failed: Explicit Skip Requested", "file": f"{doi_filename}.pdf", "url": url}
+        elif force_dl == "DOI_NOT_RESOLVED":
+            return {"status": "Failed: DOI Not Resolved", "file": f"{doi_filename}.pdf", "url": url}
 
         # **Wait for new file event instead of using sleep**
         print("wait for download")

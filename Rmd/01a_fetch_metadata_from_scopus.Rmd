@@ -684,8 +684,7 @@ Of course, we can later copy the data on Google Drive directly or rename the she
 First we need to run the following code. It will open a process to authenticate with Google Drive.
 
 ```{r, eval = FALSE, class.source = "fold-show"}
-drive_auth()
-gs4_auth(token = drive_token())
+gs4_auth(email = my_gmail) # my_gmail is stored in secret_vars.R
 ```
 
 ### Uploading the Data to Google Drive
@@ -705,6 +704,10 @@ Now, by just running the 2 lines below, we can create and upload our data to Goo
 journal_dfs <- split(data_to_write, data_to_write$journal)
 
 gs_worksheet <- gs4_create(paste0("publication_data_", Sys.time()), sheets = journal_dfs)
+
+# now lets have a look at the Spreadsheet ID 
+gs_worksheet
+# save the value shown next to ID to secret_vars.R as google_sheet_id for later use 
 
 # save local R data frame copy
 saveRDS(journal_dfs, file = paste0("publication_data_", str_replace_all(Sys.time(), ":", ""), ".rds"))
