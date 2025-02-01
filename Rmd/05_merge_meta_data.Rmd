@@ -28,7 +28,7 @@ library(XML)
 ```{r}
 # iterate through files in a folder, extract the p-values and save them to a data frame
 # set path to folder with xml files
-path <- "downloads/Psychological_Science/"
+path <- "downloads/Psychological_Science/" # remember to replace / with \\ on windows
 # find all .xml
 files_pdf <- list.files(path, pattern = "*.pdf", full.names = TRUE)
 files_xml <- list.files(path, pattern = "*.xml", full.names = TRUE)
