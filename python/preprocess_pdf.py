@@ -1,5 +1,6 @@
 import os
 import shutil
+import sys
 from grobid_client.grobid_client import GrobidClient
 
 def process_folder(client, folder, n):
