@@ -10,10 +10,11 @@ downloads
 selenium.log
 python/sel_download_dir.txt
 page.html
-*extract_statistics*
 *log.txt
 *token_usage.txt
 *hypothesis_text.txt
 *.hyptheses_extract.txt
 python/json_files*
 extracted_data*.json
+python/oai_key.py
+python/extract_statistics_GPT-o1_mini.ipynb

@@ -262,20 +262,20 @@ The function works in the following way:
 
 For convenience, there is a function that does all of these steps simultaneously. Thus, the only thing that you need to do in the end is to provide a list of ISSNs for all journals you are interested in and the time period for which you want to query the data.
 
-This piece of code will look like this:
+This piece of code will look like this (commented out so you know you could not run it, as we didn't load the functions yet.):
 <!-- this code block is just for demonstration, it does not run, because the functions are not loaded yet. -->
 ```{r, eval = FALSE, class.source = "fold-show"}
-issn_list <- c(
-  "0001-4273",
-  "0002-8282"
-)
+# issn_list <- c(
+#   "0001-4273",
+#   "0002-8282"
+# )
 
-publications_2022_to_2023 <- query_and_process(
-  pubyear_start = 2022,
-  pubyear_end = 2023,
-  issn_list = issn_list,
-  max_count = 1e5
-)
+# publications_2022_to_2023 <- query_and_process(
+#   pubyear_start = 2022,
+#   pubyear_end = 2023,
+#   issn_list = issn_list,
+#   max_count = 1e5
+# )
 ```
 
 This example uses the ISSN of the Academy of Management Journal and American Economic Review as an example. You can add as many ISSNs as you want to the list.
@@ -461,7 +461,11 @@ process_queried_items_df <- function(queried_items_df, vars_to_keep = c()) {
   # should you need to change it, you can do so by providing a vector of column names to the function
   processed_df_final <- processed_df[, which(names(processed_df) %in% vars_to_keep)]
 
-  processed_df_final$journal_issn <- ifelse(is.null(processed_df$`prism:issn`), processed_df$`prism:eIssn`, processed_df$`prism:issn`)
+  processed_df_final$journal_issn <- if ("prism:issn" %in% names(processed_df)) {
+    processed_df$`prism:issn`
+  } else {
+    processed_df$`prism:eIssn`
+  }
   processed_df_final$title <- title_apa
   processed_df_final$authors <- authors_apa
   processed_df_final$journal <- journal_apa
@@ -493,15 +497,20 @@ Finally, we have a function that combines all of the code that we saw above and 
 
 ```{r, class.source = "fold-show"}
 # create a data frame of the list of queried items
-query_and_process <- function(pubyear_start, pubyear_end, issn_list, max_count = 1e5) {
+query_and_process <- function(pubyear_start, pubyear_end, issn_list, max_count = 1e5, query_type = c("issn", "direct"), direct_query = "") {
 
   # create empty data frame to store results
   processed_df_final <- NULL
-
+  if(query_type == "direct"){
+    issn_list <- c("direct_query")
+  }
   # run the queries for the given time period and list of ISSNs
   for(issn in issn_list){
-    
-    query_return <- rscopus::scopus_search(query = paste0("ISSN(", issn, ") AND PUBYEAR > ", (pubyear_start-1), " AND PUBYEAR < ", (pubyear_end+1)), view="COMPLETE", max_count = max_count, api_key = scopus_key, count = 25, verbose = FALSE, wait_time = 1)
+    if(query_type == "issn"){
+      query_return <- rscopus::scopus_search(query = paste0("ISSN(", issn, ") AND PUBYEAR > ", (pubyear_start-1), " AND PUBYEAR < ", (pubyear_end+1)), view="COMPLETE", max_count = max_count, api_key = scopus_key, count = 25, verbose = FALSE, wait_time = 1)
+    } else if(query_type == "direct"){
+      query_return <- rscopus::scopus_search(query = paste0(direct_query, "AND PUBYEAR > ", (pubyear_start-1), " AND PUBYEAR < ", (pubyear_end+1)), view="COMPLETE", max_count = max_count, api_key = scopus_key, count = 25, verbose = FALSE, wait_time = 1)
+    }
 
     # if there are no results for the given ISSN, skip it
     if(query_return$total_results == 0){
@@ -528,7 +537,12 @@ query_and_process <- function(pubyear_start, pubyear_end, issn_list, max_count =
     return(NULL)
   }
   # retrieve the journal metadata by calling the retrieve_journal_metadata function from above
-  journal_metadata <- retrieve_journal_metadata(issn_list)
+  if(query_type == "issn"){
+    journal_metadata <- retrieve_journal_metadata(issn_list)
+  } else if(query_type == "direct"){
+    issn_direct <- unique(processed_df_final$journal_issn)
+    journal_metadata <- retrieve_journal_metadata(issn_direct)
+  }
   # merge the processed items with the journal metadata
   processed_df_final <- merge(processed_df_final, journal_metadata, by = c("journal_issn", "year"), all.x = TRUE)
   # remove columns that are not needed
@@ -555,7 +569,18 @@ PS_2024 <- query_and_process(
   pubyear_start = 2024,
   pubyear_end = 2024,
   issn_list = issn_list,
-  max_count = 50
+  max_count = 500,
+  query_type = "issn"
+)
+
+direct_query <- "all(psychotherapy)" # for more information on how to construct these terms see https://schema.elsevier.com/dtds/document/bkapi/search/SCOPUSSearchTips.htm
+
+direct_query_test_data <- query_and_process(
+  pubyear_start = 2024,
+  pubyear_end = 2024,
+  max_count = 100,
+  query_type = "direct",
+  direct_query = direct_query
 )
 
 #save to csv
@@ -573,7 +598,7 @@ Lets have a look at the resulting data (note that long columns like abstracts an
 ```{r, eval = TRUE}
 
 # we show the head of the data frame with long columns (like abstracts and references) truncated to 100 characters
-head_df <- data.frame(lapply(head(publications_2022_to_2023), function(x) {
+head_df <- data.frame(lapply(head(PS_2024), function(x) {
   if(is.character(x)) {
     # Truncate string to a maximum length, for example, 10 characters
     substr(x, 1, 100)
@@ -697,7 +722,7 @@ As said, creating a new spreadsheet in googledrive would be the best way to do t
 So first, we specify the R data that we would like to upload to Google Drive, by creating a copy called `data_to_write`. This prevents us from having to change other code below.
 
 ```{r, class.source = "fold-show", eval = FALSE}
-data_to_write <- publications_2022_to_2023 
+data_to_write <- PS_2024 
 ```
 
 Now, by just running the 2 lines below, we can create and upload our data to GoogleDrive. 

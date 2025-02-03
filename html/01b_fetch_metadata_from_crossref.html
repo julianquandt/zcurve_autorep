@@ -12,7 +12,7 @@
 <meta name="author" content="Julian Quandt" />
 
 
-<title>Downloading PDF files from DOIs</title>
+<title>Fetching Publications by ISSN from Crossref</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1276,96 +1276,6 @@ window.buildTabsets = function(tocID) {
 };
 
 </script>
-<script>
-window.initializeCodeFolding = function(show) {
-
-  // handlers for show-all and hide all
-  $("#rmd-show-all-code").click(function() {
-    $('div.r-code-collapse').each(function() {
-      $(this).collapse('show');
-    });
-  });
-  $("#rmd-hide-all-code").click(function() {
-    $('div.r-code-collapse').each(function() {
-      $(this).collapse('hide');
-    });
-  });
-
-  // index for unique code element ids
-  var currentIndex = 1;
-
-  // select all R code blocks
-  var rCodeBlocks = $('pre.r, pre.python, pre.bash, pre.sql, pre.cpp, pre.stan, pre.julia, pre.foldable');
-  rCodeBlocks.each(function() {
-    // skip if the block has fold-none class
-    if ($(this).hasClass('fold-none')) return;
-
-    // create a collapsable div to wrap the code in
-    var div = $('<div class="collapse r-code-collapse"></div>');
-    var showThis = (show || $(this).hasClass('fold-show')) && !$(this).hasClass('fold-hide');
-    var id = 'rcode-643E0F36' + currentIndex++;
-    div.attr('id', id);
-    $(this).before(div);
-    $(this).detach().appendTo(div);
-
-    // add a show code button right above
-    var showCodeText = $('<span>' + (showThis ? 'Hide' : 'Show') + '</span>');
-    var showCodeButton = $('<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm code-folding-btn pull-right float-right"></button>');
-    showCodeButton.append(showCodeText);
-    showCodeButton
-        .attr('data-toggle', 'collapse')
-        .attr('data-bs-toggle', 'collapse') // BS5
-        .attr('data-target', '#' + id)
-        .attr('data-bs-target', '#' + id)   // BS5
-        .attr('aria-expanded', showThis)
-        .attr('aria-controls', id);
-
-    var buttonRow = $('<div class="row"></div>');
-    var buttonCol = $('<div class="col-md-12"></div>');
-
-    buttonCol.append(showCodeButton);
-    buttonRow.append(buttonCol);
-
-    div.before(buttonRow);
-
-    // show the div if necessary
-    if (showThis) div.collapse('show');
-
-    // update state of button on show/hide
-    //   * Change text
-    //   * add a class for intermediate states styling
-    div.on('hide.bs.collapse', function () {
-      showCodeText.text('Show');
-      showCodeButton.addClass('btn-collapsing');
-    });
-    div.on('hidden.bs.collapse', function () {
-      showCodeButton.removeClass('btn-collapsing');
-    });
-    div.on('show.bs.collapse', function () {
-      showCodeText.text('Hide');
-      showCodeButton.addClass('btn-expanding');
-    });
-    div.on('shown.bs.collapse', function () {
-      showCodeButton.removeClass('btn-expanding');
-    });
-
-  });
-
-}
-</script>
-<script>
-window.initializeSourceEmbed = function(filename) {
-  $("#rmd-download-source").click(function() {
-    var src = $("#rmd-source-code").html();
-    var a = document.createElement('a');
-    a.href = "data:text/x-r-markdown;base64," + src;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  });
-};
-</script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -1449,15 +1359,6 @@ code span.va { color: #000000; } /* Variable */
 code span.vs { color: #4e9a06; } /* VerbatimString */
 code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 
-.sourceCode .row {
-  width: 100%;
-}
-.sourceCode {
-  overflow-x: auto;
-}
-.code-folding-btn {
-  margin-right: -30px;
-}
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -1489,11 +1390,6 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </script>
 
 
-<style type="text/css">
-#rmd-source-code {
-  display: none;
-}
-</style>
 
 
 
@@ -1580,9 +1476,6 @@ pre code {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
 
 
@@ -1672,362 +1565,170 @@ div.tocify {
 
 <div id="header">
 
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-<li role="separator" class="divider"></li>
-<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
-</ul>
-</div>
 
 
-
-<h1 class="title toc-ignore">Downloading PDF files from DOIs</h1>
+<h1 class="title toc-ignore">Fetching Publications by ISSN from Crossref</h1>
 <h4 class="author">Julian Quandt</h4>
 <h4 class="date">03 February, 2025</h4>
 
 </div>
 
 
-<div style="border: 1px solid #999; border-radius: 5px; padding: 20px; margin-top: 20px; background-color: #ffffe0;">
-<h3 style="color: #0056b3; margin-top: 0;">
-The code in this document
-</h3>
-<p>In this HTML version of the document, the code chunks that are just doing background work or intermediate steps are hidden to make it more readable. If you want to see the code, you can click on the “Show” buttons on the right hand side of the text. To run the code in R yourself, download the .Rmd file by clicking on the “Code” button on the top right of the document and then selecting “Download Rmd”.</p>
+<div id="fetching-publications-by-issn" class="section level1">
+<h1>Fetching publications by ISSN</h1>
+<p>Journals have ISSN numbers attached to them. This number can be used to fetch all publications of a journal from Crossref. Together with specifying a time range, this can be used to fetch all publications of a journal in a given time range.</p>
+<p>The following function serves to do exactly that.</p>
+<p>First we define a few convenience functions that will be used later on.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co"># Install and load the rcrossref package if not already done</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(rcrossref)) {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>  <span class="kw">install.packages</span>(<span class="st">&quot;rcrossref&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>  <span class="kw">library</span>(rcrossref)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>}</span></code></pre></div>
+<pre><code>## Loading required package: rcrossref</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="co"># Author names are stored within a tibble for each entry.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="co"># Therefore, author names must be extracted using this function.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>concatenate_authors &lt;-<span class="st"> </span><span class="cf">function</span>(authors_tibble) {</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>  <span class="co"># Combine &#39;given&#39; and &#39;family&#39; to get full names for each author in the tibble</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>  <span class="cf">if</span>(<span class="kw">is.null</span>(authors_tibble)) <span class="kw">return</span>(<span class="kw">character</span>(<span class="dv">0</span>))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>  full_names &lt;-<span class="st"> </span><span class="kw">apply</span>(authors_tibble, <span class="dv">1</span>, <span class="cf">function</span>(row) {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>    <span class="kw">paste</span>(row[<span class="st">&#39;given&#39;</span>], row[<span class="st">&#39;family&#39;</span>])</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>  })</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a>  </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a>  <span class="co"># Concatenate all names into a single string</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a>  <span class="kw">return</span>(<span class="kw">paste</span>(full_names, <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>))</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a>}</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a><span class="co"># this is a small convenience function to retrieve the publication year from a publication entry that is formatted (yyyy-mm-dd)</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a>retrieve_pubyear &lt;-<span class="st"> </span><span class="cf">function</span>(publication) {</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a>  <span class="co"># Extract details from the publication tibble</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a>  year &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="op">!</span><span class="kw">is.null</span>(publication<span class="op">$</span><span class="st">`</span><span class="dt">published.print</span><span class="st">`</span>), <span class="kw">substr</span>(publication<span class="op">$</span><span class="st">`</span><span class="dt">published.print</span><span class="st">`</span>, <span class="dv">1</span>, <span class="dv">4</span>), <span class="st">&quot;&quot;</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a>  <span class="kw">return</span>(year)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true"></a>}</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true"></a><span class="co"># we want to generate APA-style citations for each publication</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true"></a><span class="co"># to achieve this, we need to extract the relevant information for each publication and format it accordingly</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true"></a>generate_apa_citation &lt;-<span class="st"> </span><span class="cf">function</span>(publication) {</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true"></a>    <span class="co"># Extract details from the publication tibble</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true"></a>    title &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">length</span>(publication<span class="op">$</span>title) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, publication<span class="op">$</span>title[[<span class="dv">1</span>]], <span class="st">&quot;&quot;</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true"></a>    authors &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="op">!</span><span class="kw">is.null</span>(publication<span class="op">$</span>author), <span class="kw">concatenate_authors</span>(publication<span class="op">$</span>author), <span class="kw">character</span>(<span class="dv">0</span>))</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true"></a>    doi &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="op">!</span><span class="kw">is.null</span>(publication<span class="op">$</span>doi), publication<span class="op">$</span>doi, <span class="st">&quot;&quot;</span>)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true"></a>    link &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="op">!</span><span class="kw">is.null</span>(publication<span class="op">$</span>url), publication<span class="op">$</span>url, <span class="st">&quot;&quot;</span>)</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true"></a>    issue &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="op">!</span><span class="kw">is.null</span>(publication<span class="op">$</span>issue), publication<span class="op">$</span>issue, <span class="st">&quot;&quot;</span>)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true"></a>    year &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="op">!</span><span class="kw">is.null</span>(publication<span class="op">$</span><span class="st">`</span><span class="dt">published.print</span><span class="st">`</span>), <span class="kw">retrieve_pubyear</span>(publication), <span class="st">&quot;&quot;</span>)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true"></a>    journal &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">length</span>(publication<span class="op">$</span><span class="st">`</span><span class="dt">container.title</span><span class="st">`</span>) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, publication<span class="op">$</span><span class="st">`</span><span class="dt">container.title</span><span class="st">`</span>, <span class="st">&quot;&quot;</span>)</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true"></a>    volume &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="op">!</span><span class="kw">is.null</span>(publication<span class="op">$</span>volume), <span class="kw">gsub</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">(.*</span><span class="ch">\\</span><span class="st">)&quot;</span>, <span class="st">&quot;&quot;</span>, publication<span class="op">$</span>volume), <span class="st">&quot;&quot;</span>)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true"></a>    pages &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="op">!</span><span class="kw">is.null</span>(publication<span class="op">$</span>page), publication<span class="op">$</span>page, <span class="st">&quot;&quot;</span>)</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true"></a>    <span class="co"># format authors in APA style (last name, initials)</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true"></a>    formattedAuthors &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(authors, <span class="st">&quot;, &quot;</span>)), <span class="cf">function</span>(author) {</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true"></a>        nameParts &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(author, <span class="st">&quot; &quot;</span>))</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true"></a>        lastName &lt;-<span class="st"> </span><span class="kw">tail</span>(nameParts, <span class="dv">1</span>) <span class="co"># Last name</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true"></a>        <span class="co"># For initials, consider all name parts except the last one (family name)</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true"></a>        initials &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="kw">substr</span>(nameParts[<span class="op">-</span><span class="kw">length</span>(nameParts)], <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">collapse =</span> <span class="st">&quot;.&quot;</span>)</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true"></a>        <span class="kw">return</span>(<span class="kw">paste</span>(lastName, <span class="kw">paste0</span>(initials, <span class="st">&quot;.&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;, &quot;</span>))</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true"></a>    })</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true"></a></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true"></a>    <span class="co"># Collapse the resulting vector to a single string</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true"></a>    formattedAuthors &lt;-<span class="st"> </span><span class="kw">paste</span>(formattedAuthors, <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>)</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true"></a></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true"></a>    <span class="co"># Create the APA reference</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true"></a>    apaReference &lt;-<span class="st"> </span><span class="kw">sprintf</span>(<span class="st">&quot;%s (%s). %s. %s, %s(%s), %s. %s&quot;</span>, formattedAuthors, year, title, journal, volume, issue, pages, doi)</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true"></a>    <span class="kw">return</span>(apaReference)</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true"></a>}</span></code></pre></div>
+<p>Now we can define the function that fetches all publications of a journal in a given time range. The function takes the following parameters:</p>
+<ul>
+<li>the ISSN of the Journal (can be found by just google’in for it)</li>
+<li>the start year of the time range to be fetched</li>
+<li>the end year of the time range to be fetched</li>
+<li>a cursor argument that is just set to &quot;*&quot; by default. This is used to fetch the next batch of publications. If you want to fetch all publications, you can just leave it at the default value.</li>
+<li>a clean_unpublished argument that is set to FALSE by default. If set to TRUE, all publications that are not published yet (OR DO NOT HAVE A DATE IN THE ENTRY FOR OTHER REASONS) will be removed from the result set.</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>fetchPublications &lt;-<span class="st"> </span><span class="cf">function</span>(journalISSN, startYear, endYear, <span class="dt">cursor =</span> <span class="st">&quot;*&quot;</span>, <span class="dt">clean_unpublished =</span> <span class="ot">FALSE</span>) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>    <span class="co"># Make the request</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>    res &lt;-<span class="st"> </span><span class="kw">tryCatch</span>({</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>        <span class="kw">cr_journals</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>            <span class="dt">issn =</span> journalISSN,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>            <span class="dt">filter =</span> <span class="kw">c</span>(<span class="dt">from_pub_date =</span> startYear, <span class="dt">until_pub_date =</span> endYear), <span class="dt">works =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>            <span class="co"># works = TRUE means that we want to fetch the publications of the journal</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>            <span class="dt">cursor =</span> cursor, </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>            <span class="co"># cursor = &quot;*&quot; means that we want to fetch the first batch of publications</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>            <span class="dt">.progress =</span> <span class="ot">TRUE</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a>            <span class="co"># .progress = TRUE means that we want to see a progress bar</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a>        )</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a>        <span class="co">#catch case where there is only 1 page and hence progress bar would throw error</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a>    }, <span class="dt">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a>        <span class="cf">if</span> (<span class="kw">grepl</span>(<span class="st">&quot;must have &#39;max&#39; &gt; &#39;min&#39;&quot;</span>, e<span class="op">$</span>message)) {</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a>            <span class="kw">message</span>(<span class="st">&quot;Error with progress bar. This means there is probably only 1 page of results... retrying without progress bar...&quot;</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a>            <span class="kw">cr_journals</span>(</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a>                <span class="dt">issn =</span> journalISSN,</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true"></a>                <span class="dt">filter =</span> <span class="kw">c</span>(<span class="dt">from_pub_date =</span> startYear, <span class="dt">until_pub_date =</span> endYear), <span class="dt">works =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true"></a>                <span class="dt">cursor =</span> cursor, </span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true"></a>                <span class="dt">.progress =</span> <span class="ot">FALSE</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true"></a>            )</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true"></a>        } <span class="cf">else</span> {</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true"></a>            <span class="kw">stop</span>(e)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true"></a>        }</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true"></a>    })</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true"></a>    <span class="co"># after finishing the initial fetching, we want to format the authors as a single string (they are stored in data-sets within each publication entry by default)</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true"></a>    author_strings &lt;-<span class="st"> </span><span class="kw">lapply</span>(res<span class="op">$</span>data<span class="op">$</span>author, concatenate_authors)</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true"></a></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true"></a>    <span class="co"># we also want to generate APA-style citations for each publication</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true"></a>    apa_citations &lt;-<span class="st"> </span><span class="kw">apply</span>(res<span class="op">$</span>data, <span class="dv">1</span>, <span class="cf">function</span>(row) {</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true"></a>        <span class="kw">return</span>(<span class="kw">generate_apa_citation</span>(row))</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true"></a>    })</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true"></a>    </span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true"></a>    <span class="co"># and we want to retrieve the publication year from the publication entry</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true"></a>    years &lt;-<span class="st"> </span><span class="kw">apply</span>(res<span class="op">$</span>data, <span class="dv">1</span>, <span class="cf">function</span>(row) {</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true"></a>        <span class="kw">return</span>(<span class="kw">retrieve_pubyear</span>(row))</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true"></a>    })</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true"></a></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true"></a>    <span class="co"># append the columns to the data frame</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true"></a>    res<span class="op">$</span>data<span class="op">$</span>authors &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>)</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true"></a>    res<span class="op">$</span>data<span class="op">$</span>authors &lt;-<span class="st"> </span>author_strings</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true"></a>    res<span class="op">$</span>data<span class="op">$</span>apa_citation &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>)</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true"></a>    res<span class="op">$</span>data<span class="op">$</span>apa_citation &lt;-<span class="st"> </span>apa_citations</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true"></a>    res<span class="op">$</span>data<span class="op">$</span>year &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>)</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true"></a>    res<span class="op">$</span>data<span class="op">$</span>year &lt;-<span class="st"> </span>years</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true"></a></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true"></a>    <span class="co"># for information purposes, print the number of publications that were fetched</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true"></a>    </span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true"></a>    <span class="cf">if</span>(clean_unpublished) {</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true"></a>        nrow_before &lt;-<span class="st"> </span><span class="kw">nrow</span>(res<span class="op">$</span>data)</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true"></a>        <span class="kw">print</span>(<span class="st">&quot;cleaned&quot;</span>)</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true"></a>        <span class="co"># remove all publications that are not published yet</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true"></a>        res<span class="op">$</span>data &lt;-<span class="st"> </span>res<span class="op">$</span>data[<span class="op">!</span><span class="kw">is.na</span>(res<span class="op">$</span>data<span class="op">$</span>year), ]</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true"></a>        <span class="kw">print</span>(<span class="kw">nrow</span>(res<span class="op">$</span>data[<span class="op">!</span><span class="kw">is.na</span>(res<span class="op">$</span>data<span class="op">$</span>year), ]))</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true"></a>        <span class="kw">print</span>(<span class="kw">nrow</span>(res<span class="op">$</span>data))</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true"></a>        <span class="kw">message</span>(<span class="kw">paste</span>(<span class="st">&quot;Fetched&quot;</span>, <span class="kw">nrow</span>(res<span class="op">$</span>data), <span class="st">&quot;publications.&quot;</span>, nrow_before <span class="op">-</span><span class="st"> </span><span class="kw">nrow</span>(res<span class="op">$</span>data), <span class="st">&quot;were deleted due to not being published yet.&quot;</span>))</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true"></a>    } <span class="cf">else</span> {</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true"></a>        <span class="kw">message</span>(<span class="kw">paste</span>(<span class="st">&quot;Fetched&quot;</span>, <span class="kw">nrow</span>(res<span class="op">$</span>data), <span class="st">&quot;publications.&quot;</span>))</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true"></a>    }</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true"></a></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true"></a>    <span class="co"># return all publications</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true"></a>    <span class="kw">return</span>(res<span class="op">$</span>data)</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true"></a>}</span></code></pre></div>
+<div id="example" class="section level2">
+<h2>Example</h2>
+<p>Let’s fetch all publications of the journal <em>Psychologocial Science</em> in 2024.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>publications &lt;-<span class="st"> </span><span class="kw">fetchPublications</span>(<span class="st">&#39;0956-7976&#39;</span>, <span class="st">&#39;2024&#39;</span>, <span class="st">&#39;2024&#39;</span>, <span class="dt">clean_unpublished =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>##   |                                                                              |                                                                      |   0%  |                                                                              |===================                                                   |  27%  |                                                                              |======================================                                |  55%  |                                                                              |==========================================================            |  82%</code></pre>
+<pre><code>## Fetched 93 publications.</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>publications_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(publications)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="co"># some cells are lists / tibbles by themselves so clean them up</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>list_columns &lt;-<span class="st"> </span><span class="kw">sapply</span>(publications_df, is.list)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>publications_df[list_columns] &lt;-<span class="st"> </span><span class="kw">lapply</span>(publications_df[list_columns], <span class="cf">function</span>(col) {</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a>  <span class="kw">sapply</span>(col, <span class="cf">function</span>(x) <span class="kw">paste</span>(<span class="kw">unlist</span>(x), <span class="dt">collapse =</span> <span class="st">&quot;, &quot;</span>))</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>})</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a><span class="co"># save to csv file</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a><span class="kw">write.csv</span>(publications_df, <span class="st">&quot;example_publications.csv&quot;</span>)</span></code></pre></div>
 </div>
-<div id="about" class="section level1">
-<h1>About</h1>
-<p>This file can be used to download scientific papers from open access websites. It uses the roadoi package to find open access versions of papers and downloads them. If the paper would not be available it is added to a bibtex file for manual download. These manual downloads, can be done in Zotero (see below for instructions).</p>
-<div id="defining-and-installing-packages" class="section level2">
-<h2>Defining and installing packages</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co"># this is a list of packages that are needed for the script to run.</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="co"># httr is used for http requests</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(httr)) {</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>  <span class="kw">install.packages</span>(<span class="st">&quot;httr&quot;</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>  <span class="kw">library</span>(httr)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>}</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="co"># xml2 is used for parsing xml files</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(xml2)) {</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>  <span class="kw">install.packages</span>(<span class="st">&quot;xml2&quot;</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>  <span class="kw">library</span>(xml2)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>}</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a><span class="co"># stringr is used for string manipulation</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(stringr)) {</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>  <span class="kw">install.packages</span>(<span class="st">&quot;stringr&quot;</span>)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a>  <span class="kw">library</span>(stringr)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a>}</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a><span class="co"># roadoi is used to find open access versions of papers using unpaywall</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(roadoi)) {</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a>  <span class="kw">install.packages</span>(<span class="st">&quot;roadoi&quot;</span>)</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true"></a>  <span class="kw">library</span>(roadoi)</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true"></a>}</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true"></a><span class="co"># bib2df is used to convert bibtex files to dataframes and vice versa</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(bib2df)) {</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true"></a>  <span class="kw">install.packages</span>(<span class="st">&quot;bib2df&quot;</span>)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true"></a>  <span class="kw">library</span>(bib2df)</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true"></a>}</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true"></a><span class="co"># googledrive is used to access, save to and load from google drive</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(googledrive)) {</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true"></a>  <span class="kw">install.packages</span>(<span class="st">&quot;googledrive&quot;</span>)</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true"></a>  <span class="kw">library</span>(googledrive)</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true"></a>}</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true"></a></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true"></a><span class="co"># googlesheets4 is used to access, save to and load from google sheets</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(googlesheets4)) {</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true"></a>  <span class="kw">install.packages</span>(<span class="st">&quot;googlesheets4&quot;</span>)</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true"></a>  <span class="kw">library</span>(googlesheets4)</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true"></a>}</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true"></a></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true"></a><span class="co"># processx is used to start the selenium server for the respective download method in the background</span></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(processx)) {</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true"></a>  <span class="kw">install.packages</span>(<span class="st">&quot;processx&quot;</span>)</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true"></a>  <span class="kw">library</span>(processx)</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true"></a>}</span></code></pre></div>
-</div>
-</div>
-<div id="the-code" class="section level1">
-<h1>The code</h1>
-<p>The functions below are the main functions that are used to download the papers.</p>
-<div id="the-main-functions" class="section level2">
-<h2>The main functions</h2>
-<p>The main functions are the following:</p>
-<ol style="list-style-type: decimal">
-<li><code>file_already_downloaded</code>: This function checks if the file already exists and is a valid PDF.</li>
-<li><code>load_external_methods</code>: This function loads the external download methods that are defined in the <code>file_download_methods.R</code> file. This function is is where you would add additional download methods that you think would be useful, or adjust the existing ones. They would automatically be loaded here so no need to change stuff in this script.</li>
-<li><code>find_values</code>: This function finds and evaluates argument values from available environments.</li>
-<li><code>run_download_methods</code>: This function executes all available download methods.</li>
-<li><code>append_source_overview</code>: This function appends the source overview to a csv file.</li>
-<li><code>handle_download_error</code>: This function handles the fallback case (manual download).</li>
-<li><code>download_file</code>: This function is the main function that downloads the file. It first checks if the file already exists and if not, it tries to download the file. If the download fails, it adds the DOI to a bibtex file for manual download.</li>
-</ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="co"># Check if file already exists and is a valid PDF</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>file_already_downloaded &lt;-<span class="st"> </span><span class="cf">function</span>(download_dir, journal_path, doi_filename) {</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>  file_path &lt;-<span class="st"> </span><span class="kw">paste0</span>(download_dir, journal_path, <span class="st">&quot;/&quot;</span>, doi_filename, <span class="st">&quot;.pdf&quot;</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>  <span class="kw">return</span>(<span class="kw">file.exists</span>(file_path) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">file.size</span>(file_path) <span class="op">&gt;</span><span class="st"> </span><span class="dv">20000</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>}</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a><span class="co"># Load external download methods</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>load_external_methods &lt;-<span class="st"> </span><span class="cf">function</span>() {</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="kw">exists</span>(<span class="st">&quot;download_methods_loaded&quot;</span>)) {</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>    <span class="kw">source</span>(<span class="st">&quot;./R_addons/file_download_methods.R&quot;</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>  }</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a>}</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a><span class="co"># Find and evaluate argument values from available environments</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a>find_values &lt;-<span class="st"> </span><span class="cf">function</span>(arg_name, env_list) {</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a>  <span class="cf">for</span> (env <span class="cf">in</span> <span class="kw">rev</span>(env_list)) {</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a>    <span class="cf">if</span> (<span class="kw">exists</span>(arg_name, <span class="dt">envir =</span> env, <span class="dt">inherits =</span> <span class="ot">FALSE</span>)) {</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a>      <span class="kw">return</span>(<span class="kw">get</span>(arg_name, <span class="dt">envir =</span> env))</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a>    }</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true"></a>  }</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true"></a>  <span class="cf">if</span> (<span class="kw">exists</span>(arg_name, <span class="dt">envir =</span> .GlobalEnv, <span class="dt">inherits =</span> <span class="ot">FALSE</span>)) {</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true"></a>    <span class="kw">return</span>(<span class="kw">get</span>(arg_name, <span class="dt">envir =</span> .GlobalEnv))</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true"></a>  }</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true"></a>  <span class="kw">return</span>(<span class="ot">NULL</span>)</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true"></a>}</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true"></a></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true"></a><span class="co"># Execute all available download methods</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true"></a>run_download_methods &lt;-<span class="st"> </span><span class="cf">function</span>(download_methods, doi) {</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true"></a>  env_list &lt;-<span class="st"> </span><span class="kw">sys.frames</span>() <span class="co"># Capture active environments</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true"></a>  <span class="cf">for</span> (method <span class="cf">in</span> download_methods) {</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true"></a>    <span class="cf">if</span> (<span class="kw">exists</span>(method) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">is.function</span>(<span class="kw">get</span>(method))) {</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true"></a>      function_args &lt;-<span class="st"> </span><span class="kw">names</span>(<span class="kw">formals</span>(<span class="kw">get</span>(method)))</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true"></a>      arg_values &lt;-<span class="st"> </span><span class="kw">setNames</span>(<span class="kw">lapply</span>(function_args, find_values, env_list), function_args)</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true"></a>      res &lt;-<span class="st"> </span><span class="kw">do.call</span>(method, arg_values)</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true"></a>      <span class="kw">print</span>(<span class="kw">paste0</span>(<span class="st">&quot;Method &quot;</span>, method, <span class="st">&quot; returned: &quot;</span>, res[<span class="dv">1</span>]))</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true"></a>      <span class="cf">if</span> (res[<span class="dv">1</span>] <span class="op">==</span><span class="st"> &quot;Success&quot;</span>) {</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true"></a>        <span class="kw">return</span>(res)</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true"></a>      }</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true"></a>    } <span class="cf">else</span> {</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true"></a>      <span class="kw">message</span>(<span class="st">&quot;Download addon &quot;</span>, method, <span class="st">&quot; does not exist or is not a correct function call&quot;</span>)</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true"></a>      <span class="kw">return</span>(<span class="st">&quot;Failed&quot;</span>)</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true"></a>    }</span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true"></a>  }</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true"></a>  <span class="kw">return</span>(<span class="st">&quot;Failed&quot;</span>)</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true"></a>}</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true"></a></span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true"></a>append_source_overview &lt;-<span class="st"> </span><span class="cf">function</span>(dl_method, doi, journal_path, download_dir) {</span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true"></a>  <span class="kw">write.table</span>(<span class="kw">data.frame</span>(<span class="dt">doi =</span> doi, <span class="dt">method =</span> dl_method),</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true"></a>    <span class="kw">paste0</span>(download_dir, journal_path, <span class="st">&quot;/source_overview.csv&quot;</span>),</span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true"></a>    <span class="dt">append =</span> <span class="ot">TRUE</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>, <span class="dt">col.names =</span> <span class="ot">FALSE</span></span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true"></a>  )</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true"></a>}</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true"></a></span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true"></a><span class="co"># Handle the fallback case (manual download)</span></span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true"></a>handle_download_error &lt;-<span class="st"> </span><span class="cf">function</span>(row, journal_path, download_dir, source_overview) {</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true"></a>  <span class="cf">if</span> (source_overview) {</span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true"></a>    <span class="kw">append_source_overview</span>(<span class="st">&quot;manual&quot;</span>, row<span class="op">$</span>doi, journal_path, download_dir)</span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true"></a>  }</span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true"></a>  <span class="kw">df2bib</span>(row, <span class="dt">file =</span> <span class="kw">paste0</span>(download_dir, journal_path, <span class="st">&quot;/manual_download_list.bib&quot;</span>), <span class="dt">append =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true"></a>  <span class="kw">message</span>(<span class="st">&quot;No open access version found. Appending it to overview for manual download&quot;</span>)</span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true"></a>}</span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true"></a></span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true"></a><span class="co"># Main function</span></span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true"></a>download_file &lt;-<span class="st"> </span><span class="cf">function</span>(row, <span class="dt">journal_path =</span> <span class="st">&quot;&quot;</span>, <span class="dt">download_dir =</span> <span class="st">&quot;./downloads/&quot;</span>,</span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true"></a>                          <span class="dt">source_overview =</span> <span class="ot">TRUE</span>, <span class="dt">load_external_methods =</span> <span class="ot">TRUE</span>) {</span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true"></a>  doi_filename &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;[^[:alnum:]]&quot;</span>, <span class="st">&quot;&quot;</span>, row<span class="op">$</span>doi)</span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true"></a></span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true"></a>  <span class="co"># Ensure journal directory exists</span></span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true"></a>  <span class="kw">dir.create</span>(<span class="kw">file.path</span>(download_dir, journal_path), <span class="dt">recursive =</span> <span class="ot">TRUE</span>, <span class="dt">showWarnings =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true"></a></span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true"></a>  <span class="co"># Skip download if file already exists</span></span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true"></a>  <span class="cf">if</span> (<span class="kw">file_already_downloaded</span>(download_dir, journal_path, doi_filename)) {</span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true"></a>    <span class="kw">message</span>(<span class="st">&quot;File already exists&quot;</span>)</span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true"></a>    <span class="kw">return</span>()</span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true"></a>  } <span class="cf">else</span> {</span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true"></a>    <span class="kw">Sys.sleep</span>(<span class="dv">1</span>)</span>
-<span id="cb2-77"><a href="#cb2-77" aria-hidden="true"></a>  }</span>
-<span id="cb2-78"><a href="#cb2-78" aria-hidden="true"></a></span>
-<span id="cb2-79"><a href="#cb2-79" aria-hidden="true"></a>  <span class="kw">tryCatch</span>(</span>
-<span id="cb2-80"><a href="#cb2-80" aria-hidden="true"></a>    {</span>
-<span id="cb2-81"><a href="#cb2-81" aria-hidden="true"></a>      <span class="cf">if</span> (load_external_methods) {</span>
-<span id="cb2-82"><a href="#cb2-82" aria-hidden="true"></a>        <span class="kw">load_external_methods</span>()</span>
-<span id="cb2-83"><a href="#cb2-83" aria-hidden="true"></a>        doi &lt;-<span class="st"> </span>row<span class="op">$</span>doi</span>
-<span id="cb2-84"><a href="#cb2-84" aria-hidden="true"></a>        dl_method &lt;-<span class="st"> </span><span class="kw">run_download_methods</span>(download_methods, doi)</span>
-<span id="cb2-85"><a href="#cb2-85" aria-hidden="true"></a>        <span class="cf">if</span>(dl_method[<span class="dv">1</span>] <span class="op">==</span><span class="st"> &quot;Failed&quot;</span>) {</span>
-<span id="cb2-86"><a href="#cb2-86" aria-hidden="true"></a>          <span class="kw">handle_download_error</span>(row, journal_path, download_dir, source_overview)</span>
-<span id="cb2-87"><a href="#cb2-87" aria-hidden="true"></a>        } <span class="cf">else</span> {</span>
-<span id="cb2-88"><a href="#cb2-88" aria-hidden="true"></a>          <span class="cf">if</span>(source_overview){</span>
-<span id="cb2-89"><a href="#cb2-89" aria-hidden="true"></a>            <span class="kw">print</span>(<span class="st">&quot;Appending source overview&quot;</span>)</span>
-<span id="cb2-90"><a href="#cb2-90" aria-hidden="true"></a>            <span class="kw">print</span>(dl_method)</span>
-<span id="cb2-91"><a href="#cb2-91" aria-hidden="true"></a>            <span class="kw">append_source_overview</span>(dl_method[<span class="dv">2</span>], row<span class="op">$</span>doi, journal_path, download_dir)</span>
-<span id="cb2-92"><a href="#cb2-92" aria-hidden="true"></a>          }</span>
-<span id="cb2-93"><a href="#cb2-93" aria-hidden="true"></a>        }</span>
-<span id="cb2-94"><a href="#cb2-94" aria-hidden="true"></a>      } <span class="cf">else</span> {</span>
-<span id="cb2-95"><a href="#cb2-95" aria-hidden="true"></a>        <span class="kw">handle_download_error</span>(row, journal_path, download_dir, source_overview)</span>
-<span id="cb2-96"><a href="#cb2-96" aria-hidden="true"></a>      }</span>
-<span id="cb2-97"><a href="#cb2-97" aria-hidden="true"></a>    },</span>
-<span id="cb2-98"><a href="#cb2-98" aria-hidden="true"></a>    <span class="dt">error =</span> <span class="cf">function</span>(e) {</span>
-<span id="cb2-99"><a href="#cb2-99" aria-hidden="true"></a>      <span class="kw">message</span>(<span class="st">&quot;Error: &quot;</span>, e<span class="op">$</span>message)</span>
-<span id="cb2-100"><a href="#cb2-100" aria-hidden="true"></a>      <span class="kw">handle_download_error</span>(row, journal_path, download_dir, source_overview)</span>
-<span id="cb2-101"><a href="#cb2-101" aria-hidden="true"></a>    },</span>
-<span id="cb2-102"><a href="#cb2-102" aria-hidden="true"></a>    <span class="dt">warning =</span> <span class="cf">function</span>(w) {</span>
-<span id="cb2-103"><a href="#cb2-103" aria-hidden="true"></a>      <span class="kw">message</span>(<span class="st">&quot;Warning: &quot;</span>, w<span class="op">$</span>message)</span>
-<span id="cb2-104"><a href="#cb2-104" aria-hidden="true"></a>    }</span>
-<span id="cb2-105"><a href="#cb2-105" aria-hidden="true"></a>  )</span>
-<span id="cb2-106"><a href="#cb2-106" aria-hidden="true"></a>}</span></code></pre></div>
-</div>
-</div>
-<div id="different-ways-to-load-a-list-of-dois-for-downloading" class="section level1">
-<h1>Different ways to load a list of DOIs for downloading</h1>
-<p>The code below is how we actually download the pdfs. We can either load a list of DOIs from a bibtex file or from a google sheet. The google sheet needs to be defined in the secret_vars.R file.</p>
-<div id="option-1-from-a-bibtex-list" class="section level2">
-<h2>Option 1: From a bibtex list</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>bib &lt;-<span class="st"> </span><span class="kw">bib2df</span>(<span class="st">&quot;bibtex_file.bib&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="kw">names</span>(bib)[<span class="kw">which</span>(<span class="kw">names</span>(bib) <span class="op">==</span><span class="st"> &quot;DOI&quot;</span>)] &lt;-<span class="st"> &quot;doi&quot;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="kw">names</span>(bib)[<span class="kw">which</span>(<span class="kw">names</span>(bib) <span class="op">==</span><span class="st"> &quot;URL&quot;</span>)] &lt;-<span class="st"> &quot;link&quot;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>download_dir =<span class="st"> &quot;./downloads/&quot;</span> <span class="co"># you want to change this to the path where you want to parent folder of the journal folders with the files to be downloaded to. Make sure to have a trailing slash (because I am currently to lazy to deal with R&#39;s file handling)</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>last_i &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a> <span class="cf">for</span>(i <span class="cf">in</span> last_i<span class="op">:</span><span class="kw">nrow</span>(bib)){</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>      last_i &lt;-<span class="st"> </span>i</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>      <span class="kw">Sys.sleep</span>(<span class="dv">1</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a>      <span class="kw">download_file</span>(bib[i, ], <span class="dt">journal_path =</span> journal_path)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a>      <span class="kw">print</span>(<span class="kw">paste0</span>(<span class="st">&quot;downloaded (or added to manual download list) paper &quot;</span>, i, <span class="st">&quot; of &quot;</span>, <span class="kw">nrow</span>(bib), <span class="st">&quot; with doi: &quot;</span>, bib<span class="op">$</span>doi[i]))</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a>}</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a><span class="cf">if</span> (<span class="kw">file.exists</span>(<span class="kw">paste0</span>(download_dir, journal_path, <span class="st">&quot;/&quot;</span>, <span class="st">&quot;manual_download_list.bib&quot;</span>))) {</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a>  bib_file &lt;-<span class="st"> </span><span class="kw">readLines</span>(<span class="kw">paste0</span>(download_dir, journal_path, <span class="st">&quot;/&quot;</span>, <span class="st">&quot;manual_download_list.bib&quot;</span>))</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a>  <span class="co"># replace @ with @article</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a>  bib_file &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;@{&quot;</span>, <span class="st">&quot;@article{&quot;</span>, <span class="dt">fixed =</span> <span class="ot">TRUE</span>, bib_file)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a>  <span class="co"># write file</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a>  <span class="kw">writeLines</span>(bib_file, <span class="kw">paste0</span>(download_dir, journal_path, <span class="st">&quot;/&quot;</span>, <span class="st">&quot;manual_download_list.bib&quot;</span>))</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a>} <span class="cf">else</span> {</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true"></a>  <span class="kw">message</span>(<span class="st">&quot;No manual_download_list.bib file found, probably all papers were downloaded&quot;</span>)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true"></a>}</span></code></pre></div>
-</div>
-<div id="option-2-from-a-google-sheet" class="section level2">
-<h2>Option 2: From a google sheet</h2>
-<p>For details on Google Sheet use see the <code>fetch_from_scopus.Rmd</code> file. First we authenticate, then we get the google sheet and then we download the papers. By default, this loop will read the Journal_path from the name of the sheet. If you want all different journals in one folder, you could change that line to a fixed value.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="co"># get the google sheet with the publication data</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="kw">drive_auth</span>(<span class="dt">email =</span> my_gmail)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>gs_sheets &lt;-<span class="st"> </span><span class="kw">gs4_get</span>(google_sheet_id)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>pubdata_dfs &lt;-<span class="st"> </span><span class="kw">sapply</span>(gs_sheets<span class="op">$</span>sheets<span class="op">$</span>name, <span class="cf">function</span>(x) <span class="kw">read_sheet</span>(gs_sheets, <span class="dt">sheet =</span> x), <span class="dt">simplify =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>download_dir =<span class="st"> &quot;./downloads/&quot;</span> <span class="co"># you want to change this to the path where you want to parent folder of the journal folders with the files to be downloaded to. Make sure to have a trailing slash (because I am currently to lazy to deal with R&#39;s file handling)</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a><span class="cf">for</span> (name <span class="cf">in</span> <span class="kw">names</span>(pubdata_dfs)) {</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>  bib &lt;-<span class="st"> </span><span class="kw">data.frame</span>(pubdata_dfs[[name]])</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>  journal_path &lt;-<span class="st"> </span><span class="kw">str_replace_all</span>(name, <span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>) <span class="co"># &lt;- this is the line that you would change if you want all files in the same folder, just give it a fixed value</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>  last_i &lt;-<span class="st"> </span><span class="dv">1</span> <span class="co"># so loop can be restarted at other place more easily, mostly for debugging</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a>  <span class="cf">for</span> (i <span class="cf">in</span> last_i<span class="op">:</span><span class="kw">nrow</span>(bib)) {</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a>    <span class="co"># make a journal path based on the journal name. Note that this should just be a fixed value, i you are doing a project on multiple journals and want all files in the same folder</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a>    journal_path &lt;-<span class="st"> </span><span class="kw">str_replace_all</span>(bib<span class="op">$</span>journal[i], <span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a>    last_i &lt;-<span class="st"> </span>i</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a>    <span class="co"># this is the download part. Print some info first</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a>    <span class="kw">print</span>(<span class="st">&quot;#################################################################&quot;</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a>    <span class="kw">print</span>(<span class="kw">paste0</span>(<span class="st">&quot;Downloading paper &quot;</span>, i, <span class="st">&quot; of &quot;</span>, <span class="kw">nrow</span>(bib), <span class="st">&quot; with doi: &quot;</span>, bib<span class="op">$</span>doi[i]))</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true"></a>    <span class="co"># if the doi is NA, we skip the download and mark it for manual download</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true"></a>    <span class="cf">if</span>(<span class="kw">is.na</span>(bib<span class="op">$</span>doi[i])){</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true"></a>      <span class="kw">print</span>(<span class="st">&quot;doi is NA, skipping and marking for manual download&quot;</span>) </span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true"></a>      bib_file &lt;-<span class="st"> </span><span class="kw">readLines</span>(<span class="kw">paste0</span>(download_dir, journal_path, <span class="st">&quot;/&quot;</span>, <span class="st">&quot;manual_download_list.bib&quot;</span>)) <span class="co"># if multiple journals are used (e.g. when querying papers differently, journal_path might instead be a project path)</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true"></a>      <span class="co"># replace @ with @article because somehow df2bib does this incorrectly.</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true"></a>      bib_file &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;@{&quot;</span>, <span class="st">&quot;@article{&quot;</span>, <span class="dt">fixed =</span> <span class="ot">TRUE</span>, bib_file)</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true"></a>      <span class="co"># write the changes back to the bib file</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true"></a>      <span class="kw">writeLines</span>(bib_file, <span class="kw">paste0</span>(download_dir, journal_path, <span class="st">&quot;/&quot;</span>, <span class="st">&quot;manual_download_list.bib&quot;</span>))</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true"></a>      <span class="cf">next</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true"></a>    }</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true"></a>    <span class="co"># if doi is not NA, we download the file using the download_file function above</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true"></a>    <span class="kw">download_file</span>(bib[i, ], <span class="dt">journal_path =</span> journal_path)</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true"></a>    <span class="kw">print</span>(<span class="kw">paste0</span>(<span class="st">&quot;downloaded (or added to manual download list) paper &quot;</span>, i, <span class="st">&quot; of &quot;</span>, <span class="kw">nrow</span>(bib), <span class="st">&quot; with doi: &quot;</span>, bib<span class="op">$</span>doi[i]))</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true"></a>    <span class="co"># to be fair, we wait a second before downloading the next file (but honestly, as all the other stuff takes long anyway, this could be omitted)</span></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true"></a>    <span class="kw">Sys.sleep</span>(<span class="dv">1</span>)</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true"></a>  }</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true"></a></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true"></a>  <span class="co"># to make the manual_download_list.bib file importable by Zotero, we need to replace all @ with @article for the articles that were added for manual download</span></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true"></a>  <span class="co"># read file</span></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true"></a>  <span class="co"># check if file exists</span></span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true"></a>  <span class="cf">if</span> (<span class="kw">file.exists</span>(<span class="kw">paste0</span>(download_dir, journal_path, <span class="st">&quot;/&quot;</span>, <span class="st">&quot;manual_download_list.bib&quot;</span>))) {</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true"></a>    bib_file &lt;-<span class="st"> </span><span class="kw">readLines</span>(<span class="kw">paste0</span>(download_dir, journal_path, <span class="st">&quot;/&quot;</span>, <span class="st">&quot;manual_download_list.bib&quot;</span>))</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true"></a>    <span class="co"># replace @ with @article</span></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true"></a>    bib_file &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;@{&quot;</span>, <span class="st">&quot;@article{&quot;</span>, <span class="dt">fixed =</span> <span class="ot">TRUE</span>, bib_file)</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true"></a>    <span class="co"># write file</span></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true"></a>    <span class="kw">writeLines</span>(bib_file, <span class="kw">paste0</span>(download_dir, journal_path, <span class="st">&quot;/&quot;</span>, <span class="st">&quot;manual_download_list.bib&quot;</span>))</span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true"></a>  } <span class="cf">else</span> {</span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true"></a>    <span class="kw">message</span>(<span class="st">&quot;No manual_download_list.bib file found, probably all papers were downloaded&quot;</span>)</span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true"></a>  }</span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true"></a>}</span></code></pre></div>
-</div>
-<div id="option-3-from-a-csv-file" class="section level2">
-<h2>Option 3: from a csv file</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>pubdata_dfs &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;PS_2024_metadata.csv&quot;</span>) </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>bib &lt;-<span class="st"> </span>pubdata_dfs</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>download_dir =<span class="st"> &quot;./downloads/&quot;</span> <span class="co"># you want to change this to the path where you want to parent folder of the journal folders with the files to be downloaded to. Make sure to have a trailing slash (because I am currently to lazy to deal with R&#39;s file handling)</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>last_i &lt;-<span class="st"> </span><span class="dv">1</span> <span class="co"># so loop can be restarted at other place more easily, mostly for debugging</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a><span class="cf">for</span> (i <span class="cf">in</span> last_i<span class="op">:</span><span class="kw">nrow</span>(bib)) {</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a>  <span class="co"># make a journal path based on the journal name. Note that this should just be a fixed value, i you are doing a project on multiple journals and want all files in the same folder</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a>  journal_path &lt;-<span class="st"> </span><span class="kw">str_replace_all</span>(bib<span class="op">$</span>journal[i], <span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true"></a>  last_i &lt;-<span class="st"> </span>i</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true"></a>  <span class="co"># this is the download part. Print some info first</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true"></a>  <span class="kw">print</span>(<span class="st">&quot;#################################################################&quot;</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true"></a>  <span class="kw">print</span>(<span class="kw">paste0</span>(<span class="st">&quot;Downloading paper &quot;</span>, i, <span class="st">&quot; of &quot;</span>, <span class="kw">nrow</span>(bib), <span class="st">&quot; with doi: &quot;</span>, bib<span class="op">$</span>doi[i]))</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true"></a>  <span class="co"># if the doi is NA, we skip the download and mark it for manual download</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true"></a>  <span class="cf">if</span>(<span class="kw">is.na</span>(bib<span class="op">$</span>doi[i])){</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true"></a>    <span class="kw">print</span>(<span class="st">&quot;doi is NA, skipping and marking for manual download&quot;</span>) </span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true"></a>    bib_file &lt;-<span class="st"> </span><span class="kw">readLines</span>(<span class="kw">paste0</span>(download_dir, journal_path, <span class="st">&quot;/&quot;</span>, <span class="st">&quot;manual_download_list.bib&quot;</span>)) <span class="co"># if multiple journals are used (e.g. when querying papers differently, journal_path might instead be a project path)</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true"></a>    <span class="co"># replace @ with @article because somehow df2bib does this incorrectly.</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true"></a>    bib_file &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;@{&quot;</span>, <span class="st">&quot;@article{&quot;</span>, <span class="dt">fixed =</span> <span class="ot">TRUE</span>, bib_file)</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true"></a>    <span class="co"># write the changes back to the bib file</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true"></a>    <span class="kw">writeLines</span>(bib_file, <span class="kw">paste0</span>(download_dir, journal_path, <span class="st">&quot;/&quot;</span>, <span class="st">&quot;manual_download_list.bib&quot;</span>))</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true"></a>    <span class="cf">next</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true"></a>  }</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true"></a>  <span class="co"># if doi is not NA, we download the file using the download_file function above</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true"></a>  <span class="kw">download_file</span>(bib[i, ], <span class="dt">journal_path =</span> journal_path)</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true"></a>  <span class="kw">print</span>(<span class="kw">paste0</span>(<span class="st">&quot;downloaded (or added to manual download list) paper &quot;</span>, i, <span class="st">&quot; of &quot;</span>, <span class="kw">nrow</span>(bib), <span class="st">&quot; with doi: &quot;</span>, bib<span class="op">$</span>doi[i]))</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true"></a>  <span class="co"># to be fair, we wait a second before downloading the next file (but honestly, as all the other stuff takes long anyway, this could be omitted)</span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true"></a>  <span class="kw">Sys.sleep</span>(<span class="dv">1</span>)</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true"></a>}</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true"></a></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true"></a><span class="co"># to make the manual_download_list.bib file importable by Zotero, we need to replace all @ with @article for the articles that were added for manual download</span></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true"></a><span class="co"># read file</span></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true"></a><span class="co"># check if file exists</span></span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true"></a><span class="cf">if</span> (<span class="kw">file.exists</span>(<span class="kw">paste0</span>(download_dir, journal_path, <span class="st">&quot;/&quot;</span>, <span class="st">&quot;manual_download_list.bib&quot;</span>))) {</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true"></a>  bib_file &lt;-<span class="st"> </span><span class="kw">readLines</span>(<span class="kw">paste0</span>(download_dir, journal_path, <span class="st">&quot;/&quot;</span>, <span class="st">&quot;manual_download_list.bib&quot;</span>))</span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true"></a>  <span class="co"># replace @ with @article</span></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true"></a>  bib_file &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;@{&quot;</span>, <span class="st">&quot;@article{&quot;</span>, <span class="dt">fixed =</span> <span class="ot">TRUE</span>, bib_file)</span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true"></a>  <span class="co"># write file</span></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true"></a>  <span class="kw">writeLines</span>(bib_file, <span class="kw">paste0</span>(download_dir, journal_path, <span class="st">&quot;/&quot;</span>, <span class="st">&quot;manual_download_list.bib&quot;</span>))</span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true"></a>} <span class="cf">else</span> {</span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true"></a>  <span class="kw">message</span>(<span class="st">&quot;No manual_download_list.bib file found, probably all papers were downloaded&quot;</span>)</span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true"></a>}</span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true"></a></span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true"></a><span class="co"># lets see how many files were downloaded from open access:</span></span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true"></a>source_overview &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="kw">paste0</span>(download_dir, journal_path, <span class="st">&quot;/source_overview.csv&quot;</span>))</span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true"></a><span class="kw">table</span>(source_overview<span class="op">$</span>V2)</span></code></pre></div>
-</div>
-</div>
-<div id="manually-adding-failed-downloads-using-zotero" class="section level1">
-<h1>Manually adding failed downloads using Zotero</h1>
-<p>In case the automatic download fails, we can download the papers manually from Zotero.</p>
-<p>For this, download and install Zotero from <a href="https://www.zotero.org/download/">https://www.zotero.org/download/</a>.</p>
-<p>Then, open Zotero and, if this is the first time you import something for a project add a new library by clicking on the “New Library” button in the top left corner. Then add a new collection for the journal by clicking on the “New Collection” button in the top left corner. Then, click on the “File” menu and select “Import from File”. Select the “manual_download_list.bib” file from the downloads folder and click “Open”. Zotero will import the papers into a collection called “manual_download_list” with some timestamp. Move the files in this collection into the collection with the journal name that you created earlier by drag and drop.</p>
-<p>Now we follow the following steps for downloading the missing PDFs:</p>
-<ol style="list-style-type: decimal">
-<li>As zotero has some additional functionality compared to the open access lookup, we can try to download the PDFs from the open access sources that Zotero knows about. For this, select all articles in the collection and right click on the selection, and select “Find Available PDFs”. Zotero will now try to download the PDFs from the open access sources that it knows about. If it finds a PDF, it will automatically add it to the entry in the collection.</li>
-<li>If there are still pdfs that have not been found, (actually the more pdfs you look up the less likely zotero is to find them because publishers will temporarily block your IP if you look up too many PDFs), you can <strong>connect to the University VPN</strong> and download them via Zotero’s library lookup function. For this,
-<ol style="list-style-type: decimal">
-<li>go to Edit &gt; Preferences &gt; Advanced, and in the OpenURL option, select your continent, country and institution.</li>
-<li>Select an article (yes, a single one), click on the green rightward arrow in the top right corner of the window and select “Library Lookup”. Zotero will now try to find the article in the library of your institution.</li>
-<li>If it finds the article, it will open a new tab in your browser with the article. Download the article and add it to the entry in the collection.</li>
-</ol></li>
-</ol>
-<p>This should eventually result in all articles being available. Obviously, the Zotero steps still take a lot of manual work, but it is still better than downloading all articles from the web.</p>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiRG93bmxvYWRpbmcgUERGIGZpbGVzIGZyb20gRE9JcyIKYXV0aG9yOiAiSnVsaWFuIFF1YW5kdCIKZGF0ZTogImByIGZvcm1hdChTeXMudGltZSgpLCAnJWQgJUIsICVZJylgIgpvdXRwdXQ6IAogIGh0bWxfZG9jdW1lbnQ6CiAgICB0aGVtZTogY2VydWxlYW4KICAgIGhpZ2hsaWdodDogdGFuZ28KICAgIHRvYzogdHJ1ZQogICAgdG9jX2RlcHRoOiAzCiAgICB0b2NfZmxvYXQ6IHRydWUKICAgIHNlbGZfY29udGFpbmVkOiB0cnVlCiAgICBjb2RlX2ZvbGRpbmc6IHNob3cKICAgIGNvZGVfZG93bmxvYWQ6IHRydWUKLS0tCgo8ZGl2IHN0eWxlPSJib3JkZXI6IDFweCBzb2xpZCAjOTk5OyBib3JkZXItcmFkaXVzOiA1cHg7IHBhZGRpbmc6IDIwcHg7IG1hcmdpbi10b3A6IDIwcHg7IGJhY2tncm91bmQtY29sb3I6ICNmZmZmZTA7Ij4KICA8aDMgc3R5bGU9ImNvbG9yOiAjMDA1NmIzOyBtYXJnaW4tdG9wOiAwOyI+VGhlIGNvZGUgaW4gdGhpcyBkb2N1bWVudDwvaDM+CiAgSW4gdGhpcyBIVE1MIHZlcnNpb24gb2YgdGhlIGRvY3VtZW50LCB0aGUgY29kZSBjaHVua3MgdGhhdCBhcmUganVzdCBkb2luZyBiYWNrZ3JvdW5kIHdvcmsgb3IgaW50ZXJtZWRpYXRlIHN0ZXBzIGFyZSBoaWRkZW4gdG8gbWFrZSBpdCBtb3JlIHJlYWRhYmxlLiBJZiB5b3Ugd2FudCB0byBzZWUgdGhlIGNvZGUsIHlvdSBjYW4gY2xpY2sgb24gdGhlICJTaG93IiBidXR0b25zIG9uIHRoZSByaWdodCBoYW5kIHNpZGUgb2YgdGhlIHRleHQuIFRvIHJ1biB0aGUgY29kZSBpbiBSIHlvdXJzZWxmLCBkb3dubG9hZCB0aGUgLlJtZCBmaWxlIGJ5IGNsaWNraW5nIG9uIHRoZSAiQ29kZSIgYnV0dG9uIG9uIHRoZSB0b3AgcmlnaHQgb2YgdGhlIGRvY3VtZW50IGFuZCB0aGVuIHNlbGVjdGluZyAiRG93bmxvYWQgUm1kIi4KPC9kaXY+CgpgYGB7ciwgaW5jbHVkZSA9IEZBTFNFfQojIHNldCBvcHRpb25zIHRvIG5vdCBrbml0IGNvZGUgY2h1bmtzCmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSwgZXZhbCA9IEZBTFNFLCBpbmNsdWRlID0gVFJVRSwgd2FybmluZyA9IEZBTFNFLCBtZXNzYWdlID0gRkFMU0UpCmlmICghcmVxdWlyZShrYWJsZUV4dHJhKSkgewogIGluc3RhbGwucGFja2FnZXMoImthYmxlRXh0cmEiKQogIGxpYnJhcnkoa2FibGVFeHRyYSkKfQoKc291cmNlKCIuLi9zZWNyZXRfdmFycy5SIikgIyB0aGlzIG5lZWRzIHRvIGJlIGFjdGl2YXRlZCBhbmQgdGhlIGZpbGUgY3JlYXRlZApgYGAKCgojIEFib3V0CgpUaGlzIGZpbGUgY2FuIGJlIHVzZWQgdG8gZG93bmxvYWQgc2NpZW50aWZpYyBwYXBlcnMgZnJvbSBvcGVuIGFjY2VzcyB3ZWJzaXRlcy4gCkl0IHVzZXMgdGhlIHJvYWRvaSBwYWNrYWdlIHRvIGZpbmQgb3BlbiBhY2Nlc3MgdmVyc2lvbnMgb2YgcGFwZXJzIGFuZCBkb3dubG9hZHMgdGhlbS4KSWYgdGhlIHBhcGVyIHdvdWxkIG5vdCBiZSBhdmFpbGFibGUgaXQgaXMgYWRkZWQgdG8gYSBiaWJ0ZXggZmlsZSBmb3IgbWFudWFsIGRvd25sb2FkLgpUaGVzZSBtYW51YWwgZG93bmxvYWRzLCBjYW4gYmUgZG9uZSBpbiBab3Rlcm8gKHNlZSBiZWxvdyBmb3IgaW5zdHJ1Y3Rpb25zKS4KCgoKCiMjIERlZmluaW5nIGFuZCBpbnN0YWxsaW5nIHBhY2thZ2VzCgpgYGB7cn0KIyB0aGlzIGlzIGEgbGlzdCBvZiBwYWNrYWdlcyB0aGF0IGFyZSBuZWVkZWQgZm9yIHRoZSBzY3JpcHQgdG8gcnVuLgoKIyBodHRyIGlzIHVzZWQgZm9yIGh0dHAgcmVxdWVzdHMKaWYgKCFyZXF1aXJlKGh0dHIpKSB7CiAgaW5zdGFsbC5wYWNrYWdlcygiaHR0ciIpCiAgbGlicmFyeShodHRyKQp9CgojIHhtbDIgaXMgdXNlZCBmb3IgcGFyc2luZyB4bWwgZmlsZXMKaWYgKCFyZXF1aXJlKHhtbDIpKSB7CiAgaW5zdGFsbC5wYWNrYWdlcygieG1sMiIpCiAgbGlicmFyeSh4bWwyKQp9CgojIHN0cmluZ3IgaXMgdXNlZCBmb3Igc3RyaW5nIG1hbmlwdWxhdGlvbgppZiAoIXJlcXVpcmUoc3RyaW5ncikpIHsKICBpbnN0YWxsLnBhY2thZ2VzKCJzdHJpbmdyIikKICBsaWJyYXJ5KHN0cmluZ3IpCn0KCiMgcm9hZG9pIGlzIHVzZWQgdG8gZmluZCBvcGVuIGFjY2VzcyB2ZXJzaW9ucyBvZiBwYXBlcnMgdXNpbmcgdW5wYXl3YWxsCmlmICghcmVxdWlyZShyb2Fkb2kpKSB7CiAgaW5zdGFsbC5wYWNrYWdlcygicm9hZG9pIikKICBsaWJyYXJ5KHJvYWRvaSkKfQoKIyBiaWIyZGYgaXMgdXNlZCB0byBjb252ZXJ0IGJpYnRleCBmaWxlcyB0byBkYXRhZnJhbWVzIGFuZCB2aWNlIHZlcnNhCmlmICghcmVxdWlyZShiaWIyZGYpKSB7CiAgaW5zdGFsbC5wYWNrYWdlcygiYmliMmRmIikKICBsaWJyYXJ5KGJpYjJkZikKfQoKIyBnb29nbGVkcml2ZSBpcyB1c2VkIHRvIGFjY2Vzcywgc2F2ZSB0byBhbmQgbG9hZCBmcm9tIGdvb2dsZSBkcml2ZQppZiAoIXJlcXVpcmUoZ29vZ2xlZHJpdmUpKSB7CiAgaW5zdGFsbC5wYWNrYWdlcygiZ29vZ2xlZHJpdmUiKQogIGxpYnJhcnkoZ29vZ2xlZHJpdmUpCn0KCiMgZ29vZ2xlc2hlZXRzNCBpcyB1c2VkIHRvIGFjY2Vzcywgc2F2ZSB0byBhbmQgbG9hZCBmcm9tIGdvb2dsZSBzaGVldHMKaWYgKCFyZXF1aXJlKGdvb2dsZXNoZWV0czQpKSB7CiAgaW5zdGFsbC5wYWNrYWdlcygiZ29vZ2xlc2hlZXRzNCIpCiAgbGlicmFyeShnb29nbGVzaGVldHM0KQp9CgojIHByb2Nlc3N4IGlzIHVzZWQgdG8gc3RhcnQgdGhlIHNlbGVuaXVtIHNlcnZlciBmb3IgdGhlIHJlc3BlY3RpdmUgZG93bmxvYWQgbWV0aG9kIGluIHRoZSBiYWNrZ3JvdW5kCmlmICghcmVxdWlyZShwcm9jZXNzeCkpIHsKICBpbnN0YWxsLnBhY2thZ2VzKCJwcm9jZXNzeCIpCiAgbGlicmFyeShwcm9jZXNzeCkKfQpgYGAKCiMgVGhlIGNvZGUKClRoZSBmdW5jdGlvbnMgYmVsb3cgYXJlIHRoZSBtYWluIGZ1bmN0aW9ucyB0aGF0IGFyZSB1c2VkIHRvIGRvd25sb2FkIHRoZSBwYXBlcnMuCgojIyBUaGUgbWFpbiBmdW5jdGlvbnMKClRoZSBtYWluIGZ1bmN0aW9ucyBhcmUgdGhlIGZvbGxvd2luZzoKCjEuIGBmaWxlX2FscmVhZHlfZG93bmxvYWRlZGA6IFRoaXMgZnVuY3Rpb24gY2hlY2tzIGlmIHRoZSBmaWxlIGFscmVhZHkgZXhpc3RzIGFuZCBpcyBhIHZhbGlkIFBERi4KMi4gYGxvYWRfZXh0ZXJuYWxfbWV0aG9kc2A6IFRoaXMgZnVuY3Rpb24gbG9hZHMgdGhlIGV4dGVybmFsIGRvd25sb2FkIG1ldGhvZHMgdGhhdCBhcmUgZGVmaW5lZCBpbiB0aGUgYGZpbGVfZG93bmxvYWRfbWV0aG9kcy5SYCBmaWxlLiBUaGlzIGZ1bmN0aW9uIGlzIGlzIHdoZXJlIHlvdSB3b3VsZCBhZGQgYWRkaXRpb25hbCBkb3dubG9hZCBtZXRob2RzIHRoYXQgeW91IHRoaW5rIHdvdWxkIGJlIHVzZWZ1bCwgb3IgYWRqdXN0IHRoZSBleGlzdGluZyBvbmVzLiBUaGV5IHdvdWxkIGF1dG9tYXRpY2FsbHkgYmUgbG9hZGVkIGhlcmUgc28gbm8gbmVlZCB0byBjaGFuZ2Ugc3R1ZmYgaW4gdGhpcyBzY3JpcHQuCjMuIGBmaW5kX3ZhbHVlc2A6IFRoaXMgZnVuY3Rpb24gZmluZHMgYW5kIGV2YWx1YXRlcyBhcmd1bWVudCB2YWx1ZXMgZnJvbSBhdmFpbGFibGUgZW52aXJvbm1lbnRzLgo0LiBgcnVuX2Rvd25sb2FkX21ldGhvZHNgOiBUaGlzIGZ1bmN0aW9uIGV4ZWN1dGVzIGFsbCBhdmFpbGFibGUgZG93bmxvYWQgbWV0aG9kcy4KNS4gYGFwcGVuZF9zb3VyY2Vfb3ZlcnZpZXdgOiBUaGlzIGZ1bmN0aW9uIGFwcGVuZHMgdGhlIHNvdXJjZSBvdmVydmlldyB0byBhIGNzdiBmaWxlLgo2LiBgaGFuZGxlX2Rvd25sb2FkX2Vycm9yYDogVGhpcyBmdW5jdGlvbiBoYW5kbGVzIHRoZSBmYWxsYmFjayBjYXNlIChtYW51YWwgZG93bmxvYWQpLgo3LiBgZG93bmxvYWRfZmlsZWA6IFRoaXMgZnVuY3Rpb24gaXMgdGhlIG1haW4gZnVuY3Rpb24gdGhhdCBkb3dubG9hZHMgdGhlIGZpbGUuIEl0IGZpcnN0IGNoZWNrcyBpZiB0aGUgZmlsZSBhbHJlYWR5IGV4aXN0cyBhbmQgaWYgbm90LCBpdCB0cmllcyB0byBkb3dubG9hZCB0aGUgZmlsZS4gSWYgdGhlIGRvd25sb2FkIGZhaWxzLCBpdCBhZGRzIHRoZSBET0kgdG8gYSBiaWJ0ZXggZmlsZSBmb3IgbWFudWFsIGRvd25sb2FkLgoKYGBge3J9CiMgQ2hlY2sgaWYgZmlsZSBhbHJlYWR5IGV4aXN0cyBhbmQgaXMgYSB2YWxpZCBQREYKZmlsZV9hbHJlYWR5X2Rvd25sb2FkZWQgPC0gZnVuY3Rpb24oZG93bmxvYWRfZGlyLCBqb3VybmFsX3BhdGgsIGRvaV9maWxlbmFtZSkgewogIGZpbGVfcGF0aCA8LSBwYXN0ZTAoZG93bmxvYWRfZGlyLCBqb3VybmFsX3BhdGgsICIvIiwgZG9pX2ZpbGVuYW1lLCAiLnBkZiIpCiAgcmV0dXJuKGZpbGUuZXhpc3RzKGZpbGVfcGF0aCkgJiYgZmlsZS5zaXplKGZpbGVfcGF0aCkgPiAyMDAwMCkKfQoKIyBMb2FkIGV4dGVybmFsIGRvd25sb2FkIG1ldGhvZHMKbG9hZF9leHRlcm5hbF9tZXRob2RzIDwtIGZ1bmN0aW9uKCkgewogIGlmICghZXhpc3RzKCJkb3dubG9hZF9tZXRob2RzX2xvYWRlZCIpKSB7CiAgICBzb3VyY2UoIi4vUl9hZGRvbnMvZmlsZV9kb3dubG9hZF9tZXRob2RzLlIiKQogIH0KfQoKIyBGaW5kIGFuZCBldmFsdWF0ZSBhcmd1bWVudCB2YWx1ZXMgZnJvbSBhdmFpbGFibGUgZW52aXJvbm1lbnRzCmZpbmRfdmFsdWVzIDwtIGZ1bmN0aW9uKGFyZ19uYW1lLCBlbnZfbGlzdCkgewogIGZvciAoZW52IGluIHJldihlbnZfbGlzdCkpIHsKICAgIGlmIChleGlzdHMoYXJnX25hbWUsIGVudmlyID0gZW52LCBpbmhlcml0cyA9IEZBTFNFKSkgewogICAgICByZXR1cm4oZ2V0KGFyZ19uYW1lLCBlbnZpciA9IGVudikpCiAgICB9CiAgfQogIGlmIChleGlzdHMoYXJnX25hbWUsIGVudmlyID0gLkdsb2JhbEVudiwgaW5oZXJpdHMgPSBGQUxTRSkpIHsKICAgIHJldHVybihnZXQoYXJnX25hbWUsIGVudmlyID0gLkdsb2JhbEVudikpCiAgfQogIHJldHVybihOVUxMKQp9CgojIEV4ZWN1dGUgYWxsIGF2YWlsYWJsZSBkb3dubG9hZCBtZXRob2RzCnJ1bl9kb3dubG9hZF9tZXRob2RzIDwtIGZ1bmN0aW9uKGRvd25sb2FkX21ldGhvZHMsIGRvaSkgewogIGVudl9saXN0IDwtIHN5cy5mcmFtZXMoKSAjIENhcHR1cmUgYWN0aXZlIGVudmlyb25tZW50cwogIGZvciAobWV0aG9kIGluIGRvd25sb2FkX21ldGhvZHMpIHsKICAgIGlmIChleGlzdHMobWV0aG9kKSAmJiBpcy5mdW5jdGlvbihnZXQobWV0aG9kKSkpIHsKICAgICAgZnVuY3Rpb25fYXJncyA8LSBuYW1lcyhmb3JtYWxzKGdldChtZXRob2QpKSkKICAgICAgYXJnX3ZhbHVlcyA8LSBzZXROYW1lcyhsYXBwbHkoZnVuY3Rpb25fYXJncywgZmluZF92YWx1ZXMsIGVudl9saXN0KSwgZnVuY3Rpb25fYXJncykKICAgICAgcmVzIDwtIGRvLmNhbGwobWV0aG9kLCBhcmdfdmFsdWVzKQogICAgICBwcmludChwYXN0ZTAoIk1ldGhvZCAiLCBtZXRob2QsICIgcmV0dXJuZWQ6ICIsIHJlc1sxXSkpCiAgICAgIGlmIChyZXNbMV0gPT0gIlN1Y2Nlc3MiKSB7CiAgICAgICAgcmV0dXJuKHJlcykKICAgICAgfQogICAgfSBlbHNlIHsKICAgICAgbWVzc2FnZSgiRG93bmxvYWQgYWRkb24gIiwgbWV0aG9kLCAiIGRvZXMgbm90IGV4aXN0IG9yIGlzIG5vdCBhIGNvcnJlY3QgZnVuY3Rpb24gY2FsbCIpCiAgICAgIHJldHVybigiRmFpbGVkIikKICAgIH0KICB9CiAgcmV0dXJuKCJGYWlsZWQiKQp9CgphcHBlbmRfc291cmNlX292ZXJ2aWV3IDwtIGZ1bmN0aW9uKGRsX21ldGhvZCwgZG9pLCBqb3VybmFsX3BhdGgsIGRvd25sb2FkX2RpcikgewogIHdyaXRlLnRhYmxlKGRhdGEuZnJhbWUoZG9pID0gZG9pLCBtZXRob2QgPSBkbF9tZXRob2QpLAogICAgcGFzdGUwKGRvd25sb2FkX2Rpciwgam91cm5hbF9wYXRoLCAiL3NvdXJjZV9vdmVydmlldy5jc3YiKSwKICAgIGFwcGVuZCA9IFRSVUUsIHJvdy5uYW1lcyA9IEZBTFNFLCBjb2wubmFtZXMgPSBGQUxTRQogICkKfQoKIyBIYW5kbGUgdGhlIGZhbGxiYWNrIGNhc2UgKG1hbnVhbCBkb3dubG9hZCkKaGFuZGxlX2Rvd25sb2FkX2Vycm9yIDwtIGZ1bmN0aW9uKHJvdywgam91cm5hbF9wYXRoLCBkb3dubG9hZF9kaXIsIHNvdXJjZV9vdmVydmlldykgewogIGlmIChzb3VyY2Vfb3ZlcnZpZXcpIHsKICAgIGFwcGVuZF9zb3VyY2Vfb3ZlcnZpZXcoIm1hbnVhbCIsIHJvdyRkb2ksIGpvdXJuYWxfcGF0aCwgZG93bmxvYWRfZGlyKQogIH0KICBkZjJiaWIocm93LCBmaWxlID0gcGFzdGUwKGRvd25sb2FkX2Rpciwgam91cm5hbF9wYXRoLCAiL21hbnVhbF9kb3dubG9hZF9saXN0LmJpYiIpLCBhcHBlbmQgPSBUUlVFKQogIG1lc3NhZ2UoIk5vIG9wZW4gYWNjZXNzIHZlcnNpb24gZm91bmQuIEFwcGVuZGluZyBpdCB0byBvdmVydmlldyBmb3IgbWFudWFsIGRvd25sb2FkIikKfQoKIyBNYWluIGZ1bmN0aW9uCmRvd25sb2FkX2ZpbGUgPC0gZnVuY3Rpb24ocm93LCBqb3VybmFsX3BhdGggPSAiIiwgZG93bmxvYWRfZGlyID0gIi4vZG93bmxvYWRzLyIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgc291cmNlX292ZXJ2aWV3ID0gVFJVRSwgbG9hZF9leHRlcm5hbF9tZXRob2RzID0gVFJVRSkgewogIGRvaV9maWxlbmFtZSA8LSBnc3ViKCJbXls6YWxudW06XV0iLCAiIiwgcm93JGRvaSkKCiAgIyBFbnN1cmUgam91cm5hbCBkaXJlY3RvcnkgZXhpc3RzCiAgZGlyLmNyZWF0ZShmaWxlLnBhdGgoZG93bmxvYWRfZGlyLCBqb3VybmFsX3BhdGgpLCByZWN1cnNpdmUgPSBUUlVFLCBzaG93V2FybmluZ3MgPSBGQUxTRSkKCiAgIyBTa2lwIGRvd25sb2FkIGlmIGZpbGUgYWxyZWFkeSBleGlzdHMKICBpZiAoZmlsZV9hbHJlYWR5X2Rvd25sb2FkZWQoZG93bmxvYWRfZGlyLCBqb3VybmFsX3BhdGgsIGRvaV9maWxlbmFtZSkpIHsKICAgIG1lc3NhZ2UoIkZpbGUgYWxyZWFkeSBleGlzdHMiKQogICAgcmV0dXJuKCkKICB9IGVsc2UgewogICAgU3lzLnNsZWVwKDEpCiAgfQoKICB0cnlDYXRjaCgKICAgIHsKICAgICAgaWYgKGxvYWRfZXh0ZXJuYWxfbWV0aG9kcykgewogICAgICAgIGxvYWRfZXh0ZXJuYWxfbWV0aG9kcygpCiAgICAgICAgZG9pIDwtIHJvdyRkb2kKICAgICAgICBkbF9tZXRob2QgPC0gcnVuX2Rvd25sb2FkX21ldGhvZHMoZG93bmxvYWRfbWV0aG9kcywgZG9pKQogICAgICAgIGlmKGRsX21ldGhvZFsxXSA9PSAiRmFpbGVkIikgewogICAgICAgICAgaGFuZGxlX2Rvd25sb2FkX2Vycm9yKHJvdywgam91cm5hbF9wYXRoLCBkb3dubG9hZF9kaXIsIHNvdXJjZV9vdmVydmlldykKICAgICAgICB9IGVsc2UgewogICAgICAgICAgaWYoc291cmNlX292ZXJ2aWV3KXsKICAgICAgICAgICAgcHJpbnQoIkFwcGVuZGluZyBzb3VyY2Ugb3ZlcnZpZXciKQogICAgICAgICAgICBwcmludChkbF9tZXRob2QpCiAgICAgICAgICAgIGFwcGVuZF9zb3VyY2Vfb3ZlcnZpZXcoZGxfbWV0aG9kWzJdLCByb3ckZG9pLCBqb3VybmFsX3BhdGgsIGRvd25sb2FkX2RpcikKICAgICAgICAgIH0KICAgICAgICB9CiAgICAgIH0gZWxzZSB7CiAgICAgICAgaGFuZGxlX2Rvd25sb2FkX2Vycm9yKHJvdywgam91cm5hbF9wYXRoLCBkb3dubG9hZF9kaXIsIHNvdXJjZV9vdmVydmlldykKICAgICAgfQogICAgfSwKICAgIGVycm9yID0gZnVuY3Rpb24oZSkgewogICAgICBtZXNzYWdlKCJFcnJvcjogIiwgZSRtZXNzYWdlKQogICAgICBoYW5kbGVfZG93bmxvYWRfZXJyb3Iocm93LCBqb3VybmFsX3BhdGgsIGRvd25sb2FkX2Rpciwgc291cmNlX292ZXJ2aWV3KQogICAgfSwKICAgIHdhcm5pbmcgPSBmdW5jdGlvbih3KSB7CiAgICAgIG1lc3NhZ2UoIldhcm5pbmc6ICIsIHckbWVzc2FnZSkKICAgIH0KICApCn0KCmBgYAoKIyBEaWZmZXJlbnQgd2F5cyB0byBsb2FkIGEgbGlzdCBvZiBET0lzIGZvciBkb3dubG9hZGluZwoKVGhlIGNvZGUgYmVsb3cgaXMgaG93IHdlIGFjdHVhbGx5IGRvd25sb2FkIHRoZSBwZGZzLiAKV2UgY2FuIGVpdGhlciBsb2FkIGEgbGlzdCBvZiBET0lzIGZyb20gYSBiaWJ0ZXggZmlsZSBvciBmcm9tIGEgZ29vZ2xlIHNoZWV0LgpUaGUgZ29vZ2xlIHNoZWV0IG5lZWRzIHRvIGJlIGRlZmluZWQgaW4gdGhlIHNlY3JldF92YXJzLlIgZmlsZS4gCgojIyBPcHRpb24gMTogRnJvbSBhIGJpYnRleCBsaXN0CgpgYGB7cn0KYmliIDwtIGJpYjJkZigiYmlidGV4X2ZpbGUuYmliIikKbmFtZXMoYmliKVt3aGljaChuYW1lcyhiaWIpID09ICJET0kiKV0gPC0gImRvaSIKbmFtZXMoYmliKVt3aGljaChuYW1lcyhiaWIpID09ICJVUkwiKV0gPC0gImxpbmsiCmRvd25sb2FkX2RpciA9ICIuL2Rvd25sb2Fkcy8iICMgeW91IHdhbnQgdG8gY2hhbmdlIHRoaXMgdG8gdGhlIHBhdGggd2hlcmUgeW91IHdhbnQgdG8gcGFyZW50IGZvbGRlciBvZiB0aGUgam91cm5hbCBmb2xkZXJzIHdpdGggdGhlIGZpbGVzIHRvIGJlIGRvd25sb2FkZWQgdG8uIE1ha2Ugc3VyZSB0byBoYXZlIGEgdHJhaWxpbmcgc2xhc2ggKGJlY2F1c2UgSSBhbSBjdXJyZW50bHkgdG8gbGF6eSB0byBkZWFsIHdpdGggUidzIGZpbGUgaGFuZGxpbmcpCgpsYXN0X2kgPC0gMQogZm9yKGkgaW4gbGFzdF9pOm5yb3coYmliKSl7CiAgICAgIGxhc3RfaSA8LSBpCiAgICAgIFN5cy5zbGVlcCgxKQogICAgICBkb3dubG9hZF9maWxlKGJpYltpLCBdLCBqb3VybmFsX3BhdGggPSBqb3VybmFsX3BhdGgpCiAgICAgIHByaW50KHBhc3RlMCgiZG93bmxvYWRlZCAob3IgYWRkZWQgdG8gbWFudWFsIGRvd25sb2FkIGxpc3QpIHBhcGVyICIsIGksICIgb2YgIiwgbnJvdyhiaWIpLCAiIHdpdGggZG9pOiAiLCBiaWIkZG9pW2ldKSkKfQppZiAoZmlsZS5leGlzdHMocGFzdGUwKGRvd25sb2FkX2Rpciwgam91cm5hbF9wYXRoLCAiLyIsICJtYW51YWxfZG93bmxvYWRfbGlzdC5iaWIiKSkpIHsKICBiaWJfZmlsZSA8LSByZWFkTGluZXMocGFzdGUwKGRvd25sb2FkX2Rpciwgam91cm5hbF9wYXRoLCAiLyIsICJtYW51YWxfZG93bmxvYWRfbGlzdC5iaWIiKSkKICAjIHJlcGxhY2UgQCB3aXRoIEBhcnRpY2xlCiAgYmliX2ZpbGUgPC0gZ3N1YigiQHsiLCAiQGFydGljbGV7IiwgZml4ZWQgPSBUUlVFLCBiaWJfZmlsZSkKICAjIHdyaXRlIGZpbGUKICB3cml0ZUxpbmVzKGJpYl9maWxlLCBwYXN0ZTAoZG93bmxvYWRfZGlyLCBqb3VybmFsX3BhdGgsICIvIiwgIm1hbnVhbF9kb3dubG9hZF9saXN0LmJpYiIpKQp9IGVsc2UgewogIG1lc3NhZ2UoIk5vIG1hbnVhbF9kb3dubG9hZF9saXN0LmJpYiBmaWxlIGZvdW5kLCBwcm9iYWJseSBhbGwgcGFwZXJzIHdlcmUgZG93bmxvYWRlZCIpCn0KYGBgCgojIyBPcHRpb24gMjogRnJvbSBhIGdvb2dsZSBzaGVldAoKRm9yIGRldGFpbHMgb24gR29vZ2xlIFNoZWV0IHVzZSBzZWUgdGhlIGBmZXRjaF9mcm9tX3Njb3B1cy5SbWRgIGZpbGUuIApGaXJzdCB3ZSBhdXRoZW50aWNhdGUsIHRoZW4gd2UgZ2V0IHRoZSBnb29nbGUgc2hlZXQgYW5kIHRoZW4gd2UgZG93bmxvYWQgdGhlIHBhcGVycy4KQnkgZGVmYXVsdCwgdGhpcyBsb29wIHdpbGwgcmVhZCB0aGUgSm91cm5hbF9wYXRoIGZyb20gdGhlIG5hbWUgb2YgdGhlIHNoZWV0LiBJZiB5b3Ugd2FudCBhbGwgZGlmZmVyZW50IGpvdXJuYWxzIGluIG9uZSBmb2xkZXIsIHlvdSBjb3VsZCBjaGFuZ2UgdGhhdCBsaW5lIHRvIGEgZml4ZWQgdmFsdWUuCgpgYGB7cn0KIyBnZXQgdGhlIGdvb2dsZSBzaGVldCB3aXRoIHRoZSBwdWJsaWNhdGlvbiBkYXRhCmRyaXZlX2F1dGgoZW1haWwgPSBteV9nbWFpbCkKZ3Nfc2hlZXRzIDwtIGdzNF9nZXQoZ29vZ2xlX3NoZWV0X2lkKQpwdWJkYXRhX2RmcyA8LSBzYXBwbHkoZ3Nfc2hlZXRzJHNoZWV0cyRuYW1lLCBmdW5jdGlvbih4KSByZWFkX3NoZWV0KGdzX3NoZWV0cywgc2hlZXQgPSB4KSwgc2ltcGxpZnkgPSBGQUxTRSkKCmRvd25sb2FkX2RpciA9ICIuL2Rvd25sb2Fkcy8iICMgeW91IHdhbnQgdG8gY2hhbmdlIHRoaXMgdG8gdGhlIHBhdGggd2hlcmUgeW91IHdhbnQgdG8gcGFyZW50IGZvbGRlciBvZiB0aGUgam91cm5hbCBmb2xkZXJzIHdpdGggdGhlIGZpbGVzIHRvIGJlIGRvd25sb2FkZWQgdG8uIE1ha2Ugc3VyZSB0byBoYXZlIGEgdHJhaWxpbmcgc2xhc2ggKGJlY2F1c2UgSSBhbSBjdXJyZW50bHkgdG8gbGF6eSB0byBkZWFsIHdpdGggUidzIGZpbGUgaGFuZGxpbmcpCgpmb3IgKG5hbWUgaW4gbmFtZXMocHViZGF0YV9kZnMpKSB7CiAgYmliIDwtIGRhdGEuZnJhbWUocHViZGF0YV9kZnNbW25hbWVdXSkKICBqb3VybmFsX3BhdGggPC0gc3RyX3JlcGxhY2VfYWxsKG5hbWUsICIgIiwgIl8iKSAjIDwtIHRoaXMgaXMgdGhlIGxpbmUgdGhhdCB5b3Ugd291bGQgY2hhbmdlIGlmIHlvdSB3YW50IGFsbCBmaWxlcyBpbiB0aGUgc2FtZSBmb2xkZXIsIGp1c3QgZ2l2ZSBpdCBhIGZpeGVkIHZhbHVlCiAgbGFzdF9pIDwtIDEgIyBzbyBsb29wIGNhbiBiZSByZXN0YXJ0ZWQgYXQgb3RoZXIgcGxhY2UgbW9yZSBlYXNpbHksIG1vc3RseSBmb3IgZGVidWdnaW5nCiAgZm9yIChpIGluIGxhc3RfaTpucm93KGJpYikpIHsKICAgICMgbWFrZSBhIGpvdXJuYWwgcGF0aCBiYXNlZCBvbiB0aGUgam91cm5hbCBuYW1lLiBOb3RlIHRoYXQgdGhpcyBzaG91bGQganVzdCBiZSBhIGZpeGVkIHZhbHVlLCBpIHlvdSBhcmUgZG9pbmcgYSBwcm9qZWN0IG9uIG11bHRpcGxlIGpvdXJuYWxzIGFuZCB3YW50IGFsbCBmaWxlcyBpbiB0aGUgc2FtZSBmb2xkZXIKICAgIGpvdXJuYWxfcGF0aCA8LSBzdHJfcmVwbGFjZV9hbGwoYmliJGpvdXJuYWxbaV0sICIgIiwgIl8iKQogICAgbGFzdF9pIDwtIGkKCiAgICAjIHRoaXMgaXMgdGhlIGRvd25sb2FkIHBhcnQuIFByaW50IHNvbWUgaW5mbyBmaXJzdAogICAgcHJpbnQoIiMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIikKICAgIHByaW50KHBhc3RlMCgiRG93bmxvYWRpbmcgcGFwZXIgIiwgaSwgIiBvZiAiLCBucm93KGJpYiksICIgd2l0aCBkb2k6ICIsIGJpYiRkb2lbaV0pKQoKICAgICMgaWYgdGhlIGRvaSBpcyBOQSwgd2Ugc2tpcCB0aGUgZG93bmxvYWQgYW5kIG1hcmsgaXQgZm9yIG1hbnVhbCBkb3dubG9hZAogICAgaWYoaXMubmEoYmliJGRvaVtpXSkpewogICAgICBwcmludCgiZG9pIGlzIE5BLCBza2lwcGluZyBhbmQgbWFya2luZyBmb3IgbWFudWFsIGRvd25sb2FkIikgCiAgICAgIGJpYl9maWxlIDwtIHJlYWRMaW5lcyhwYXN0ZTAoZG93bmxvYWRfZGlyLCBqb3VybmFsX3BhdGgsICIvIiwgIm1hbnVhbF9kb3dubG9hZF9saXN0LmJpYiIpKSAjIGlmIG11bHRpcGxlIGpvdXJuYWxzIGFyZSB1c2VkIChlLmcuIHdoZW4gcXVlcnlpbmcgcGFwZXJzIGRpZmZlcmVudGx5LCBqb3VybmFsX3BhdGggbWlnaHQgaW5zdGVhZCBiZSBhIHByb2plY3QgcGF0aCkKICAgICAgIyByZXBsYWNlIEAgd2l0aCBAYXJ0aWNsZSBiZWNhdXNlIHNvbWVob3cgZGYyYmliIGRvZXMgdGhpcyBpbmNvcnJlY3RseS4KICAgICAgYmliX2ZpbGUgPC0gZ3N1YigiQHsiLCAiQGFydGljbGV7IiwgZml4ZWQgPSBUUlVFLCBiaWJfZmlsZSkKICAgICAgIyB3cml0ZSB0aGUgY2hhbmdlcyBiYWNrIHRvIHRoZSBiaWIgZmlsZQogICAgICB3cml0ZUxpbmVzKGJpYl9maWxlLCBwYXN0ZTAoZG93bmxvYWRfZGlyLCBqb3VybmFsX3BhdGgsICIvIiwgIm1hbnVhbF9kb3dubG9hZF9saXN0LmJpYiIpKQogICAgICBuZXh0CiAgICB9CiAgICAjIGlmIGRvaSBpcyBub3QgTkEsIHdlIGRvd25sb2FkIHRoZSBmaWxlIHVzaW5nIHRoZSBkb3dubG9hZF9maWxlIGZ1bmN0aW9uIGFib3ZlCiAgICBkb3dubG9hZF9maWxlKGJpYltpLCBdLCBqb3VybmFsX3BhdGggPSBqb3VybmFsX3BhdGgpCiAgICBwcmludChwYXN0ZTAoImRvd25sb2FkZWQgKG9yIGFkZGVkIHRvIG1hbnVhbCBkb3dubG9hZCBsaXN0KSBwYXBlciAiLCBpLCAiIG9mICIsIG5yb3coYmliKSwgIiB3aXRoIGRvaTogIiwgYmliJGRvaVtpXSkpCiAgICAjIHRvIGJlIGZhaXIsIHdlIHdhaXQgYSBzZWNvbmQgYmVmb3JlIGRvd25sb2FkaW5nIHRoZSBuZXh0IGZpbGUgKGJ1dCBob25lc3RseSwgYXMgYWxsIHRoZSBvdGhlciBzdHVmZiB0YWtlcyBsb25nIGFueXdheSwgdGhpcyBjb3VsZCBiZSBvbWl0dGVkKQogICAgU3lzLnNsZWVwKDEpCiAgfQoKICAjIHRvIG1ha2UgdGhlIG1hbnVhbF9kb3dubG9hZF9saXN0LmJpYiBmaWxlIGltcG9ydGFibGUgYnkgWm90ZXJvLCB3ZSBuZWVkIHRvIHJlcGxhY2UgYWxsIEAgd2l0aCBAYXJ0aWNsZSBmb3IgdGhlIGFydGljbGVzIHRoYXQgd2VyZSBhZGRlZCBmb3IgbWFudWFsIGRvd25sb2FkCiAgIyByZWFkIGZpbGUKICAjIGNoZWNrIGlmIGZpbGUgZXhpc3RzCiAgaWYgKGZpbGUuZXhpc3RzKHBhc3RlMChkb3dubG9hZF9kaXIsIGpvdXJuYWxfcGF0aCwgIi8iLCAibWFudWFsX2Rvd25sb2FkX2xpc3QuYmliIikpKSB7CiAgICBiaWJfZmlsZSA8LSByZWFkTGluZXMocGFzdGUwKGRvd25sb2FkX2Rpciwgam91cm5hbF9wYXRoLCAiLyIsICJtYW51YWxfZG93bmxvYWRfbGlzdC5iaWIiKSkKICAgICMgcmVwbGFjZSBAIHdpdGggQGFydGljbGUKICAgIGJpYl9maWxlIDwtIGdzdWIoIkB7IiwgIkBhcnRpY2xleyIsIGZpeGVkID0gVFJVRSwgYmliX2ZpbGUpCiAgICAjIHdyaXRlIGZpbGUKICAgIHdyaXRlTGluZXMoYmliX2ZpbGUsIHBhc3RlMChkb3dubG9hZF9kaXIsIGpvdXJuYWxfcGF0aCwgIi8iLCAibWFudWFsX2Rvd25sb2FkX2xpc3QuYmliIikpCiAgfSBlbHNlIHsKICAgIG1lc3NhZ2UoIk5vIG1hbnVhbF9kb3dubG9hZF9saXN0LmJpYiBmaWxlIGZvdW5kLCBwcm9iYWJseSBhbGwgcGFwZXJzIHdlcmUgZG93bmxvYWRlZCIpCiAgfQp9CgpgYGAKCiMjIE9wdGlvbiAzOiBmcm9tIGEgY3N2IGZpbGUKCmBgYHtyfQoKcHViZGF0YV9kZnMgPC0gcmVhZC5jc3YoIlBTXzIwMjRfbWV0YWRhdGEuY3N2IikgCmJpYiA8LSBwdWJkYXRhX2RmcwoKZG93bmxvYWRfZGlyID0gIi4vZG93bmxvYWRzLyIgIyB5b3Ugd2FudCB0byBjaGFuZ2UgdGhpcyB0byB0aGUgcGF0aCB3aGVyZSB5b3Ugd2FudCB0byBwYXJlbnQgZm9sZGVyIG9mIHRoZSBqb3VybmFsIGZvbGRlcnMgd2l0aCB0aGUgZmlsZXMgdG8gYmUgZG93bmxvYWRlZCB0by4gTWFrZSBzdXJlIHRvIGhhdmUgYSB0cmFpbGluZyBzbGFzaCAoYmVjYXVzZSBJIGFtIGN1cnJlbnRseSB0byBsYXp5IHRvIGRlYWwgd2l0aCBSJ3MgZmlsZSBoYW5kbGluZykKCmxhc3RfaSA8LSAxICMgc28gbG9vcCBjYW4gYmUgcmVzdGFydGVkIGF0IG90aGVyIHBsYWNlIG1vcmUgZWFzaWx5LCBtb3N0bHkgZm9yIGRlYnVnZ2luZwpmb3IgKGkgaW4gbGFzdF9pOm5yb3coYmliKSkgewogICMgbWFrZSBhIGpvdXJuYWwgcGF0aCBiYXNlZCBvbiB0aGUgam91cm5hbCBuYW1lLiBOb3RlIHRoYXQgdGhpcyBzaG91bGQganVzdCBiZSBhIGZpeGVkIHZhbHVlLCBpIHlvdSBhcmUgZG9pbmcgYSBwcm9qZWN0IG9uIG11bHRpcGxlIGpvdXJuYWxzIGFuZCB3YW50IGFsbCBmaWxlcyBpbiB0aGUgc2FtZSBmb2xkZXIKICBqb3VybmFsX3BhdGggPC0gc3RyX3JlcGxhY2VfYWxsKGJpYiRqb3VybmFsW2ldLCAiICIsICJfIikKICBsYXN0X2kgPC0gaQoKICAjIHRoaXMgaXMgdGhlIGRvd25sb2FkIHBhcnQuIFByaW50IHNvbWUgaW5mbyBmaXJzdAogIHByaW50KCIjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyIpCiAgcHJpbnQocGFzdGUwKCJEb3dubG9hZGluZyBwYXBlciAiLCBpLCAiIG9mICIsIG5yb3coYmliKSwgIiB3aXRoIGRvaTogIiwgYmliJGRvaVtpXSkpCgogICMgaWYgdGhlIGRvaSBpcyBOQSwgd2Ugc2tpcCB0aGUgZG93bmxvYWQgYW5kIG1hcmsgaXQgZm9yIG1hbnVhbCBkb3dubG9hZAogIGlmKGlzLm5hKGJpYiRkb2lbaV0pKXsKICAgIHByaW50KCJkb2kgaXMgTkEsIHNraXBwaW5nIGFuZCBtYXJraW5nIGZvciBtYW51YWwgZG93bmxvYWQiKSAKICAgIGJpYl9maWxlIDwtIHJlYWRMaW5lcyhwYXN0ZTAoZG93bmxvYWRfZGlyLCBqb3VybmFsX3BhdGgsICIvIiwgIm1hbnVhbF9kb3dubG9hZF9saXN0LmJpYiIpKSAjIGlmIG11bHRpcGxlIGpvdXJuYWxzIGFyZSB1c2VkIChlLmcuIHdoZW4gcXVlcnlpbmcgcGFwZXJzIGRpZmZlcmVudGx5LCBqb3VybmFsX3BhdGggbWlnaHQgaW5zdGVhZCBiZSBhIHByb2plY3QgcGF0aCkKICAgICMgcmVwbGFjZSBAIHdpdGggQGFydGljbGUgYmVjYXVzZSBzb21laG93IGRmMmJpYiBkb2VzIHRoaXMgaW5jb3JyZWN0bHkuCiAgICBiaWJfZmlsZSA8LSBnc3ViKCJAeyIsICJAYXJ0aWNsZXsiLCBmaXhlZCA9IFRSVUUsIGJpYl9maWxlKQogICAgIyB3cml0ZSB0aGUgY2hhbmdlcyBiYWNrIHRvIHRoZSBiaWIgZmlsZQogICAgd3JpdGVMaW5lcyhiaWJfZmlsZSwgcGFzdGUwKGRvd25sb2FkX2Rpciwgam91cm5hbF9wYXRoLCAiLyIsICJtYW51YWxfZG93bmxvYWRfbGlzdC5iaWIiKSkKICAgIG5leHQKICB9CiAgIyBpZiBkb2kgaXMgbm90IE5BLCB3ZSBkb3dubG9hZCB0aGUgZmlsZSB1c2luZyB0aGUgZG93bmxvYWRfZmlsZSBmdW5jdGlvbiBhYm92ZQogIGRvd25sb2FkX2ZpbGUoYmliW2ksIF0sIGpvdXJuYWxfcGF0aCA9IGpvdXJuYWxfcGF0aCkKICBwcmludChwYXN0ZTAoImRvd25sb2FkZWQgKG9yIGFkZGVkIHRvIG1hbnVhbCBkb3dubG9hZCBsaXN0KSBwYXBlciAiLCBpLCAiIG9mICIsIG5yb3coYmliKSwgIiB3aXRoIGRvaTogIiwgYmliJGRvaVtpXSkpCiAgIyB0byBiZSBmYWlyLCB3ZSB3YWl0IGEgc2Vjb25kIGJlZm9yZSBkb3dubG9hZGluZyB0aGUgbmV4dCBmaWxlIChidXQgaG9uZXN0bHksIGFzIGFsbCB0aGUgb3RoZXIgc3R1ZmYgdGFrZXMgbG9uZyBhbnl3YXksIHRoaXMgY291bGQgYmUgb21pdHRlZCkKICBTeXMuc2xlZXAoMSkKfQoKIyB0byBtYWtlIHRoZSBtYW51YWxfZG93bmxvYWRfbGlzdC5iaWIgZmlsZSBpbXBvcnRhYmxlIGJ5IFpvdGVybywgd2UgbmVlZCB0byByZXBsYWNlIGFsbCBAIHdpdGggQGFydGljbGUgZm9yIHRoZSBhcnRpY2xlcyB0aGF0IHdlcmUgYWRkZWQgZm9yIG1hbnVhbCBkb3dubG9hZAojIHJlYWQgZmlsZQojIGNoZWNrIGlmIGZpbGUgZXhpc3RzCmlmIChmaWxlLmV4aXN0cyhwYXN0ZTAoZG93bmxvYWRfZGlyLCBqb3VybmFsX3BhdGgsICIvIiwgIm1hbnVhbF9kb3dubG9hZF9saXN0LmJpYiIpKSkgewogIGJpYl9maWxlIDwtIHJlYWRMaW5lcyhwYXN0ZTAoZG93bmxvYWRfZGlyLCBqb3VybmFsX3BhdGgsICIvIiwgIm1hbnVhbF9kb3dubG9hZF9saXN0LmJpYiIpKQogICMgcmVwbGFjZSBAIHdpdGggQGFydGljbGUKICBiaWJfZmlsZSA8LSBnc3ViKCJAeyIsICJAYXJ0aWNsZXsiLCBmaXhlZCA9IFRSVUUsIGJpYl9maWxlKQogICMgd3JpdGUgZmlsZQogIHdyaXRlTGluZXMoYmliX2ZpbGUsIHBhc3RlMChkb3dubG9hZF9kaXIsIGpvdXJuYWxfcGF0aCwgIi8iLCAibWFudWFsX2Rvd25sb2FkX2xpc3QuYmliIikpCn0gZWxzZSB7CiAgbWVzc2FnZSgiTm8gbWFudWFsX2Rvd25sb2FkX2xpc3QuYmliIGZpbGUgZm91bmQsIHByb2JhYmx5IGFsbCBwYXBlcnMgd2VyZSBkb3dubG9hZGVkIikKfQoKIyBsZXRzIHNlZSBob3cgbWFueSBmaWxlcyB3ZXJlIGRvd25sb2FkZWQgZnJvbSBvcGVuIGFjY2VzczoKc291cmNlX292ZXJ2aWV3IDwtIHJlYWQudGFibGUocGFzdGUwKGRvd25sb2FkX2Rpciwgam91cm5hbF9wYXRoLCAiL3NvdXJjZV9vdmVydmlldy5jc3YiKSkKdGFibGUoc291cmNlX292ZXJ2aWV3JFYyKQpgYGAKCgoKIyBNYW51YWxseSBhZGRpbmcgZmFpbGVkIGRvd25sb2FkcyB1c2luZyBab3Rlcm8KCkluIGNhc2UgdGhlIGF1dG9tYXRpYyBkb3dubG9hZCBmYWlscywgd2UgY2FuIGRvd25sb2FkIHRoZSBwYXBlcnMgbWFudWFsbHkgZnJvbSBab3Rlcm8uCgpGb3IgdGhpcywgZG93bmxvYWQgYW5kIGluc3RhbGwgWm90ZXJvIGZyb20gPGEgaHJlZj0iaHR0cHM6Ly93d3cuem90ZXJvLm9yZy9kb3dubG9hZC8iPmh0dHBzOi8vd3d3LnpvdGVyby5vcmcvZG93bmxvYWQvPC9hPi4KClRoZW4sIG9wZW4gWm90ZXJvIGFuZCwgaWYgdGhpcyBpcyB0aGUgZmlyc3QgdGltZSB5b3UgaW1wb3J0IHNvbWV0aGluZyBmb3IgYSBwcm9qZWN0IGFkZCBhIG5ldyBsaWJyYXJ5IGJ5IGNsaWNraW5nIG9uIHRoZSAiTmV3IExpYnJhcnkiIGJ1dHRvbiBpbiB0aGUgdG9wIGxlZnQgY29ybmVyLiAKVGhlbiBhZGQgYSBuZXcgY29sbGVjdGlvbiBmb3IgdGhlIGpvdXJuYWwgYnkgY2xpY2tpbmcgb24gdGhlICJOZXcgQ29sbGVjdGlvbiIgYnV0dG9uIGluIHRoZSB0b3AgbGVmdCBjb3JuZXIuIApUaGVuLCBjbGljayBvbiB0aGUgIkZpbGUiIG1lbnUgYW5kIHNlbGVjdCAiSW1wb3J0IGZyb20gRmlsZSIuClNlbGVjdCB0aGUgIm1hbnVhbF9kb3dubG9hZF9saXN0LmJpYiIgZmlsZSBmcm9tIHRoZSBkb3dubG9hZHMgZm9sZGVyIGFuZCBjbGljayAiT3BlbiIuClpvdGVybyB3aWxsIGltcG9ydCB0aGUgcGFwZXJzIGludG8gYSBjb2xsZWN0aW9uIGNhbGxlZCAibWFudWFsX2Rvd25sb2FkX2xpc3QiIHdpdGggc29tZSB0aW1lc3RhbXAuCk1vdmUgdGhlIGZpbGVzIGluIHRoaXMgY29sbGVjdGlvbiBpbnRvIHRoZSBjb2xsZWN0aW9uIHdpdGggdGhlIGpvdXJuYWwgbmFtZSB0aGF0IHlvdSBjcmVhdGVkIGVhcmxpZXIgYnkgZHJhZyBhbmQgZHJvcC4KCk5vdyB3ZSBmb2xsb3cgdGhlIGZvbGxvd2luZyBzdGVwcyBmb3IgZG93bmxvYWRpbmcgdGhlIG1pc3NpbmcgUERGczoKCjEuIEFzIHpvdGVybyBoYXMgc29tZSBhZGRpdGlvbmFsIGZ1bmN0aW9uYWxpdHkgY29tcGFyZWQgdG8gdGhlIG9wZW4gYWNjZXNzIGxvb2t1cCwgd2UgY2FuIHRyeSB0byBkb3dubG9hZCB0aGUgUERGcyBmcm9tIHRoZSBvcGVuIGFjY2VzcyBzb3VyY2VzIHRoYXQgWm90ZXJvIGtub3dzIGFib3V0LiBGb3IgdGhpcywgc2VsZWN0IGFsbCBhcnRpY2xlcyBpbiB0aGUgY29sbGVjdGlvbiBhbmQgcmlnaHQgY2xpY2sgb24gdGhlIHNlbGVjdGlvbiwgYW5kIHNlbGVjdCAiRmluZCBBdmFpbGFibGUgUERGcyIuIFpvdGVybyB3aWxsIG5vdyB0cnkgdG8gZG93bmxvYWQgdGhlIFBERnMgZnJvbSB0aGUgb3BlbiBhY2Nlc3Mgc291cmNlcyB0aGF0IGl0IGtub3dzIGFib3V0LiBJZiBpdCBmaW5kcyBhIFBERiwgaXQgd2lsbCBhdXRvbWF0aWNhbGx5IGFkZCBpdCB0byB0aGUgZW50cnkgaW4gdGhlIGNvbGxlY3Rpb24uIAoyLiBJZiB0aGVyZSBhcmUgc3RpbGwgcGRmcyB0aGF0IGhhdmUgbm90IGJlZW4gZm91bmQsIChhY3R1YWxseSB0aGUgbW9yZSBwZGZzIHlvdSBsb29rIHVwIHRoZSBsZXNzIGxpa2VseSB6b3Rlcm8gaXMgdG8gZmluZCB0aGVtIGJlY2F1c2UgcHVibGlzaGVycyB3aWxsIHRlbXBvcmFyaWx5IGJsb2NrIHlvdXIgSVAgaWYgeW91IGxvb2sgdXAgdG9vIG1hbnkgUERGcyksIHlvdSBjYW4gKipjb25uZWN0IHRvIHRoZSBVbml2ZXJzaXR5IFZQTioqIGFuZCBkb3dubG9hZCB0aGVtIHZpYSBab3Rlcm8ncyBsaWJyYXJ5IGxvb2t1cCBmdW5jdGlvbi4gRm9yIHRoaXMsCiAgIDEuICBnbyB0byBFZGl0ID4gUHJlZmVyZW5jZXMgPiBBZHZhbmNlZCwgYW5kIGluIHRoZSBPcGVuVVJMIG9wdGlvbiwgc2VsZWN0IHlvdXIgY29udGluZW50LCBjb3VudHJ5IGFuZCBpbnN0aXR1dGlvbi4gCiAgIDIuICBTZWxlY3QgYW4gYXJ0aWNsZSAoeWVzLCBhIHNpbmdsZSBvbmUpLCBjbGljayBvbiB0aGUgZ3JlZW4gcmlnaHR3YXJkIGFycm93IGluIHRoZSB0b3AgcmlnaHQgY29ybmVyIG9mIHRoZSB3aW5kb3cgYW5kIHNlbGVjdCAiTGlicmFyeSBMb29rdXAiLiBab3Rlcm8gd2lsbCBub3cgdHJ5IHRvIGZpbmQgdGhlIGFydGljbGUgaW4gdGhlIGxpYnJhcnkgb2YgeW91ciBpbnN0aXR1dGlvbi4KICAgMy4gIElmIGl0IGZpbmRzIHRoZSBhcnRpY2xlLCBpdCB3aWxsIG9wZW4gYSBuZXcgdGFiIGluIHlvdXIgYnJvd3NlciB3aXRoIHRoZSBhcnRpY2xlLiBEb3dubG9hZCB0aGUgYXJ0aWNsZSBhbmQgYWRkIGl0IHRvIHRoZSBlbnRyeSBpbiB0aGUgY29sbGVjdGlvbi4KClRoaXMgc2hvdWxkIGV2ZW50dWFsbHkgcmVzdWx0IGluIGFsbCBhcnRpY2xlcyBiZWluZyBhdmFpbGFibGUuIApPYnZpb3VzbHksIHRoZSBab3Rlcm8gc3RlcHMgc3RpbGwgdGFrZSBhIGxvdCBvZiBtYW51YWwgd29yaywgYnV0IGl0IGlzIHN0aWxsIGJldHRlciB0aGFuIGRvd25sb2FkaW5nIGFsbCBhcnRpY2xlcyBmcm9tIHRoZSB3ZWIuCg==</div>
 
 
 </div>
@@ -2063,12 +1764,6 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeSourceEmbed("02_file_downloader.Rmd");
-  window.initializeCodeFolding("show" === "show");
-});
-</script>
 
 <script>
 $(document).ready(function ()  {

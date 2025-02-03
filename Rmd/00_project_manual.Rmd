@@ -74,7 +74,7 @@ For us, this means that we can use the xml to extract p-values and other test st
 The project is structured as follows:
 
 - `Rmd`: This folder contains the Rmarkdown files that are used to produce the html files.
-- `html`: This folder contains the html files that are produced from the Rmarkdown files.
+- `html`: This folder contains the html files that are produced from the Rmarkdown files (so it is basically a mirror of the .Rmd folder just with the rendered files).
 - `data`: This folder contains the data that is used in the project.
 - `downloads`: This folder contains the pdf files that are downloaded from the DOIs.
 - `grobid_build`: This folder contains the grobid build that is used to convert the pdf files to xml files.

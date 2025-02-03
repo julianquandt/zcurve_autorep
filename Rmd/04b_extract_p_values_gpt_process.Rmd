@@ -1,0 +1,87 @@
+---
+title: "Preprocessing XML files and extracting P-values"
+author: "Julian Quandt"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document:
+    theme: cerulean
+    highlight: tango
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    self_contained: true
+---
+
+```{r, include = FALSE}
+# set options to not knit code chunks
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE, include = TRUE, warning = FALSE, message = FALSE)
+if (!require(kableExtra)) {
+  install.packages("kableExtra")
+  library(kableExtra)
+}
+if (!require(XML)) {
+  install.packages("XML")
+  library(XML)
+}
+if (!require(readr)) {
+  install.packages("readr")
+  library(readr)
+}
+```
+
+The actual file that does the work to extract p-values using GPT is in the python folder. This Rmd file is only to explain how it works and to process the results
+
+```{r, include = FALSE}
+
+# Load th data
+data_path <- "python/json_files_4o/combined_data.csv"
+data <- read.csv(data_path)
+
+metadata <- read.csv("PS_2024_metadata.csv")
+```
+
+
+The below is a crude example of how we can analyze the data obtained with ChatGPT. 
+Sorry I know not super well documented.
+
+```{r, include = FALSE}
+
+
+data$doi_compare <- gsub("[^0-9]", "", data$file_name)
+
+# remove everything but numbers from doi in metadata
+metadata$doi_compare <- gsub("[^0-9]", "", metadata$doi)
+
+
+analysis_data <- merge(data, metadata, by.x = "doi_compare", by.y = "doi_compare", all.x = TRUE)
+
+analysis_data$p_value_reporting <- ifelse(analysis_data$p_value_exact == "True", "exact", "limit")
+
+analysis_data$test_report <- paste0(analysis_data$statistic_type, ifelse(analysis_data$degrees_of_freedom == "", "", paste0("(", analysis_data$degrees_of_freedom, ")")), " = ", analysis_data$value, ", p = ", analysis_data$p_value)
+
+analysis_data$p_value_num <- as.numeric(analysis_data$p_value)
+analysis_data <- calculate_exact_p(analysis_data) ## import from extract_p_values_r
+analysis_data$p_value_analysis <- ifelse(analysis_data$p_value_reporting == "exact", analysis_data$p_value_num, analysis_data$p_value_calc)
+
+analysis_data <- analysis_data[which(!is.na(analysis_data$p_value_analysis)),]
+```
+
+# Fit some z-curves
+
+```{r}
+
+zc <- zcurve(p = analysis_data$p_value_analysis)
+summary(zc)
+
+
+analysis_data$n_author_ms <- ifelse(analysis_data$n_authors > median(unique(analysis_data$n_authors)), "high", "low")
+
+z_curve_n_author_high <- zcurve(p = analysis_data$p_value_analysis[analysis_data$n_author_ms == "high"])
+plot(z_curve_n_author_high)
+summary(z_curve_n_author_high)
+
+z_curve_n_author_low <- zcurve(p = analysis_data$p_value_analysis[analysis_data$n_author_ms == "low"])
+plot(z_curve_n_author_low)
+summary(z_curve_n_author_low)
+
+```

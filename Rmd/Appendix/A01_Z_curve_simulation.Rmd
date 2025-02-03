@@ -1,0 +1,210 @@
+---
+title: "Simulation of Publishing Decision Parameters and Their Effect on the Z-Curve"
+author: "Julian Quandt"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document:
+    theme: cerulean
+    highlight: tango
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    self_contained: true
+---
+
+
+```{r, include = FALSE}
+# set options to not knit code chunks
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE, include = TRUE, warning = FALSE, message = FALSE)
+```
+
+# Simulate Data to see how different publishing decision parameters affect the z-curve
+
+In this document, we simulate how different publishing decision parameters affect the z-curve. We explore scenarios where studies are p-hacked, selectively published, or replicated until a significant result is achieved. The effect of these factors on the empirical power and publication rate is analyzed.
+
+The first function simulates a single study based on the given parameters, generating a two-sided p-value from a t-test. It applies p-hacking, replication, and selective publication criteria to determine which results get published.
+
+We extend the simulation to multiple experiments with different power levels to observe their overall effects on the z-curve. The following function runs multiple experiments and collects p-values from both published and unpublished studies.
+
+```{r}
+
+# ----- FUNCTION TO SIMULATE A SINGLE STUDY -----
+simulate_experiment <- function(delta, sample_size, alpha, phack_range, hack_value, replicate_prop, sel_rate) {
+  # simulate one attempt: generate data and compute the two-sided p-value
+  pval <- t.test(rnorm(sample_size, mean = delta, sd = 1),
+                 mu = 0, alternative = "two.sided")$p.value
+  
+  # If non-significant, see if any “correction” is applied:
+  if (pval >= alpha) {
+    # (a) p-hacking: if p-value is just above alpha (in phack_range), push it below alpha.
+    if (pval > alpha && pval <= phack_range[2]) {
+      pval <- hack_value
+    } else {
+      # (b) Replication until success:
+      if (runif(1) < replicate_prop) {
+        # Repeat the study until a significant p-value is obtained.
+        repeat {
+          pval_new <- t.test(rnorm(sample_size, mean = delta, sd = 1),
+                             mu = 0, alternative = "two.sided")$p.value
+          if (pval_new < alpha) { 
+            pval <- pval_new
+            break
+          }
+        }
+      }
+    }
+  }
+  
+  # Publication (selection) decision:
+  # If the final p-value is significant, it is always published.
+  # Otherwise, non-significant studies are published with probability (1 - sel_rate).
+  published <- if (pval < alpha) TRUE else (runif(1) > sel_rate)
+  
+  return(list(pval = pval, published = published))
+}
+
+
+simulate_zcurve_data <- function(desired_power, sample_size, n_sims, alpha, phack_range, hack_value, replicate_prop, sel_rate) {
+  # ----- SIMULATION LOOP -----
+  # We will store results for each power condition in a list.
+  results_list <- list()
+
+  for (pwr_val in desired_power) {
+    # Calculate the effect size (delta) required for the desired power (using a two-sided t-test)
+    pwr_obj <- power.t.test(n = sample_size, power = pwr_val, sig.level = alpha,
+                            type = "one.sample", alternative = "two.sided")
+    delta <- pwr_obj$delta
+    
+    # Run n_sims simulated experiments for this power condition.
+    sims <- replicate(n_sims,
+                      simulate_experiment(delta, sample_size, alpha,
+                                          phack_range, hack_value, replicate_prop, sel_rate),
+                      simplify = FALSE)
+    
+    # Extract p-values and publication flags:
+    all_pvals       <- sapply(sims, function(x) x$pval)
+    published_flags <- sapply(sims, function(x) x$published)
+    published_pvals <- all_pvals[published_flags]
+    
+    # Compute some summary metrics:
+    emp_power_all <- mean(all_pvals < alpha)       # empirical power across all simulated studies
+    emp_power_pub <- mean(published_pvals < alpha)   # empirical power among published studies
+    publication_rate <- mean(published_flags)        # proportion of studies that are published
+    
+    cat("Desired power:", pwr_val,
+        " | Effect size (delta):", round(delta, 3),
+        " | Empirical power (all):", round(emp_power_all, 3),
+        " | Empirical power (published):", round(emp_power_pub, 3),
+        " | Publication rate:", round(publication_rate, 3), "\n")
+    
+    # Save the results for later inspection/plotting.
+    results_list[[paste0("power_", pwr_val)]] <- list(
+      delta = delta,
+      all_pvals = all_pvals,
+      published_pvals = published_pvals,
+      emp_power_all = emp_power_all,
+      emp_power_pub = emp_power_pub,
+      publication_rate = publication_rate
+    )
+  }
+  return(results_list)
+}
+
+
+```
+
+
+We now define the simulation parameters and execute the experiment across multiple power levels.
+The simulation parameters include:
+
+- `desired_power`: The desired power levels to simulate.
+- `sample_size`: The sample size per experiment (keep this rather high as it has pretty big consequences on how interpretable the z-curve results are in this simulation).
+- `n_sims`: The number of simulations per scenario.
+- `alpha`: The significance level (leave this the same - it doesn't really make sense to change it here).
+- `sel_rate`: The probability that a non-significant study is not published.
+- `phack_range`: The range in which p-values are p-hacked to being just significant.
+- `hack_value`: The target p-value to which p-values are p-hacked.
+- `replicate_prop`: The proportion of non-significant studies that are repeated until significant.
+
+```{r}
+# ----- PARAMETERS -----
+
+# Basic simulation parameters
+desired_power <- c(0.05, 0.2, 0.5, 0.8, 0.9999)  # desired power levels to simulate
+sample_size   <- 1000    # sample size per experiment
+n_sims        <- 500 # number of simulations per scenario
+alpha         <- 0.05  # significance level
+
+# Additional parameters for improved simulation:
+sel_rate      <- 0.25         # for non-significant results: probability that the study is dropped (not published)
+phack_range   <- c(alpha, 0.055)  # if p-value is in (0.05, 0.075] it is "p-hacked"
+hack_value    <- 0.049         # p-hacked p-value (just below alpha)
+replicate_prop <- 0.1          # proportion of non-significant studies (outside phack range) that are repeated until significant
+
+
+# Run the simulation
+z_curve_data_list <- simulate_zcurve_data(desired_power, sample_size, n_sims, alpha,
+                                          phack_range, hack_value, replicate_prop, sel_rate)
+
+
+```
+
+Finally, we apply the zcurve function to analyze the distribution of p-values for different power levels.
+Try playing around with the simulation parameters above to see how they affect the z-curve results.
+
+For example:
+
+- Increase the margin in which people p-hack (phack_range) to see how it affects the z-curve.
+- Change the rate by which people will re-run experiments until they get a significant result (replicate_prop).
+- Adjust the rate by which people will (willingly or focefully) not publish non-significant results (sel_rate).
+
+Especially have a look at the following:
+
+- How is the ODR affected between the z-curves using all (i.e. published and unpublished) p-values and only published p-values?
+- How does this affect the EDR and ERR values? - Which would you think is most useful to look at for real published data?
+
+```{r}
+library(zcurve)
+
+# zcurve with power = 0.05 (i.e. null hypothesis = true)
+## for all p-values
+z_curve_power_0.05_all <- zcurve(p = z_curve_data_list$power_0.05$all_pvals)
+summary(z_curve_power_0.05_all)
+
+## for published p-values only
+z_curve_power_0.05_pub <- zcurve(p = z_curve_data_list$power_0.05$published_pvals)
+summary(z_curve_power_0.05_pub)
+
+
+# zcurve with power = 0.20
+z_curve_power_0.20_all <- zcurve(p = z_curve_data_list$power_0.2$all_pvals)
+summary(z_curve_power_0.20_all)
+
+z_curve_power_0.20_pub <- zcurve(p = z_curve_data_list$power_0.2$published_pvals)
+summary(z_curve_power_0.20_pub)
+
+
+# zcurve with power = 0.50
+z_curve_power_0.50_all <- zcurve(p = z_curve_data_list$power_0.5$all_pvals)
+summary(z_curve_power_0.50_all)
+
+z_curve_power_0.50_pub <- zcurve(p = z_curve_data_list$power_0.5$published_pvals)
+summary(z_curve_power_0.50_pub)
+
+
+# zcurve with power = 0.80
+z_curve_power_0.80_all <- zcurve(p = z_curve_data_list$power_0.8$all_pvals)
+summary(z_curve_power_0.80_all)
+
+z_curve_power_0.80_pub <- zcurve(p = z_curve_data_list$power_0.8$published_pvals)
+summary(z_curve_power_0.80_pub)
+
+
+# zcurve with power = 0.9999
+z_curve_power_0.9999_all <- zcurve(p = z_curve_data_list$power_0.9999$all_pvals)
+summary(z_curve_power_0.9999_all)
+
+z_curve_power_0.9999_pub <- zcurve(p = z_curve_data_list$power_0.9999$published_pvals)
+summary(z_curve_power_0.9999_pub)
+
+```

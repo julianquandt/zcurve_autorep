@@ -167,11 +167,17 @@ fetchPublications <- function(journalISSN, startYear, endYear, cursor = "*", cle
 
 ## Example
 
-Let's fetch all publications of the journal *Academy of Management Journal* from 2011 to 2023.
+Let's fetch all publications of the journal *Psychologocial Science* in 2024.
 
 ```{r}
 publications <- fetchPublications('0956-7976', '2024', '2024', clean_unpublished = FALSE)
 publications_df <- data.frame(publications)
+
+# some cells are lists / tibbles by themselves so clean them up
+list_columns <- sapply(publications_df, is.list)
+publications_df[list_columns] <- lapply(publications_df[list_columns], function(col) {
+  sapply(col, function(x) paste(unlist(x), collapse = ", "))
+})
 
 # save to csv file
 write.csv(publications_df, "example_publications.csv")
