@@ -27,6 +27,9 @@ if (!require(readr)) {
   install.packages("readr")
   library(readr)
 }
+
+here::i_am("Rmd/02_file_downloader.Rmd")
+
 ```
 
 The actual file that does the work to extract p-values using GPT is in the python folder. This Rmd file is only to explain how it works and to process the results

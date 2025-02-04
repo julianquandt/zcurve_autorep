@@ -27,6 +27,7 @@ if (!require(readr)) {
   install.packages("readr")
   library(readr)
 }
+here::i_am("Rmd/02_file_downloader.Rmd")
 ```
 
 # Helper functions
