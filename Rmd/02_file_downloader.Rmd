@@ -317,7 +317,7 @@ for (name in names(pubdata_dfs)) {
 
 ```{r}
 
-pubdata_dfs <- read.csv("data/PS_2024_metadata.csv") 
+pubdata_dfs <- read.csv("data/PS_2024_metadata_backup.csv") 
 bib <- pubdata_dfs
 
 download_dir = "./downloads/" # you want to change this to the path where you want to parent folder of the journal folders with the files to be downloaded to. Make sure to have a trailing slash (because I am currently to lazy to deal with R's file handling)
