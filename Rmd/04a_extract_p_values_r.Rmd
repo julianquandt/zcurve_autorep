@@ -990,7 +990,7 @@ calculate_exact_p <- function(extracted_data) {
 This is how you would pass a list of files to get a table containing all p-values and the corresponding test reports.
 
 ```{r}
-path <- "downloads/Psychological_Science" # remember to replace / by \\ on windows
+path <- here::here("downloads/Psychological_Science") # remember to replace / by \\ on windows
 files_xml <- list.files(path, pattern = "*.xml", full.names = TRUE)
 
 extracted_data <- extract_tests(path, files_xml, filter_phrases = c())
@@ -1043,6 +1043,6 @@ sum(grepl("calc", extracted_data$p_value_reporting)) + sum(grepl("exact", extrac
 # Save Extracted P-value Data to file
 
 ```{r}
-write.csv(extracted_data, "data/PS_2024_testdata.csv")
+write.csv(extracted_data, here::here("data/PS_2024_testdata.csv"))
 
 ```

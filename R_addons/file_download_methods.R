@@ -67,9 +67,9 @@ oa_dl <- function(doi, journal_path, download_dir, oa_email_key, doi_filename) {
     tryCatch(
         {
           # download file from best url
-          suppressWarnings(download.file(url = best_url, destfile = paste0(download_dir, journal_path, "/", doi_filename, ".pdf"), mode = "wb"))
+          suppressWarnings(download.file(url = best_url, destfile = here::here(download_dir, journal_path, paste0(doi_filename, ".pdf")), mode = "wb"))
           # check if file is larger than 40 kb
-          if (file.size(paste0(download_dir, journal_path, "/", doi_filename, ".pdf")) < 20000) {
+          if (file.size(here::here(download_dir, journal_path, paste0(doi_filename, ".pdf"))) < 20000) {
             stop("File is too small, falling back on other urls")
           } else {
             message("Download successful from ", best_url)
@@ -95,10 +95,10 @@ oa_dl <- function(doi, journal_path, download_dir, oa_email_key, doi_filename) {
             tryCatch(
               { 
                 # download file from other urls if previous ones failed
-                suppressWarnings(download.file(url = oadoi_fetch$oa_locations[[1]]$url[i], destfile = paste0(download_dir, journal_path, "/", doi_filename, ".pdf"), mode = "wb"))
+                suppressWarnings(download.file(url = oadoi_fetch$oa_locations[[1]]$url[i], destfile = here::here(download_dir, journal_path, paste0(doi_filename, ".pdf")), mode = "wb"))
                 message("Download successful from ", oadoi_fetch$oa_locations[[1]]$url[i])
                 # sometimes a file is downloaded cannot possibly be large enough to actually contain something, so check that
-                if (file.size(paste0(download_dir, journal_path, "/", doi_filename, ".pdf")) < 20000) {
+                if (file.size(here::here(download_dir, journal_path, paste0(doi_filename, ".pdf"))) < 20000) {
                   stop("File is too small, falling back on other urls")
                 } else {
                   message("Download successful from ", oadoi_fetch$oa_locations[[1]]$url[i])
@@ -132,15 +132,15 @@ selenium_api_dl <- function(doi, res, download_dir, journal_path){
   if(!exists("sel_download_dir_set")){
     sel_download_dir_set <- TRUE
     assign("sel_download_dir_set", sel_download_dir_set, envir = .GlobalEnv)
-    sel_download_dir <- normalizePath(paste0(download_dir, journal_path))
+    sel_download_dir <- here::here(download_dir, journal_path)
     # write to txt file
-    write(sel_download_dir, file = "./python/sel_download_dir.txt")
+    write(sel_download_dir, file = here::here("python/sel_download_dir.txt"))
   }
   # if server is not started yet, do so
   if(!exists("selenium_running")){
     selenium_running <- TRUE
     assign("selenium_running", selenium_running, envir = .GlobalEnv)
-    p <- process$new("python3", c("./python/selenium_server.py"), 
+    p <- process$new("python3", c(here::here("python/selenium_server.py")), 
                  stdout = "selenium.log", stderr = "selenium.log", supervise = TRUE, cleanup = FALSE)
     assign("p", p, envir = .GlobalEnv)
     print("starting selenium server")

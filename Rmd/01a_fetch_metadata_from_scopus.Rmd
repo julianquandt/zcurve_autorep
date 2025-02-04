@@ -61,7 +61,7 @@ Due to restrictions in the Scopus API you will only be able to run this code whe
 We will now load the API key from the file into R. This will make it available to the code that we will run later.
 
 ```{r, class.source = "fold-show"}
-source("secret_vars.R")
+source(here::here("secret_vars.R"))
 ```
 
 
@@ -584,7 +584,7 @@ direct_query_test_data <- query_and_process(
 )
 
 #save to csv
-write.csv(PS_2024, "data/PS_2024_metadata.csv")
+write.csv(PS_2024, here::here("data/PS_2024_metadata.csv"))
 ```
 
 When running this, you will see that you got some warning messages about not all papers being retrieved:
@@ -737,7 +737,7 @@ gs_worksheet
 # save the value shown next to ID to secret_vars.R as google_sheet_id for later use 
 
 # save local R data frame copy
-saveRDS(journal_dfs, file = paste0("publication_data_", str_replace_all(Sys.time(), ":", ""), ".rds"))
+saveRDS(journal_dfs, file = here::here(paste0("publication_data_", str_replace_all(Sys.time(), ":", ""), ".rds")))
 ```
 
 Thats it. 

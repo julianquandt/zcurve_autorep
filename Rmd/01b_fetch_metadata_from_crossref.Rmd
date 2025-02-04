@@ -180,6 +180,6 @@ publications_df[list_columns] <- lapply(publications_df[list_columns], function(
 })
 
 # save to csv file
-write.csv(publications_df, "example_publications.csv")
+write.csv(publications_df, here::here("data/example_publications_xref.csv"))
 ```
 

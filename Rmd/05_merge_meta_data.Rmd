@@ -48,9 +48,9 @@ missing_xml_files <- files_pdf[basename(files_pdf) %in% paste0(missing_xml, ".pd
 
 ```{r}
 
-metadata <- read.csv("data/PS_2024_metadata.csv")
+metadata <- read.csv(here::here("data/PS_2024_metadata.csv"))
 
-testdata <- read.csv("data/PS_2024_testdata.csv")
+testdata <- read.csv(here::here("data/PS_2024_testdata.csv"))
 
 ```
 
@@ -79,7 +79,6 @@ analysis_data <- merged_data[!is.na(merged_data$p_value), ]
 
 # remove rows that have non-exact p-values which could not be calculated from test statistics
 analysis_data <- analysis_data[!analysis_data$p_value_reporting == "limit",]
-View(analysis_data)
 
 
 # add a p-value_analysis column, that compiles the p_value_numeric and p_value_calc columns
@@ -91,5 +90,5 @@ if (any(analysis_data$p_value_analysis > 1 | analysis_data$p_value_analysis < 0)
 
 }
 
-write.csv(analysis_data, "data/PS_2024_analysis.csv")
+write.csv(analysis_data, here::here("data/PS_2024_analysis.csv"))
 ```

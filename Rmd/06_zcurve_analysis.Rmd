@@ -27,7 +27,7 @@ library(XML)
 
 ```{r}
 
-analysis_data <- read.csv("data/PS_2024_analysis.csv")
+analysis_data <- read.csv(here::here("data/PS_2024_analysis.csv"))
 View(analysis_data)
 ```
 

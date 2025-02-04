@@ -27,7 +27,7 @@ if (!require(kableExtra)) {
   library(kableExtra)
 }
 
-source("secret_vars.R") # this needs to be activated and the file created
+source(here::here("secret_vars.R")) # this needs to be activated and the file created
 ```
 
 
@@ -45,6 +45,12 @@ These manual downloads, can be done in Zotero (see below for instructions).
 
 ```{r}
 # this is a list of packages that are needed for the script to run.
+
+# here for file paths
+if (!require(here)) {
+  install.packages("here")
+  library(here)
+}
 
 # httr is used for http requests
 if (!require(httr)) {
@@ -114,14 +120,14 @@ The main functions are the following:
 ```{r}
 # Check if file already exists and is a valid PDF
 file_already_downloaded <- function(download_dir, journal_path, doi_filename) {
-  file_path <- paste0(download_dir, journal_path, "/", doi_filename, ".pdf")
+  file_path <- here::here(download_dir, journal_path, paste0(doi_filename, ".pdf"))
   return(file.exists(file_path) && file.size(file_path) > 20000)
 }
 
 # Load external download methods
 load_external_methods <- function() {
   if (!exists("download_methods_loaded")) {
-    source("./R_addons/file_download_methods.R")
+    source(here::here("R_addons/file_download_methods.R"))
   }
 }
 
@@ -160,7 +166,7 @@ run_download_methods <- function(download_methods, doi) {
 
 append_source_overview <- function(dl_method, doi, journal_path, download_dir) {
   write.table(data.frame(doi = doi, method = dl_method),
-    paste0(download_dir, journal_path, "/source_overview.csv"),
+    here::here(download_dir, journal_path, "source_overview.csv"),
     append = TRUE, row.names = FALSE, col.names = FALSE
   )
 }
@@ -170,12 +176,12 @@ handle_download_error <- function(row, journal_path, download_dir, source_overvi
   if (source_overview) {
     append_source_overview("manual", row$doi, journal_path, download_dir)
   }
-  df2bib(row, file = paste0(download_dir, journal_path, "/manual_download_list.bib"), append = TRUE)
+  df2bib(row, file = here::here(download_dir, journal_path, "manual_download_list.bib"), append = TRUE)
   message("No open access version found. Appending it to overview for manual download")
 }
 
 # Main function
-download_file <- function(row, journal_path = "", download_dir = "./downloads/",
+download_file <- function(row, journal_path = "", download_dir = "downloads",
                           source_overview = TRUE, load_external_methods = TRUE) {
   doi_filename <- gsub("[^[:alnum:]]", "", row$doi)
 
@@ -233,7 +239,7 @@ The google sheet needs to be defined in the secret_vars.R file.
 bib <- bib2df("bibtex_file.bib")
 names(bib)[which(names(bib) == "DOI")] <- "doi"
 names(bib)[which(names(bib) == "URL")] <- "link"
-download_dir = "./downloads/" # you want to change this to the path where you want to parent folder of the journal folders with the files to be downloaded to. Make sure to have a trailing slash (because I am currently to lazy to deal with R's file handling)
+download_dir = "downloads" # you want to change this to the path where you want to parent folder of the journal folders with the files to be downloaded to. Make sure to have a trailing slash (because I am currently to lazy to deal with R's file handling)
 
 last_i <- 1
  for(i in last_i:nrow(bib)){
@@ -242,12 +248,12 @@ last_i <- 1
       download_file(bib[i, ], journal_path = journal_path)
       print(paste0("downloaded (or added to manual download list) paper ", i, " of ", nrow(bib), " with doi: ", bib$doi[i]))
 }
-if (file.exists(paste0(download_dir, journal_path, "/", "manual_download_list.bib"))) {
-  bib_file <- readLines(paste0(download_dir, journal_path, "/", "manual_download_list.bib"))
+if (file.exists(here::here(download_dir, journal_path, "manual_download_list.bib"))) {
+  bib_file <- readLines(here::here(download_dir, journal_path, "manual_download_list.bib"))
   # replace @ with @article
   bib_file <- gsub("@{", "@article{", fixed = TRUE, bib_file)
   # write file
-  writeLines(bib_file, paste0(download_dir, journal_path, "/", "manual_download_list.bib"))
+  writeLines(bib_file, here::here(download_dir, journal_path, "manual_download_list.bib"))
 } else {
   message("No manual_download_list.bib file found, probably all papers were downloaded")
 }
@@ -265,7 +271,7 @@ drive_auth(email = my_gmail)
 gs_sheets <- gs4_get(google_sheet_id)
 pubdata_dfs <- sapply(gs_sheets$sheets$name, function(x) read_sheet(gs_sheets, sheet = x), simplify = FALSE)
 
-download_dir = "./downloads/" # you want to change this to the path where you want to parent folder of the journal folders with the files to be downloaded to. Make sure to have a trailing slash (because I am currently to lazy to deal with R's file handling)
+download_dir = here::here("downloads/") # you want to change this to the path where you want to parent folder of the journal folders with the files to be downloaded to. Make sure to have a trailing slash (because I am currently to lazy to deal with R's file handling)
 
 for (name in names(pubdata_dfs)) {
   bib <- data.frame(pubdata_dfs[[name]])
@@ -283,11 +289,11 @@ for (name in names(pubdata_dfs)) {
     # if the doi is NA, we skip the download and mark it for manual download
     if(is.na(bib$doi[i])){
       print("doi is NA, skipping and marking for manual download") 
-      bib_file <- readLines(paste0(download_dir, journal_path, "/", "manual_download_list.bib")) # if multiple journals are used (e.g. when querying papers differently, journal_path might instead be a project path)
+      bib_file <- readLines(here::here(download_dir, journal_path, "manual_download_list.bib")) # if multiple journals are used (e.g. when querying papers differently, journal_path might instead be a project path)
       # replace @ with @article because somehow df2bib does this incorrectly.
       bib_file <- gsub("@{", "@article{", fixed = TRUE, bib_file)
       # write the changes back to the bib file
-      writeLines(bib_file, paste0(download_dir, journal_path, "/", "manual_download_list.bib"))
+      writeLines(bib_file, here::here(download_dir, journal_path, "manual_download_list.bib"))
       next
     }
     # if doi is not NA, we download the file using the download_file function above
@@ -300,12 +306,12 @@ for (name in names(pubdata_dfs)) {
   # to make the manual_download_list.bib file importable by Zotero, we need to replace all @ with @article for the articles that were added for manual download
   # read file
   # check if file exists
-  if (file.exists(paste0(download_dir, journal_path, "/", "manual_download_list.bib"))) {
-    bib_file <- readLines(paste0(download_dir, journal_path, "/", "manual_download_list.bib"))
+  if (file.exists(here::here(download_dir, journal_path, "manual_download_list.bib"))) {
+    bib_file <- readLines(here::here(download_dir, journal_path, "manual_download_list.bib"))
     # replace @ with @article
     bib_file <- gsub("@{", "@article{", fixed = TRUE, bib_file)
     # write file
-    writeLines(bib_file, paste0(download_dir, journal_path, "/", "manual_download_list.bib"))
+    writeLines(bib_file, here::here(download_dir, journal_path, "manual_download_list.bib"))
   } else {
     message("No manual_download_list.bib file found, probably all papers were downloaded")
   }
@@ -317,10 +323,10 @@ for (name in names(pubdata_dfs)) {
 
 ```{r}
 
-pubdata_dfs <- read.csv("data/PS_2024_metadata.csv") 
+pubdata_dfs <- read.csv(here::here("data/PS_2024_metadata.csv")) 
 bib <- pubdata_dfs
 
-download_dir = "./downloads/" # you want to change this to the path where you want to parent folder of the journal folders with the files to be downloaded to. Make sure to have a trailing slash (because I am currently to lazy to deal with R's file handling)
+download_dir = here::here("downloads") # you want to change this to the path where you want to parent folder of the journal folders with the files to be downloaded to. Make sure to have a trailing slash (because I am currently to lazy to deal with R's file handling)
 
 last_i <- 1 # so loop can be restarted at other place more easily, mostly for debugging
 for (i in last_i:nrow(bib)) {
@@ -335,11 +341,11 @@ for (i in last_i:nrow(bib)) {
   # if the doi is NA, we skip the download and mark it for manual download
   if(is.na(bib$doi[i])){
     print("doi is NA, skipping and marking for manual download") 
-    bib_file <- readLines(paste0(download_dir, journal_path, "/", "manual_download_list.bib")) # if multiple journals are used (e.g. when querying papers differently, journal_path might instead be a project path)
+    bib_file <- readLines(here::here(download_dir, journal_path, "manual_download_list.bib")) # if multiple journals are used (e.g. when querying papers differently, journal_path might instead be a project path)
     # replace @ with @article because somehow df2bib does this incorrectly.
     bib_file <- gsub("@{", "@article{", fixed = TRUE, bib_file)
     # write the changes back to the bib file
-    writeLines(bib_file, paste0(download_dir, journal_path, "/", "manual_download_list.bib"))
+    writeLines(bib_file, here::here(download_dir, journal_path, "manual_download_list.bib"))
     next
   }
   # if doi is not NA, we download the file using the download_file function above
@@ -352,18 +358,18 @@ for (i in last_i:nrow(bib)) {
 # to make the manual_download_list.bib file importable by Zotero, we need to replace all @ with @article for the articles that were added for manual download
 # read file
 # check if file exists
-if (file.exists(paste0(download_dir, journal_path, "/", "manual_download_list.bib"))) {
-  bib_file <- readLines(paste0(download_dir, journal_path, "/", "manual_download_list.bib"))
+if (file.exists(here::here(download_dir, journal_path, "manual_download_list.bib"))) {
+  bib_file <- readLines(here::here(download_dir, journal_path, "manual_download_list.bib"))
   # replace @ with @article
   bib_file <- gsub("@{", "@article{", fixed = TRUE, bib_file)
   # write file
-  writeLines(bib_file, paste0(download_dir, journal_path, "/", "manual_download_list.bib"))
+  writeLines(bib_file, here::here(download_dir, journal_path, "manual_download_list.bib"))
 } else {
   message("No manual_download_list.bib file found, probably all papers were downloaded")
 }
 
 # lets see how many files were downloaded from open access:
-source_overview <- read.table(paste0(download_dir, journal_path, "/source_overview.csv"))
+source_overview <- read.table(here::here(download_dir, journal_path, "source_overview.csv"))
 table(source_overview$V2)
 ```
 
