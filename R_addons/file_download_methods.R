@@ -140,9 +140,18 @@ selenium_api_dl <- function(doi, res, download_dir, journal_path){
   if(!exists("selenium_running")){
     selenium_running <- TRUE
     assign("selenium_running", selenium_running, envir = .GlobalEnv)
-    Sys.setenv(PYTHONUTF8 = "1")
-    p <- process$new(here::here(".venv/Scripts/python.exe"), c("./python/selenium_server.py"), 
+    if(.Platform$OS.type == "windows"){
+      # start selenium server
+      Sys.setenv(PYTHONUTF8 = "1")
+      p <- process$new(here::here(".venv/Scripts/python.exe"), c("./python/selenium_server.py"), 
                  stdout = "selenium.log", stderr = "selenium.log", supervise = TRUE, cleanup = FALSE)
+    } else {
+      # start selenium server
+      Sys.setenv(PYTHONUTF8 = "1")
+      p <- process$new(here::here(".venv/bin/python3"), c("./python/selenium_server.py"), 
+                 stdout = "selenium.log", stderr = "selenium.log", supervise = TRUE, cleanup = FALSE)
+    }
+
     assign("p", p, envir = .GlobalEnv)
     print("starting selenium server")
     # wait for server to start
