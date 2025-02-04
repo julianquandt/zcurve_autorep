@@ -6,7 +6,6 @@ annotated-types==0.7.0
 anyio==3.7.1
 asttokens==3.0.0
 async-timeout==5.0.1
-attrs==21.4.0
 beautifulsoup4==4.12.3
 bs4==0.0.2
 cdp-socket==1.2.8
