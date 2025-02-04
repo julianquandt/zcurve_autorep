@@ -8,5 +8,5 @@ The files are numbered to indicate the order in which you would use them, where 
 
 This repository is only meant as a temporary demonstration of the code.
 However, the code will be migrated to another repository in the long term and pointed to from this one.
-The code is currently only meant as a working example, and might still contain errors, and is poorly documented.
-It should, however, already be usable in it's current state.
+
+A good place to start exploring this repository is to look at the Rmd/00_project_manual.Rmd file or the html/00_project_manual.html file. 

@@ -164,7 +164,10 @@ I would not recommend this though, as I also included some functionality to try 
 To set up Docker for file conversion, follow the docker manual in the `Rmd/03_pdf_conversion_manual.Rmd` file.
 This will guide you through the process of setting up Docker and running grobid in a container.
 
+# Data
 
+The data folder also contains some example data so you can try the different scripts. 
+Moreover, in Appendix folder within the Rmd folder, you can find a simulation script to investigate the impact of some QRPs on z-curve analyses.
 
 
 
