@@ -140,7 +140,8 @@ selenium_api_dl <- function(doi, res, download_dir, journal_path){
   if(!exists("selenium_running")){
     selenium_running <- TRUE
     assign("selenium_running", selenium_running, envir = .GlobalEnv)
-    p <- process$new("python3", c(here::here("python/selenium_server.py")), 
+    Sys.setenv(PYTHONUTF8 = "1")
+    p <- process$new(here::here(".venv/Scripts/python.exe"), c("./python/selenium_server.py"), 
                  stdout = "selenium.log", stderr = "selenium.log", supervise = TRUE, cleanup = FALSE)
     assign("p", p, envir = .GlobalEnv)
     print("starting selenium server")
@@ -158,7 +159,7 @@ selenium_api_dl <- function(doi, res, download_dir, journal_path){
 
   # download file using selenium
   doi_filename <- gsub("[^[:alnum:]]", "", doi)
-  response <- GET(paste0("http://127.0.0.1:8000/download?url=", URLencode(url), "&doi_filename=", doi_filename))
+  response <- GET(paste0("http://127.0.0.1:8001/download?url=", URLencode(url), "&doi_filename=", doi_filename))
 
   # see if download was successful or failed with expected error
   if(content(response)$status == "Download successful"){
@@ -179,8 +180,8 @@ selenium_api_dl <- function(doi, res, download_dir, journal_path){
   rts <- 0
   while(content(response)$status != "Download successful" && rts < 1){
     message("Download failed with selenium, rotating IP and retrying")
-    response <- GET(paste0("http://127.0.0.1:8000/rotate"))
-    response <- GET(paste0("http://127.0.0.1:8000/download?url=", URLencode(url), "&doi_filename=", doi_filename))
+    response <- GET(paste0("http://127.0.0.1:8001/rotate"))
+    response <- GET(paste0("http://127.0.0.1:8001/download?url=", URLencode(url), "&doi_filename=", doi_filename))
     rts <- rts + 1
   }
 
@@ -233,17 +234,17 @@ download_methods <- c("oa_dl", "selenium_api_dl")
 # url_taylor <- "https://dx.doi.org/10.1080/23311908.2024.2432740"                    # taylor-francis
 # url_wiley <- "https://dx.doi.org/10.1002/psp4.13295"                                # wiley
 
-# response <- GET(paste0("http://127.0.0.1:8000/download?url=", URLencode(url_aa_avail), "&doi_filename=test_aa"))
-# response <- GET(paste0("http://127.0.0.1:8000/download?url=", URLencode(url_aa_unavail), "&doi_filename=test_aa"))
-# response <- GET(paste0("http://127.0.0.1:8000/download?url=", URLencode(url_apa), "&doi_filename=test_apa"))
-# response <- GET(paste0("http://127.0.0.1:8000/download?url=", URLencode(url_doi_noresolve), "&doi_filename=test_apa"))
-# response <- GET(paste0("http://127.0.0.1:8000/download?url=", URLencode(url_elsevier), "&doi_filename=test_elsevier"))
-# response <- GET(paste0("http://127.0.0.1:8000/download?url=", URLencode(url_mdpi), "&doi_filename=test_mdpi"))
-# response <- GET(paste0("http://127.0.0.1:8000/download?url=", URLencode(url_nature), "&doi_filename=test_nature"))
-# response <- GET(paste0("http://127.0.0.1:8000/download?url=", URLencode(url_oxford), "&doi_filename=test_oxford"))
-# response <- GET(paste0("http://127.0.0.1:8000/download?url=", URLencode(url_pnas), "&doi_filename=test_pnas"))
-# response <- GET(paste0("http://127.0.0.1:8000/download?url=", URLencode(url_sage), "&doi_filename=test_sage"))
-# response <- GET(paste0("http://127.0.0.1:8000/download?url=", URLencode(url_science), "&doi_filename=test_science"))
-# response <- GET(paste0("http://127.0.0.1:8000/download?url=", URLencode(url_springer), "&doi_filename=test_springer"))
-# response <- GET(paste0("http://127.0.0.1:8000/download?url=", URLencode(url_taylor), "&doi_filename=test_taylor"))
-# response <- GET(paste0("http://127.0.0.1:8000/download?url=", URLencode(url_wiley), "&doi_filename=test_wiley"))
+# response <- GET(paste0("http://127.0.0.1:8001/download?url=", URLencode(url_aa_avail), "&doi_filename=test_aa"))
+# response <- GET(paste0("http://127.0.0.1:8001/download?url=", URLencode(url_aa_unavail), "&doi_filename=test_aa"))
+# response <- GET(paste0("http://127.0.0.1:8001/download?url=", URLencode(url_apa), "&doi_filename=test_apa"))
+# response <- GET(paste0("http://127.0.0.1:8001/download?url=", URLencode(url_doi_noresolve), "&doi_filename=test_apa"))
+# response <- GET(paste0("http://127.0.0.1:8001/download?url=", URLencode(url_elsevier), "&doi_filename=test_elsevier"))
+# response <- GET(paste0("http://127.0.0.1:8001/download?url=", URLencode(url_mdpi), "&doi_filename=test_mdpi"))
+# response <- GET(paste0("http://127.0.0.1:8001/download?url=", URLencode(url_nature), "&doi_filename=test_nature"))
+# response <- GET(paste0("http://127.0.0.1:8001/download?url=", URLencode(url_oxford), "&doi_filename=test_oxford"))
+# response <- GET(paste0("http://127.0.0.1:8001/download?url=", URLencode(url_pnas), "&doi_filename=test_pnas"))
+# response <- GET(paste0("http://127.0.0.1:8001/download?url=", URLencode(url_sage), "&doi_filename=test_sage"))
+# response <- GET(paste0("http://127.0.0.1:8001/download?url=", URLencode(url_science), "&doi_filename=test_science"))
+# response <- GET(paste0("http://127.0.0.1:8001/download?url=", URLencode(url_springer), "&doi_filename=test_springer"))
+# response <- GET(paste0("http://127.0.0.1:8001/download?url=", URLencode(url_taylor), "&doi_filename=test_taylor"))
+# response <- GET(paste0("http://127.0.0.1:8001/download?url=", URLencode(url_wiley), "&doi_filename=test_wiley"))
