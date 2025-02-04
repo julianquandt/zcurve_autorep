@@ -37,7 +37,7 @@ The actual file that does the work to extract p-values using GPT is in the pytho
 data_path <- "python/json_files_4o/combined_data.csv"
 data <- read.csv(data_path)
 
-metadata <- read.csv("PS_2024_metadata.csv")
+metadata <- read.csv("data/PS_2024_metadata.csv")
 ```
 
 

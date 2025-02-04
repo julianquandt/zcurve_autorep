@@ -48,9 +48,9 @@ missing_xml_files <- files_pdf[basename(files_pdf) %in% paste0(missing_xml, ".pd
 
 ```{r}
 
-metadata <- read.csv("PS_2024_metadata.csv")
+metadata <- read.csv("data/PS_2024_metadata.csv")
 
-testdata <- read.csv("PS_2024_testdata.csv")
+testdata <- read.csv("data/PS_2024_testdata.csv")
 
 ```
 
@@ -91,5 +91,5 @@ if (any(analysis_data$p_value_analysis > 1 | analysis_data$p_value_analysis < 0)
 
 }
 
-write.csv(analysis_data, "PS_2024_analysis.csv")
+write.csv(analysis_data, "data/PS_2024_analysis.csv")
 ```

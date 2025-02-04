@@ -584,7 +584,7 @@ direct_query_test_data <- query_and_process(
 )
 
 #save to csv
-write.csv(PS_2024, "PS_2024_metadata.csv")
+write.csv(PS_2024, "data/PS_2024_metadata.csv")
 ```
 
 When running this, you will see that you got some warning messages about not all papers being retrieved:

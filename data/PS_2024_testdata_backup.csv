@@ -1,0 +1,382 @@
+"","file","test_report","p_value","p_value_reporting","p_value_num","use_p_val","p_value_calc"
+"RESULTS__Post-cue Recall Behavior_1","downloads/Psychological_Science/10117709567976231215298.grobid.tei.xml","p < .001, Cohen","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Effectiveness of Model-Based Cue Selection_11","downloads/Psychological_Science/10117709567976231215298.grobid.tei.xml","p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Effectiveness of Model-Based Cue Selection_12","downloads/Psychological_Science/10117709567976231215298.grobid.tei.xml","p < .001, Cohen","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Effectiveness of Model-Based Cue Selection_13","downloads/Psychological_Science/10117709567976231215298.grobid.tei.xml","p = .003","p = .003","exact",0.003,TRUE,NA
+"RESULTS__Effectiveness of Model-Based Cue Selection_14","downloads/Psychological_Science/10117709567976231215298.grobid.tei.xml","p < .001, Cohen","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Survey Results_1","downloads/Psychological_Science/10117709567976231221534.grobid.tei.xml"," (1)=10.19, p=.001","p=.001.","exact",0.001,TRUE,NA
+"RESULTS__Performance Results_11","downloads/Psychological_Science/10117709567976231221534.grobid.tei.xml","t(120)=-2.95, p=.004","p=.004","exact",0.004,TRUE,NA
+"RESULTS__Performance Results_12","downloads/Psychological_Science/10117709567976231221534.grobid.tei.xml","t(120)=0.92,p=.358","p=.358","exact",0.358,TRUE,NA
+"RESULTS__Performance Results_13","downloads/Psychological_Science/10117709567976231221534.grobid.tei.xml","t(120)=4.29, p < .001","p < .001","calc_from_t",0.001,TRUE,3.637071e-05
+"RESULTS__Performance Results_14","downloads/Psychological_Science/10117709567976231221534.grobid.tei.xml","t(120)=2.24, p=.027","p=.027","exact",0.027,TRUE,NA
+"RESULTS__Performance Results_15","downloads/Psychological_Science/10117709567976231221534.grobid.tei.xml","t(120)=0.10, p=.922","p=.922.","exact",0.922,TRUE,NA
+"RESULTS__Performance Results_16","downloads/Psychological_Science/10117709567976231221534.grobid.tei.xml","p=.489, nor was there a Condition ","p=.489","exact",0.489,TRUE,NA
+"RESULTS__Performance Results_17","downloads/Psychological_Science/10117709567976231221534.grobid.tei.xml","t(3511)=-0.57, p=.567","p=.567","exact",0.567,TRUE,NA
+"RESULTS__Calculus course performance._11","downloads/Psychological_Science/10117709567976231221534.grobid.tei.xml","p=.532, but it did differ from the diversity slope seen in the ecological","p=.532","exact",0.532,TRUE,NA
+"RESULTS__Calculus course performance._12","downloads/Psychological_Science/10117709567976231221534.grobid.tei.xml","t(378)=3.17, p=.002","p=.002","exact",0.002,TRUE,NA
+"RESULTS__Calculus course performance._13","downloads/Psychological_Science/10117709567976231221534.grobid.tei.xml","t(4860)=-0.58, p=.562","p=.562","exact",0.562,TRUE,NA
+"RESULTS__Calculus course performance._14","downloads/Psychological_Science/10117709567976231221534.grobid.tei.xml","interaction, B=-0.66, SE=0.28, t(120)=-2.36, p=.020","p=.020","exact",0.02,TRUE,NA
+"RESULTS__Calculus course performance._15","downloads/Psychological_Science/10117709567976231221534.grobid.tei.xml","t(120)=0.46, p=.644","p=.644","exact",0.644,TRUE,NA
+"RESULTS__Calculus course performance._16","downloads/Psychological_Science/10117709567976231221534.grobid.tei.xml","t(120)=3.82, p < .001","p < .001","calc_from_t",0.001,TRUE,0.0002128171
+"RESULTS__Calculus course performance._17","downloads/Psychological_Science/10117709567976231221534.grobid.tei.xml","t(120)=3.58, p=.001","p=.001","exact",0.001,TRUE,NA
+"RESULTS__Calculus course performance._18","downloads/Psychological_Science/10117709567976231221534.grobid.tei.xml","t(120)=0.86, p=.391","p=.391","exact",0.391,TRUE,NA
+"RESULTS__Calculus course performance._19","downloads/Psychological_Science/10117709567976231221534.grobid.tei.xml","Notably, the Condition × Classroom Diversity interaction did not differ as a function of participant gender, SE=0.54,p=.882","p=.882","exact",0.882,TRUE,NA
+"RESULTS__Calculus course performance._110","downloads/Psychological_Science/10117709567976231221534.grobid.tei.xml","t(3359)= -2.07, p=.038","p=.038","exact",0.038,TRUE,NA
+"1","downloads/Psychological_Science/10117709567976231221990.grobid.tei.xml","no p-values found; paper might be qualitative?","no p-values found; paper might be qualitative?","limit",NA,FALSE,NA
+"11","downloads/Psychological_Science/10117709567976241228503.grobid.tei.xml","no p-values found; paper might be qualitative?","no p-values found; paper might be qualitative?","limit",NA,FALSE,NA
+"RESULTS__Experiment 1: Manipulating prior beliefs via comparative feedback causally induces under-and overconfidence._11","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","phase, F(2,47) = 16.65, p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Experiment 1: Manipulating prior beliefs via comparative feedback causally induces under-and overconfidence._12","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","F(2,47) = 159.71, p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Experiment 1: Manipulating prior beliefs via comparative feedback causally induces under-and overconfidence._13","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","F(4,30744) = 2.60, p = .034","p = .034","exact",0.034,TRUE,NA
+"RESULTS__Experiment 1: Manipulating prior beliefs via comparative feedback causally induces under-and overconfidence._14","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","easy trials: F(2,47) = 7.65, p <.01","p <.01","limit",0.01,TRUE,NA
+"RESULTS__Experiment 1: Manipulating prior beliefs via comparative feedback causally induces under-and overconfidence._15","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml"," average difficulty: F(2,47) = 16.67, p <.001","p <.001","limit",0.001,TRUE,NA
+"RESULTS__Experiment 1: Manipulating prior beliefs via comparative feedback causally induces under-and overconfidence._16","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","; hard trials: F(2,47) = 19.78, p <.001","p <.001","limit",0.001,TRUE,NA
+"RESULTS__Experiment 1: Manipulating prior beliefs via comparative feedback causally induces under-and overconfidence._17","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","accuracy: χ 2 (2) = 2421.63, p < .001, BF10 = 9.47e+113","p < .001","calc_from_chi_squared",0.001,TRUE,0
+"RESULTS__Experiment 1: Manipulating prior beliefs via comparative feedback causally induces under-and overconfidence._18","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","; RTs: F(2,30837) = 316.29, p < .001, BF10 = 75239472401","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Experiment 1: Manipulating prior beliefs via comparative feedback causally induces under-and overconfidence._19","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","accuracy: χ 2 (2) = 0.3, p = .863, BF10 = 0.03","p = .863","exact",0.863,TRUE,NA
+"RESULTS__Experiment 1: Manipulating prior beliefs via comparative feedback causally induces under-and overconfidence._110","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml"," RTs: F(2,47) = 2.06, p = .14, BF10 = 13.96","p = .14","exact",0.14,TRUE,NA
+"RESULTS__Experiment 1: Manipulating prior beliefs via comparative feedback causally induces under-and overconfidence._111","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","accuracy: χ 2 (4) = 4.528, p = .34, BF10 = .019","p = .34","exact",0.34,TRUE,NA
+"RESULTS__Experiment 1: Manipulating prior beliefs via comparative feedback causally induces under-and overconfidence._112","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","; RTs: F(4, 30837) = 1.024, p = 0.3930 , BF10 = .014","p = 0.3930","exact",0.393,TRUE,NA
+"RESULTS__Experiment 1: Manipulating prior beliefs via comparative feedback causally induces under-and overconfidence._113","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","F(4,31412) = 4.98, p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Experiment 2: Manipulating prior beliefs via differences in task difficulty during training._11","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","F(2,46) = 8.19, p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Experiment 2: Manipulating prior beliefs via differences in task difficulty during training._12","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","F(2,30109) = 2122.11, p < .001, BF10 = 1.77083e+64, with no interaction between both, F(4,30109","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Experiment 2: Manipulating prior beliefs via differences in task difficulty during training._13","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","","p = .99","exact",0.99,TRUE,NA
+"RESULTS__Experiment 2: Manipulating prior beliefs via differences in task difficulty during training._14","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml"," RTs: F(2,46) = 0.01, p = 0.99, BF10 = .03","p = 0.99","exact",0.99,TRUE,NA
+"RESULTS__Experiment 2: Manipulating prior beliefs via differences in task difficulty during training._15","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","accuracy: χ 2 (4) = 1.6, p = .81, BF10 = .012","p = .81","exact",0.81,TRUE,NA
+"RESULTS__Experiment 2: Manipulating prior beliefs via differences in task difficulty during training._16","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","; RTs: F(4,30109) = 1.52, p = 0.19, BF10 = .01","p = 0.19","exact",0.19,TRUE,NA
+"RESULTS__Experiment 2: Manipulating prior beliefs via differences in task difficulty during training._17","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","block, F(4,30091) = 2.3, p = 0.056","p = 0.056","exact",0.056,TRUE,NA
+"RESULTS__Quantitative model fitting_11","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","F(2,48) = 6.92, p = .002, BF10 = 7.4838542e+7, and with easier training difficulty in Experiment 2, F(2,47","p = .002","exact",0.002,TRUE,NA
+"RESULTS__Quantitative model fitting_12","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","F(2,47) = 7.02, p = .002","p = .002","exact",0.002,TRUE,NA
+"RESULTS__Quantitative model fitting_13","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","F(2,48) = 194.27, p < .001, BF10 = 8.145035e+36 and Experiment 2, F(2,47","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Quantitative model fitting_14","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","F(2,47) = 251.68, p <.001","p <.001","limit",0.001,TRUE,NA
+"RESULTS__Quantitative model fitting_15","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","Experiment 1: F(4,30306) = 1.07, p = .37, BF10 = .01","p = .37","exact",0.37,TRUE,NA
+"RESULTS__Quantitative model fitting_16","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","; Experiment 2: F(4,29519) = 0.38, p = .82, BF10 = .01","p = .82","exact",0.82,TRUE,NA
+"RESULTS__Qualitative model fitting_11","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","feedback, F(2,94) = 450.02, p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Qualitative model fitting_12","downloads/Psychological_Science/10117709567976241231572.grobid.tei.xml","task, F(2,92) = 64.97, p < .001","p < .001","limit",0.001,TRUE,NA
+"INTRODUCTION__Political-orientation measures_1","downloads/Psychological_Science/10117709567976241232905.grobid.tei.xml"," (for recent work suggesting this assessment is strongly correlated with the average of the social and economic conservatism measure, r = .94, p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Results_11","downloads/Psychological_Science/10117709567976241232905.grobid.tei.xml","minimum b = 0.017, p = .011","p = .011","exact",0.011,TRUE,NA
+"RESULTS__Results_12","downloads/Psychological_Science/10117709567976241232905.grobid.tei.xml"," maximum b = 0.061, p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Results_13","downloads/Psychological_Science/10117709567976241232905.grobid.tei.xml","p = .007","p = .007","exact",0.007,TRUE,NA
+"RESULTS__Results_14","downloads/Psychological_Science/10117709567976241232905.grobid.tei.xml","p = .016","p = .016","exact",0.016,TRUE,NA
+"DISCUSSION__Moderation of accuracy-prompt effect by political orientation_11","downloads/Psychological_Science/10117709567976241232905.grobid.tei.xml","p = .007 ","p = .007","exact",0.007,TRUE,NA
+"DISCUSSION__Moderation of accuracy-prompt effect by political orientation_12","downloads/Psychological_Science/10117709567976241232905.grobid.tei.xml"," and p = .016,","p = .016","exact",0.016,TRUE,NA
+"METHODS__Analysis_11","downloads/Psychological_Science/10117709567976241237737.grobid.tei.xml","r = -.15, CI = (-0.50, 0.24), p = .44,","p = .44","exact",0.44,TRUE,NA
+"METHODS__Analysis_12","downloads/Psychological_Science/10117709567976241237737.grobid.tei.xml","r = -.26, CI = (-0.58, 0.12), p = .18, see discussion","p = .18","exact",0.18,TRUE,NA
+"RESULTS__Results Exp. 1A_11","downloads/Psychological_Science/10117709567976241237737.grobid.tei.xml","p = .004, Cohen","p = .004","exact",0.004,TRUE,NA
+"RESULTS__Results Exp. 1A_12","downloads/Psychological_Science/10117709567976241237737.grobid.tei.xml","χ 2 (1) = 7.25, p = .007","p = .007","exact",0.007,TRUE,NA
+"RESULTS__Results Exp. 1A_13","downloads/Psychological_Science/10117709567976241237737.grobid.tei.xml","t(19) = 1.18, p = .25, d = 0.26, CI = (0.19, 0.71","p = .25","exact",0.25,TRUE,NA
+"RESULTS__Results Exp. 1A_14","downloads/Psychological_Science/10117709567976241237737.grobid.tei.xml","t(14.337) = 4.12, p < .001, d = 1.04, CI = (0.4, 1.67","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Results Exp. 1b_11","downloads/Psychological_Science/10117709567976241237737.grobid.tei.xml","t(29) = 4.03, p = .0004, d = 0.74, CI = (0.33, 1.14","p = .0004","exact",4e-04,TRUE,NA
+"RESULTS__Results Exp. 1b_12","downloads/Psychological_Science/10117709567976241237737.grobid.tei.xml","t(29) = 0.49, p = .63, d = 0.09, CI = (0.27, 0.45","p = .63","exact",0.63,TRUE,NA
+"RESULTS__Results Exp. 1b_13","downloads/Psychological_Science/10117709567976241237737.grobid.tei.xml","χ 2 (1) = 9.48, p = .002","p = .002","exact",0.002,TRUE,NA
+"RESULTS__Results Exp. 2a_11","downloads/Psychological_Science/10117709567976241237737.grobid.tei.xml","t(29) = 2.78, p = .009, d = 0.51, CI = (0.12, 0.88","p = .009","exact",0.009,TRUE,NA
+"RESULTS__Results Exp. 2a_12","downloads/Psychological_Science/10117709567976241237737.grobid.tei.xml","t(29) = 0.32, p = .75, d = 0.06, CI = (0.30, 0.42","p = .75","exact",0.75,TRUE,NA
+"RESULTS__Results Exp. 2a_13","downloads/Psychological_Science/10117709567976241237737.grobid.tei.xml","t(38.64) = 3.95, p < .001, d = 1.08, CI = (.61, 1.54","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Results Exp. 2a_14","downloads/Psychological_Science/10117709567976241237737.grobid.tei.xml","χ 2 (1) = 3.53, p = .06","p = .06","exact",0.06,TRUE,NA
+"RESULTS__Results Exp. 2a_15","downloads/Psychological_Science/10117709567976241237737.grobid.tei.xml","t(19) = 2.38, p = .03, d = 0.53, CI = (0.06, 0.99","p = .03","exact",0.03,TRUE,NA
+"RESULTS__Results Exp. 2a_16","downloads/Psychological_Science/10117709567976241237737.grobid.tei.xml","in d' (d' = 2.23 vs 2.41; t(19) = 1.07, p = .3","p = .3","exact",0.3,TRUE,NA
+"RESULTS__Results Exp. 2a_17","downloads/Psychological_Science/10117709567976241237737.grobid.tei.xml","χ 2 (1) = 9.48, p = .002","p = .002","exact",0.002,TRUE,NA
+"RESULTS__General Discussion_1","downloads/Psychological_Science/10117709567976241237737.grobid.tei.xml","r = -.15, p = .44","p = .44","exact",0.44,TRUE,NA
+"RESULTS__Manipulation Check_11","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, d = 0.72, 95","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Manipulation Check_12","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, d = 0.52, 95","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Manipulation Check_13","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, d = 0.76, 95","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Manipulation Check_14","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, d = 0.51, 95","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Product Judgment_11","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, ","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Product Judgment_12","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, ","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Product Judgment_13","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, ","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Product Judgment_14","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","F (1, 599) =.301, p = .58, BF10 = .072","p = .58","exact",0.58,TRUE,NA
+"RESULTS__Product Judgment_15","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","F (1, 599) = 1.09, p = .296, BF10 = .032","p = .296","exact",0.296,TRUE,NA
+"RESULTS__Product Judgment_16","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p = .004, d = .204, 95","p = .004","exact",0.004,TRUE,NA
+"RESULTS__Product Judgment_17","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p = .062, d = .26, 95","p = .062","exact",0.062,TRUE,NA
+"RESULTS__Product Judgment_18","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p <.001, ","p <.001","limit",0.001,TRUE,NA
+"RESULTS__Product Judgment_19","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, ","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Product Judgment_110","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p =.001, ","p =.001","exact",0.001,TRUE,NA
+"RESULTS__Product Judgment_111","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p <.001, ","p <.001","limit",0.001,TRUE,NA
+"RESULTS__Product Judgment_112","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p <.001, ","p <.001","limit",0.001,TRUE,NA
+"RESULTS__Product Judgment_113","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p <.001, ","p <.001","limit",0.001,TRUE,NA
+"RESULTS__Product Judgment_114","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p <.001, ","p <.001","limit",0.001,TRUE,NA
+"RESULTS__Product Judgment_115","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p <.001, ","p <.001","limit",0.001,TRUE,NA
+"RESULTS__Product Judgment_116","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p = .73","p = .73","exact",0.73,TRUE,NA
+"RESULTS__Product Judgment_117","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p = .094, ","p = .094","exact",0.094,TRUE,NA
+"RESULTS__Product Judgment_118","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p = .001, ","p = .001","exact",0.001,TRUE,NA
+"RESULTS__Product Judgment_119","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, ","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Product Judgment_120","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p = .031, ","p = .031","exact",0.031,TRUE,NA
+"RESULTS__Product Judgment_121","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p = .78","p = .78","exact",0.78,TRUE,NA
+"RESULTS__Product Judgment_122","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, ","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Product Judgment_123","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, ","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Product Judgment_124","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","likely false extraction: p < .001","p < .001","limit",0.001,FALSE,NA
+"RESULTS__Product Judgment_125","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p = .163","p = .163","exact",0.163,TRUE,NA
+"RESULTS__Product Judgment_126","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, ","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Product Judgment_127","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p = .043, ","p = .043","exact",0.043,TRUE,NA
+"RESULTS__Product Judgment_128","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p = .29, ","p = .29","exact",0.29,TRUE,NA
+"RESULTS__Product Judgment_129","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p = .86, ","p = .86","exact",0.86,TRUE,NA
+"RESULTS__Product Judgment_130","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, ","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Product Judgment_131","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, ","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Product Judgment_132","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p = .018, ","p = .018","exact",0.018,TRUE,NA
+"RESULTS__Product Judgment_133","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, ","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Gender of the Gender-obvious Voice_1","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p = .021, d = 0.189, 95","p = .021","exact",0.021,TRUE,NA
+"RESULTS__Social Disfluency_1","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, d = 0.61, 95","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Difficulty Processing the Information_11","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, d = 0.24, 95","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Difficulty Processing the Information_12","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p =.81","p =.81","exact",0.81,TRUE,NA
+"RESULTS__Social Disfluency GENDER AMBIGUOUS VOICES_1","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p <.001, d = 0.61, 95","p <.001","limit",0.001,TRUE,NA
+"RESULTS__Pretest_1","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, ","p < .001","limit",0.001,TRUE,NA
+"RESULTS__GENDER AMBIGUOUS VOICES_11","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p <.001, ","p <.001","limit",0.001,TRUE,NA
+"RESULTS__GENDER AMBIGUOUS VOICES_12","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p <.001, ","p <.001","limit",0.001,TRUE,NA
+"RESULTS__GENDER AMBIGUOUS VOICES_13","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p =.166, ","p =.166","exact",0.166,TRUE,NA
+"RESULTS__GENDER AMBIGUOUS VOICES_14","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p <.001, ","p <.001","limit",0.001,TRUE,NA
+"RESULTS__GENDER AMBIGUOUS VOICES_15","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p <.001, ","p <.001","limit",0.001,TRUE,NA
+"RESULTS__GENDER AMBIGUOUS VOICES_16","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p <.001, ","p <.001","limit",0.001,TRUE,NA
+"RESULTS__GENDER AMBIGUOUS VOICES_17","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p <.001, ","p <.001","limit",0.001,TRUE,NA
+"RESULTS__Manipulation Checks_11","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, ","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Manipulation Checks_12","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, ","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Manipulation Checks_13","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, ","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Manipulation Checks_14","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","F(1, GENDER AMBIGUOUS VOICES 1795) = .121, p = .729","p = .729","exact",0.729,TRUE,NA
+"RESULTS__Manipulation Checks_15","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, ","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Manipulation Checks_16","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","X 2 (1, N = 1799) = 1453.88, p < .001, V = .67","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Prejudice Scale_11","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p = .88, ","p = .88","exact",0.88,TRUE,NA
+"RESULTS__Prejudice Scale_12","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p = .39, ","p = .39","exact",0.39,TRUE,NA
+"RESULTS__Prejudice Scale_13","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p = .52, ","p = .52","exact",0.52,TRUE,NA
+"RESULTS__Prejudice Scale_14","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p <.001, ","p <.001","limit",0.001,TRUE,NA
+"RESULTS__Prejudice Scale_15","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","F(1, 1794) = .12, p = .73","p = .73","exact",0.73,TRUE,NA
+"RESULTS__Prejudice Scale_16","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","likely false extraction: p = .092, ","p = .092","exact",0.092,FALSE,NA
+"RESULTS__Prejudice Scale_17","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","likely false extraction: p = .36, ","p = .36","exact",0.36,FALSE,NA
+"RESULTS__LGBTQ Perception_11","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","n.","n.s","limit",NA,TRUE,NA
+"RESULTS__LGBTQ Perception_12","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p = .032, ","p = .032","exact",0.032,TRUE,NA
+"RESULTS__LGBTQ Perception_13","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, ","p < .001","limit",0.001,TRUE,NA
+"RESULTS__LGBTQ Perception_14","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, ","p < .001","limit",0.001,TRUE,NA
+"RESULTS__LGBTQ Perception_15","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p < .001, ","p < .001","limit",0.001,TRUE,NA
+"RESULTS__LGBTQ Perception_16","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","F (1,602) = .063, p = .80","p = .80","exact",0.8,TRUE,NA
+"RESULTS__Method_11","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p = .128, ","p = .128","exact",0.128,TRUE,NA
+"RESULTS__Method_12","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p <.001, ","p <.001","limit",0.001,TRUE,NA
+"RESULTS__Method_13","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p <.001, ","p <.001","limit",0.001,TRUE,NA
+"RESULTS__Method_14","downloads/Psychological_Science/10117709567976241238222.grobid.tei.xml","p <.001, ","p <.001","limit",0.001,TRUE,NA
+"RESULTS__How does loneliness change with age?_1","downloads/Psychological_Science/10117709567976241242037.grobid.tei.xml","B = 0.07, SE = 0.03, p = .01","p = .01","exact",0.01,TRUE,NA
+"RESULTS__Results_1110","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","p < .001,d = 0.36,95","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Results_122","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","p = .018, d = 0.19, 95","p = .018","exact",0.018,TRUE,NA
+"RESULTS__Results_131","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","p < .001, d = 0.27, 95","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Results_141","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","p = .08, d = 0.11, 95","p = .08","exact",0.08,TRUE,NA
+"RESULTS__Results_15","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","p < .001, d = 0.21, 95","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Results_16","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","p = .006, d = 0.13, 95","p = .006","exact",0.006,TRUE,NA
+"RESULTS__Results_17","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","p < .001, d = 0.16, 95","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Results_18","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","p = .098, d = 0.07, 95","p = .098","exact",0.098,TRUE,NA
+"RESULTS__Results_19","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","by frame, t(1,414) = 0.030, p = .976","p = .976","exact",0.976,TRUE,NA
+"RESULTS__Results_110","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","p = .03, d = 0.14, 95","p = .03","exact",0.03,TRUE,NA
+"RESULTS__Results_111","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","F(4, 2351) = 1.71, p = .145","p = .145","exact",0.145,TRUE,NA
+"RESULTS__Results_112","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","p = .008, d = 0.14, 95","p = .008","exact",0.008,TRUE,NA
+"RESULTS__Results_113","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","F(1,1317) = 10.31, p = .001","p = .001","exact",0.001,TRUE,NA
+"RESULTS__Results_114","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","p < .001, d = 0.29, 95","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Results_115","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","p = .624, d = 0.04, 95","p = .624","exact",0.624,TRUE,NA
+"RESULTS__Results_116","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","p < .001, OR= 0.73, 95","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Results_117","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","p = .031, OR= 1.12, 95","p = .031","exact",0.031,TRUE,NA
+"RESULTS__Results_118","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","p = .327, although the fully between","p = .327","exact",0.327,TRUE,NA
+"RESULTS__Results_119","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","p = .024, OR= 1.18, 95","p = .024","exact",0.024,TRUE,NA
+"RESULTS__Results_120","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","p = .412, OR = 1.06, 95","p = .412","exact",0.412,TRUE,NA
+"RESULTS__Results_121","downloads/Psychological_Science/10117709567976241242462.grobid.tei.xml","p = .002, ","p = .002","exact",0.002,TRUE,NA
+"METHODS__Stimuli_1","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","; facing vs. non-facing: t(30) = 0.03, p = .979","p = .979","exact",0.979,TRUE,NA
+"RESULTS__Results_1111","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Results_1210","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","p = .039","p = .039","exact",0.039,TRUE,NA
+"RESULTS__Results_138","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","p = .026","p = .026","exact",0.026,TRUE,NA
+"RESULTS__Results_142","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","p = .016, Cohen","p = .016","exact",0.016,TRUE,NA
+"RESULTS__Results_151","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","p = .543, Cohen","p = .543","exact",0.543,TRUE,NA
+"RESULTS__Results_161","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","ikely false extraction: p < .05","p < .05","limit",0.05,FALSE,NA
+"RESULTS__Results_171","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","5; ** p < .01","p < .01.","limit",0.01,FALSE,NA
+"RESULTS__Results_181","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","Meaningfulness: t(137) = 6.72, p < .001, d = 0.57","p < .001","calc_from_t",0.001,TRUE,4.479343e-10
+"RESULTS__Results_191","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml"," Emotional content: t(137) = 5.13, p < .001, d = 0.44","p < .001","calc_from_t",0.001,TRUE,9.703498e-07
+"RESULTS__Results_1101","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","; Intentionality: t(137) = 5.55, p < .001, d = 0.47","p < .001","calc_from_t",0.001,TRUE,1.427638e-07
+"RESULTS__Results_1112","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","t(137) = 1.10, p = .272, d = 0.09","p = .272","exact",0.272,TRUE,NA
+"RESULTS__Results_1121","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","Meaningfulness: t(137) = 7.05, p < .001, d = 0.60","p < .001","calc_from_t",0.001,TRUE,8.007931e-11
+"RESULTS__Results_1131","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml"," Emotional content: t(137) = 7.07, p < .001, d = 0.60","p < .001","calc_from_t",0.001,TRUE,7.20608e-11
+"RESULTS__Results_1141","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","; Intentionality: t(137) = 7.55, p < .001, d = 0.64","p < .001","calc_from_t",0.001,TRUE,5.521882e-12
+"RESULTS__Results_1151","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","Meaningfulness: t(137) = -1.95, p = .053, d = -0.17","p = .053","exact",0.053,TRUE,NA
+"RESULTS__Results_1161","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml"," Emotional content: t(137) = 1.44, p = .153, d = 0.12","p = .153","exact",0.153,TRUE,NA
+"RESULTS__Results_1171","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","; Intentionality: t(137) = 0.36, p = .719, d = 0.03","p = .719","exact",0.719,TRUE,NA
+"RESULTS__Results_1181","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","p < .001, d = 0.60, and non","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Results_1191","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","t(137) = 5.79, p < .001","p < .001","calc_from_t",0.001,TRUE,4.592836e-08
+"RESULTS__Results_1201","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","p = .003, Cohen","p = .003","exact",0.003,TRUE,NA
+"RESULTS__Results_1211","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","exact binomial test p = .007","p = .007","exact",0.007,TRUE,NA
+"RESULTS__Results_1221","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","2617-2833 ms, p = .046","p = .046","exact",0.046,TRUE,NA
+"RESULTS__Results_123","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml"," 2983-3267 ms, p = .023","p = .023","exact",0.023,TRUE,NA
+"RESULTS__Results_124","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml"," 3450-3733, p = .020","p = .020","exact",0.02,TRUE,NA
+"RESULTS__Results_125","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","p = .318, Cohen","p = .318","exact",0.318,TRUE,NA
+"RESULTS__Results_126","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","p = .471, Cohen","p = .471","exact",0.471,TRUE,NA
+"RESULTS__Results_127","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","p = .045, Cohen","p = .045","exact",0.045,TRUE,NA
+"RESULTS__Results_128","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","p = .035, Cohen","p = .035","exact",0.035,TRUE,NA
+"RESULTS__Results_129","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","p = .036, Cohen","p = .036","exact",0.036,TRUE,NA
+"RESULTS__Results_130","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","p = .052, Cohen","p = .052","exact",0.052,TRUE,NA
+"RESULTS__Results_1311","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","p = .007, Cohen","p = .007","exact",0.007,TRUE,NA
+"RESULTS__Results_132","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","p = .042, Cohen","p = .042","exact",0.042,TRUE,NA
+"RESULTS__Results_133","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","p = .171, Cohen","p = .171","exact",0.171,TRUE,NA
+"RESULTS__Results_134","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","p = .026","p = .026","exact",0.026,TRUE,NA
+"RESULTS__Results_135","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","p = .103, Cohen","p = .103","exact",0.103,TRUE,NA
+"RESULTS__Results_136","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","p = .005, Cohen","p = .005","exact",0.005,TRUE,NA
+"RESULTS__Results_137","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","p = .043","p = .043","exact",0.043,TRUE,NA
+"RESULTS__Stimuli_1","downloads/Psychological_Science/10117709567976241242995.grobid.tei.xml","; t(29) = 0.292, p = .772","p = .772","exact",0.772,TRUE,NA
+"RESULTS__Experiment 1 Results:_1","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","t(148.4) = 10.40, p < 0.001","p < 0.001","limit",0.001,TRUE,NA
+"RESULTS__Experiment 1 Preregistered Replication Analyses_11","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","F(1, 536) = 0.15, p = 0.70","p = 0.70","exact",0.7,TRUE,NA
+"RESULTS__Experiment 1 Preregistered Replication Analyses_12","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","F(1, 592) = 0.198, p = 0.66","p = 0.66","exact",0.66,TRUE,NA
+"RESULTS__Experiment 1 Preregistered Extension Analyses_11","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","F(1, 536) = 1.27, p = 0.26","p = 0.26","exact",0.26,TRUE,NA
+"RESULTS__Experiment 1 Preregistered Extension Analyses_12","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","F(1, 592) = 40.16, p < 0.001","p < 0.001","calc_from_f",0.001,TRUE,4.638323e-10
+"RESULTS__Experiment 1 Preregistered Extension Analyses_13","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","F(1, 536) = 3.22, p = 0.07","p = 0.07","exact",0.07,TRUE,NA
+"RESULTS__Experiment 1 Preregistered Extension Analyses_14","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","F(1, 592) = 2.88, p =0.09","p =0.09","exact",0.09,TRUE,NA
+"RESULTS__Experiment 1 Preregistered Extension Analyses_15","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","t(592) = 15.58, p < 0.001","p < 0.001","calc_from_t",0.001,TRUE,4.079949e-46
+"RESULTS__Experiment 1 Preregistered Extension Analyses_16","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","t(290) = 3.79, p < 0.001, and a significant interaction effect between condition and collective identification b = -0.39, SE = 0.11, t(290","p < 0.001","calc_from_t",0.001,TRUE,0.0001832354
+"RESULTS__Experiment 1 Preregistered Extension Analyses_17","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","b = -0.39, SE = 0.11, t(290) = -3.64, p < 0.001","p < 0.001","calc_from_t",0.001,TRUE,0.0003227359
+"RESULTS__Experiment 1 Preregistered Extension Analyses_18","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","p < 0.001, such that participants judged other in","p < 0.001","limit",0.001,TRUE,NA
+"RESULTS__Experiment 1 Preregistered Extension Analyses_19","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","p < 0.20 This provided evidence of in","p < 0.20","limit",0.2,TRUE,NA
+"RESULTS__Experiment 1 Robustness Analyses_11","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","F(1, 588) = 0.66, p = 0.42","p = 0.42","exact",0.42,TRUE,NA
+"RESULTS__Experiment 1 Robustness Analyses_12","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","= 1.56, t(584.7) = 1.09, p = 0.28","p = 0.28","exact",0.28,TRUE,NA
+"RESULTS__Experiment 1 Exploratory Analyses_11","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","t(146) = -2.78, p = 0.006, and political extremity, b = 0.13, SE = 0.04, t(146","p = 0.006","exact",0.006,TRUE,NA
+"RESULTS__Experiment 1 Exploratory Analyses_12","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","p = 0.001 significantly predicted out","p = 0.001","exact",0.001,TRUE,NA
+"RESULTS__Experiment 2 Results:_1","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","t(146) = 11.58, p < 0.001","p < 0.001","calc_from_t",0.001,TRUE,2.089946e-22
+"RESULTS__Experiment 2 Preregistered Extension Analyses_11","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","F(1, 528) = 1.86, p = 0.17","p = 0.17","exact",0.17,TRUE,NA
+"RESULTS__Experiment 2 Preregistered Extension Analyses_12","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","F(1, 581) = 1.56, p = 0.21","p = 0.21","exact",0.21,TRUE,NA
+"RESULTS__Experiment 2 Preregistered Extension Analyses_13","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","F(1, 528) = 1.44, p = 0.23","p = 0.23","exact",0.23,TRUE,NA
+"RESULTS__Experiment 2 Preregistered Extension Analyses_14","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","F(1, 581) = 40.61, p < 0.001","p < 0.001","calc_from_f",0.001,TRUE,3.786376e-10
+"RESULTS__Experiment 2 Preregistered Extension Analyses_15","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","F(1, 528) = 9.04, p = 0.003","p = 0.003","exact",0.003,TRUE,NA
+"RESULTS__Experiment 2 Preregistered Extension Analyses_16","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","F(1,581) = 7.46, p = 0.007","p = 0.007","exact",0.007,TRUE,NA
+"RESULTS__Experiment 2 Preregistered Extension Analyses_17","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","t(582) = 31.36, p < 0.001","p < 0.001","calc_from_t",0.001,TRUE,3.736026e-127
+"RESULTS__Experiment 2 Preregistered Extension Analyses_18","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","t(967.4) = -15.81, p < 0.001","p < 0.001","limit",0.001,TRUE,NA
+"RESULTS__Experiment 2 Preregistered Extension Analyses_19","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","t(284) = -1.64, p = 0.10, or collective identification, b = -0.01, SE = 0.053, t(284","p = 0.10","exact",0.1,TRUE,NA
+"RESULTS__Experiment 2 Preregistered Extension Analyses_110","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","t(284) = -0.154, p = 0.878, or the interaction effect for these predictions, b = -0.02, SE = 0.07, t(284","p = 0.878","exact",0.878,TRUE,NA
+"RESULTS__Experiment 2 Preregistered Extension Analyses_111","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","predictions, b = -0.02, SE = 0.07, t(284) = -0.29, p = 0.77","p = 0.77","exact",0.77,TRUE,NA
+"RESULTS__Experiment 2 Robustness Analyses_1","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","F(1, 577) = 0.75, p = 0.39","p = 0.39","exact",0.39,TRUE,NA
+"RESULTS__Experiment 1 and Experiment 2 Comparison Analyses_11","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","F(1, 581) = 1.84, p = 0.17, η2 =0.003 , nor did we find a significant interaction effect, F(1, 581","p = 0.17","exact",0.17,TRUE,NA
+"RESULTS__Experiment 1 and Experiment 2 Comparison Analyses_12","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","F(1, 581) = 0.59, p = 0.44","p = 0.44","exact",0.44,TRUE,NA
+"RESULTS__Experiment 1 and Experiment 2 Comparison Analyses_13","downloads/Psychological_Science/10117709567976241246552.grobid.tei.xml","F(1, 581) = 11.69, p < 0.001","p < 0.001","calc_from_f",0.001,TRUE,0.0006724067
+"RESULTS__Results_1","downloads/Psychological_Science/10117709567976241251766.grobid.tei.xml","F(2, 541) = 7.12, p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Results and Discussion_11","downloads/Psychological_Science/10117709567976241252138.grobid.tei.xml","p=.36, effect size","p=.36","exact",0.36,TRUE,NA
+"RESULTS__Results and Discussion_12","downloads/Psychological_Science/10117709567976241252138.grobid.tei.xml","p=0.07, effect size","p=0.07","exact",0.07,TRUE,NA
+"RESULTS__Results and Discussion_13","downloads/Psychological_Science/10117709567976241252138.grobid.tei.xml","p=0.001, effect size","p=0.001","exact",0.001,TRUE,NA
+"RESULTS__Results and Discussion_14","downloads/Psychological_Science/10117709567976241252138.grobid.tei.xml","specifically, for the largest crowd size N=70, unpaired t-test: t(998)=58.4, p<10 -200 ","p<10","calc_from_t",10,FALSE,0
+"RESULTS__Results and Discussion_15","downloads/Psychological_Science/10117709567976241252138.grobid.tei.xml","crowd size N=70, unpaired t-test: t(998)=78.5, p<10 -200 ","p<10","calc_from_t",10,FALSE,0
+"RESULTS__2B_1","downloads/Psychological_Science/10117709567976241252138.grobid.tei.xml","","p<10","limit",10,FALSE,NA
+"RESULTS__Learning machine reward probabilities_11","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","Intercept = 2.4, SE = .17, z = 13.8, p < .001","p < .001","calc_from_z",0.001,TRUE,2.548526e-43
+"RESULTS__Learning machine reward probabilities_12","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = -.42, SE = .08, X 2 (1) = 20.86, p < .001","p < .001","calc_from_chi_squared",0.001,TRUE,4.941058e-06
+"RESULTS__Learning machine reward probabilities_13","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = .71, SE = .08, X 2 (1) = 60.59, p < .001","p < .001","calc_from_chi_squared",0.001,TRUE,7.029018e-15
+"RESULTS__Learning machine reward probabilities_14","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = .21, SE = .17, X 2 (1) = 1.46, p = .227","p = .227","exact",0.227,TRUE,NA
+"RESULTS__Learning machine reward probabilities_15","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = .10, SE = .08, X 2 (1) = 1.46, p = .226","p = .226","exact",0.226,TRUE,NA
+"RESULTS__Sensitivity to the intrinsic and instrumental value of choice_11","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = 1.42, SE = .07, X 2 (1) = 144.39, p < .001","p < .001","calc_from_chi_squared",0.001,TRUE,2.919604e-33
+"RESULTS__Sensitivity to the intrinsic and instrumental value of choice_12","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = .15, SE = .07, X 2 (1) = 4.17, p = .041","p = .041","exact",0.041,TRUE,NA
+"RESULTS__Sensitivity to the intrinsic and instrumental value of choice_13","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = .33, SE = .04, X 2 (1) = 50.21, p < .001","p < .001","calc_from_chi_squared",0.001,TRUE,1.38142e-12
+"RESULTS__Sensitivity to the intrinsic and instrumental value of choice_14","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","VoC x age x trial effect: β = .12, SE = .04, X 2 (1) = 9.59, p = .002","p = .002","exact",0.002,TRUE,NA
+"RESULTS__Sensitivity to the intrinsic and instrumental value of choice_15","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = -.02, SE = .14, X 2 (1) = 0.01, p = .906","p = .906","exact",0.906,TRUE,NA
+"RESULTS__Sensitivity to the intrinsic and instrumental value of choice_16","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = .01, SE = .12, X 2 (1) = 0.00, p = .961","p = .961","exact",0.961,TRUE,NA
+"RESULTS__Reinforcement-learning modeling results_11","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = -.04, SE = .01, F(1, 270) = 10.0, p = .002","p = .002","exact",0.002,TRUE,NA
+"RESULTS__Reinforcement-learning modeling results_12","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","t(91) = 3.2, p = .002","p = .002","exact",0.002,TRUE,NA
+"RESULTS__Reinforcement-learning modeling results_13","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","t(91) = -.87, p = .386","p = .386","exact",0.386,TRUE,NA
+"RESULTS__Reinforcement-learning modeling results_14","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = .01, SE = .01, F(1, 90) = .52, p = .473","p = .473","exact",0.473,TRUE,NA
+"RESULTS__Reinforcement-learning modeling results_15","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml",". We found that agency bonuses did not vary significantly with age, b = 0.01, SE = 0.01, p = .269","p = .269","exact",0.269,TRUE,NA
+"RESULTS__Reinforcement-learning modeling results_16","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","age, b = .24, SE = 0.12, p = .056","p = .056","exact",0.056,TRUE,NA
+"RESULTS__Reinforcement-learning modeling results_17","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","b = .09, SE = .11, p = .410","p = .410","exact",0.41,TRUE,NA
+"RESULTS__Reinforcement-learning modeling results_18","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","F(1, 90) = 1.41, p = .238","p = .238","exact",0.238,TRUE,NA
+"RESULTS__Reinforcement-learning modeling results_19","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","age, b = .25, SE = 0.09, p = .008","p = .008","exact",0.008,TRUE,NA
+"RESULTS__Reinforcement-learning modeling results_110","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","Filtered sample: b = .25, SE = 0.10, p = .014","p = .014","exact",0.014,TRUE,NA
+"RESULTS__Reinforcement-learning modeling results_111","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","age, b = -0.01, SE = 0.01, p = .242","p = .242","exact",0.242,TRUE,NA
+"RESULTS__Reinforcement-learning modeling results_112","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","Filtered sample: b = -.01, SE = 0.01, p = .099","p = .099","exact",0.099,TRUE,NA
+"RESULTS__Reinforcement-learning modeling results_113","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","b = .14, SE = .08, p = .08","p = .08","exact",0.08,TRUE,NA
+"RESULTS__Reinforcement-learning modeling results_114","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","; Filtered sample: b = .15, β 𝑚𝑎𝑐ℎ𝑖𝑛𝑒 SE = 0.09, p = .083","p = .083","exact",0.083,TRUE,NA
+"RESULTS__Reinforcement-learning modeling results_115","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","agency decision x outcome valence interaction effect on learning rates: β = -.06, SE = .01, F(1, 444) = 28.3, p < .001","p < .001","calc_from_f",0.001,TRUE,1.650929e-07
+"RESULTS__Reinforcement-learning modeling results_116","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml"," Filtered sample: β = -.06, SE = .01, F(1, 399) = 25.75, p < .001","p < .001","calc_from_f",0.001,TRUE,5.969384e-07
+"RESULTS__Reinforcement-learning modeling results_117","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","t(149) = 6.97, p < .001","p < .001","calc_from_t",0.001,TRUE,9.554707e-11
+"RESULTS__Reinforcement-learning modeling results_118","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","; Filtered sample: t(134) = 6.47, p < .001","p < .001","calc_from_t",0.001,TRUE,1.695306e-09
+"RESULTS__Reinforcement-learning modeling results_119","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","t(149) = -1.11, p = .269","p = .269","exact",0.269,TRUE,NA
+"RESULTS__Reinforcement-learning modeling results_120","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","; Filtered sample: t(134) = -1.18, p = .239","p = .239","exact",0.239,TRUE,NA
+"RESULTS__Results_1113","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = .22, SE = .06, X 2 (1) = 12.28, p < .001","p < .001","calc_from_chi_squared",0.001,TRUE,0.0004578384
+"RESULTS__Results_1212","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","VoC x trial interaction effect: β = .20, SE = .03, X 2 (1) = 51.94, p < .001","p < .001","calc_from_chi_squared",0.001,TRUE,5.722274e-13
+"RESULTS__Results_139","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","VoC x trial x age effect: β = .06, SE = .03, X 2 (1) = 5.26, p = .022","p = .022","exact",0.022,TRUE,NA
+"RESULTS__Results_143","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","*(%,!3 -which captures the extent to which participants' agency decisions were guided by their own, learned estimates of the value of agentic choice -increased with age, b = .25, SE = .09, p = .008","p = .008","exact",0.008,FALSE,NA
+"RESULTS__Results_152","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","likely false extraction: p = .081, in an exploratory, non","p = .081","exact",0.081,FALSE,NA
+"RESULTS__Results_162","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","F(1, 148) = 1.55, p = .216","p = .216.","exact",0.216,TRUE,NA
+"RESULTS__Results_172","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = .01, SE = .17, X 2 (1) = 0.00, p = .965","p = .965","exact",0.965,TRUE,NA
+"RESULTS__Results_182","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml",". Corroborating these findings, agency bonuses similarly did not vary significantly with age, b = -0.01, SE = 0.01, p = .242","p = .242.","exact",0.242,TRUE,NA
+"RESULTS__Results_192","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = -.06, SE = .01, F(1, 444) = 28.34, p < .001","p < .001","calc_from_f",0.001,TRUE,1.619174e-07
+"RESULTS__Results_1102","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","t(149) = 7.0, p < .001","p < .001","calc_from_t",0.001,TRUE,8.134369e-11
+"RESULTS__Results_1114","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","t(149) = -1.1, p = .269","p = .269","exact",0.269,TRUE,NA
+"RESULTS__Results_1122","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = -.03, SE = .01, F(1, 148) = 5.38, p = .022","p = .022","exact",0.022,TRUE,NA
+"METHODS__Agency decision times_11","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","E1: β = -.02, SE = .01, F(1, 90.3) = 17.0, p < .001","p < .001","limit",0.001,TRUE,NA
+"METHODS__Agency decision times_12","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","; E2: β = -.01, SE = .003, F(1, 148.6) = 17.1, p < .001","p < .001","limit",0.001,TRUE,NA
+"METHODS__Agency decision times_13","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","E1: β = -.13, SE = .01, F(1, 89.4) = 83.8, p < .001","p < .001","limit",0.001,TRUE,NA
+"METHODS__Agency decision times_14","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","; E2: β = -.10, SE = .01, F(1, 148.0) = 71.6, p < .001","p < .001","limit",0.001,TRUE,NA
+"METHODS__Agency decision times_15","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","E1: p = .16","p = .16","exact",0.16,TRUE,NA
+"METHODS__Agency decision times_16","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","; E2: p = .647","p = .647","exact",0.647,TRUE,NA
+"METHODS__Agency decision times_17","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = -.08, SE = .04, F(1, 90.0) = 4.1, p = .045","p = .045","exact",0.045,TRUE,NA
+"METHODS__Agency decision times_18","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = -.01, SE = .01, F(1, 90.9) = 1.16, p = .285","p = .285","exact",0.285,TRUE,NA
+"METHODS__Agency decision times_19","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = -.01, SE = .003, F(1, 148.4) = 4.4, p = .037","p = .037","exact",0.037,TRUE,NA
+"METHODS__Figure S6. Posterior predictive check: Agency decisions._11","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","E1: b = 2.3, SE = .23, t(90)= 9.9, p < .001","p < .001","calc_from_t",0.001,TRUE,4.60897e-16
+"METHODS__Figure S6. Posterior predictive check: Agency decisions._12","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","; E2: b = 2.4, SE = .17, t(148)= 14.4, p < .001","p < .001","calc_from_t",0.001,TRUE,6.038088e-30
+"METHODS__Figure S6. Posterior predictive check: Agency decisions._13","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","E1: b β 𝑎𝑔𝑒𝑛𝑐𝑦 = .09, SE = .01, t(90) = 10.4, p < .001","p < .001","calc_from_t",0.001,TRUE,4.230926e-17
+"METHODS__Figure S6. Posterior predictive check: Agency decisions._14","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","; E2: b = .10, SE = .01, t(148) = 19.4, p < .001","p < .001","calc_from_t",0.001,TRUE,1.712921e-42
+"METHODS__Figure S6. Posterior predictive check: Agency decisions._15","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","E1: b = .09, SE = .01, t(89)= 10.0, β 𝑎𝑔𝑒𝑛𝑐𝑦 p < .001","p < .001","calc_from_t",0.001,TRUE,3.201919e-16
+"METHODS__Figure S6. Posterior predictive check: Agency decisions._16","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","; E2: b = .10, SE = .01, t(147)= 18.7, p < .001","p < .001","calc_from_t",0.001,TRUE,1.066775e-40
+"METHODS__Figure S6. Posterior predictive check: Agency decisions._17","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","E1: p = .239","p = .239","exact",0.239,TRUE,NA
+"METHODS__Figure S6. Posterior predictive check: Agency decisions._18","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","; E2: p = .808","p = .808","exact",0.808,TRUE,NA
+"METHODS__Choice-based value estimation task_1","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","X 2 (1) = 79.9, p < .001","p < .001","calc_from_chi_squared",0.001,TRUE,3.938466e-19
+"METHODS__Declarative value estimation task_1","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","X 2 (1) = 21.7, p < .001","p < .001","calc_from_chi_squared",0.001,TRUE,3.187913e-06
+"RESULTS__Machine selection decisions_11","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = .50, SE = .05, X 2 (1) = 69.5, p < .001","p < .001","calc_from_chi_squared",0.001,TRUE,7.641451e-17
+"RESULTS__Machine selection decisions_12","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml"," Filtered sample: β = .53, SE = .06, X 2 (1) = 66.5, p < .001","p < .001","calc_from_chi_squared",0.001,TRUE,3.498936e-16
+"RESULTS__Machine selection decisions_13","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","Full sample: β = .41, SE = .07, X 2 (1) = 29.27, p < .001","p < .001","calc_from_chi_squared",0.001,TRUE,6.296298e-08
+"RESULTS__Machine selection decisions_14","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","; Filtered sample: β = .39, SE = .07, X 2 (1) =25.05, p < .001","p < .001","calc_from_chi_squared",0.001,TRUE,5.586276e-07
+"RESULTS__Machine selection decisions_15","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = .09, SE = .04, X 2 (1) = 5.47, p = .019","p = .019","exact",0.019,TRUE,NA
+"RESULTS__Machine selection decisions_16","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","; Filtered sample: β = .08, SE = .04, X 2 (1) = 3.44, p = .064","p = .064","exact",0.064,TRUE,NA
+"RESULTS__Machine selection decisions_17","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = .46, SE = .11, X 2 (1) = 15.49, p < .001","p < .001","calc_from_chi_squared",0.001,TRUE,8.29429e-05
+"RESULTS__Machine selection decisions_18","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","; Filtered sample: β = .53, SE = .12, X 2 (1) = 18.88, p < .001","p < .001","calc_from_chi_squared",0.001,TRUE,1.392045e-05
+"RESULTS__Agency decisions_11","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = 1.09, SE = .06, X 2 (1) = 166.6, p < .001","p < .001","calc_from_chi_squared",0.001,TRUE,4.090755e-38
+"RESULTS__Agency decisions_12","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml"," Filtered sample: β = 1.15, SE = .06, X 2 (1) = 168.42, p < .001","p < .001","calc_from_chi_squared",0.001,TRUE,1.63781e-38
+"RESULTS__Agency decisions_13","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","β = .22, SE = .06, X 2 (1) = 12.28, p < .001","p < .001","calc_from_chi_squared",0.001,TRUE,0.0004578384
+"RESULTS__Agency decisions_14","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","; Filtered sample: β =.21, SE = .06, X 2 (1) = 10.92, p < .001","p < .001","calc_from_chi_squared",0.001,TRUE,0.0009513161
+"RESULTS__Agency decisions_15","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","VoC x trial interaction effect: β = .20, SE = .03, X 2 (1) = 51.94, p < .001","p < .001","calc_from_chi_squared",0.001,TRUE,5.722274e-13
+"RESULTS__Agency decisions_16","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","; Filtered sample: β = .20, SE = .03, X 2 (1) = 48.77, p < .001","p < .001","calc_from_chi_squared",0.001,TRUE,2.878086e-12
+"RESULTS__Agency decisions_17","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","VoC x trial x age effect: β = .06, SE = .03, X 2 (1) = 5.26, p = .022","p = .022","exact",0.022,TRUE,NA
+"RESULTS__Agency decisions_18","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","; Filtered sample: β =.06, SE = .03, X 2 (1) = 5.31, p = .021","p = .021","exact",0.021,TRUE,NA
+"RESULTS__Agency decisions_19","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","Full sample: β = .01, SE = .18, X 2 (1) = 0.00, p = .965","p = .965","exact",0.965,TRUE,NA
+"RESULTS__Agency decisions_110","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","; Filtered sample: β = -.03, SE = .13, X 2 (1) = 0.04, p = .840","p = .840","exact",0.84,TRUE,NA
+"RESULTS__Explicit knowledge of machine reward probabilities_11","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","F(1, 748) = 23.42, p < .001","p < .001","calc_from_f",0.001,TRUE,1.58215218271119e-06
+"RESULTS__Explicit knowledge of machine reward probabilities_12","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","; Filtered sample: F(1, 673) = 22.78, p < .001","p < .001","calc_from_f",0.001,TRUE,2.229519e-06
+"RESULTS__Explicit knowledge of machine reward probabilities_13","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","F(1, 148) = 7.59, p = .007","p = .007","exact",0.007,TRUE,NA
+"RESULTS__Explicit knowledge of machine reward probabilities_14","downloads/Psychological_Science/10117709567976241256961.grobid.tei.xml","; Filtered sample: F(1, 133) = 7.01, p = .009","p = .009","exact",0.009,TRUE,NA
+"RESULTS__Exploratory Analyses_11","downloads/Psychological_Science/10117709567976241263784.grobid.tei.xml","β = .05, 95% C.I. = (.04, .06), p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Exploratory Analyses_12","downloads/Psychological_Science/10117709567976241263784.grobid.tei.xml","β = .09, 95% C.I. = (.08, .10), p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Exploratory Analyses_13","downloads/Psychological_Science/10117709567976241263784.grobid.tei.xml","β = -.05, 95% C.I. = (-.06, -.04), p < .001","p < .001","limit",0.001,TRUE,NA
+"12","downloads/Psychological_Science/10117709567976241266481.grobid.tei.xml","no p-values found; paper might be qualitative?","no p-values found; paper might be qualitative?","limit",NA,FALSE,NA
+"RESULTS__Exploratory Analyses: The Role of Rumination_11","downloads/Psychological_Science/10117709567976241266513.grobid.tei.xml","B = 0.05, SE = 0.01, p < .001","p < .001","calc_from_b",0.001,TRUE,5.733031e-07
+"RESULTS__Exploratory Analyses: The Role of Rumination_12","downloads/Psychological_Science/10117709567976241266513.grobid.tei.xml","B = -0.05, SE = 0.01, p < .001","p < .001","calc_from_b",0.001,TRUE,5.733031e-07
+"RESULTS__Supplemental Analyses_1","downloads/Psychological_Science/10117709567976241266513.grobid.tei.xml","p < .05 using the Benjamini","p < .05","limit",0.05,TRUE,NA
+"RESULTS__Effect of animacy and saliency_11","downloads/Psychological_Science/10117709567976241279198.grobid.tei.xml","F 1,76 = 23.2, p < 10 -5 ","p < 10","limit",10,FALSE,NA
+"RESULTS__Effect of animacy and saliency_12","downloads/Psychological_Science/10117709567976241279198.grobid.tei.xml","F 1,76 = 106.1, p < 10 -15 ","p < 10","limit",10,FALSE,NA
+"RESULTS__Effect of animacy and saliency_13","downloads/Psychological_Science/10117709567976241279198.grobid.tei.xml","F 1,76 = 0.5, p = 0.47","p = 0.47","exact",0.47,TRUE,NA
+"RESULTS__Transition to informal caregiving_11","downloads/Psychological_Science/10117709567976241279203.grobid.tei.xml","LISS: b = -2.13, 99% CI (-3.80, -0.46), p = .001","p = .001","exact",0.001,TRUE,NA
+"RESULTS__Transition to informal caregiving_12","downloads/Psychological_Science/10117709567976241279203.grobid.tei.xml","LISS: b = -4.30, 99% CI (-6.55, -2.05), p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Transition to informal caregiving_13","downloads/Psychological_Science/10117709567976241279203.grobid.tei.xml"," (-2.45, -0.25), p = .002","p = .002.","exact",0.002,TRUE,NA
+"RESULTS__Transition to informal caregiving_14","downloads/Psychological_Science/10117709567976241279203.grobid.tei.xml","SOEP: b = -3.21, 99% CI (-4.27, -2.15), p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Transition to informal caregiving_15","downloads/Psychological_Science/10117709567976241279203.grobid.tei.xml"," (-2.65, -0.57), p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Transition to informal caregiving_16","downloads/Psychological_Science/10117709567976241279203.grobid.tei.xml","SOEP: b = -1.44, 99% CI (-2.67, -0.21), p = .003","p = .003","exact",0.003,TRUE,NA
+"RESULTS__Transition to informal caregiving_17","downloads/Psychological_Science/10117709567976241279203.grobid.tei.xml","women: b = 3.58, 99% CI (2.61, 4.54), p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Transition to informal caregiving_18","downloads/Psychological_Science/10117709567976241279203.grobid.tei.xml","a caregiver, b = 2.15, 99% CI (0.67, 3.63), p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Transition to informal caregiving_19","downloads/Psychological_Science/10117709567976241279203.grobid.tei.xml","""+2"": b = 2.67, 99% CI (1.29, 4.06), p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Transition to informal caregiving_110","downloads/Psychological_Science/10117709567976241279203.grobid.tei.xml","women in LISS: b = 3.31, 99% CI (1.84, 4.78), p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Transition to informal caregiving_111","downloads/Psychological_Science/10117709567976241279203.grobid.tei.xml","women in LISS: b = 2.11, 99% CI (0.38, 3.84), p = .002","p = .002","exact",0.002,TRUE,NA
+"RESULTS__Transition to informal caregiving_112","downloads/Psychological_Science/10117709567976241279203.grobid.tei.xml","","p = .002","exact",0.002,TRUE,NA
+"RESULTS__Transition to informal caregiving_113","downloads/Psychological_Science/10117709567976241279203.grobid.tei.xml","p = .004, but women continually from the year before the transition to three or more years following the transition, b = 4.92, 99","p = .004","exact",0.004,TRUE,NA
+"RESULTS__Transition to informal caregiving_114","downloads/Psychological_Science/10117709567976241279203.grobid.tei.xml"," (2.36,7.48), p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Moderators of the effects of time spent on caregiving_11","downloads/Psychological_Science/10117709567976241279203.grobid.tei.xml","SOEP: b = 0.22, 99% CI (-0.04, 0.47), p = .029","p = .029","exact",0.029,TRUE,NA
+"RESULTS__Moderators of the effects of time spent on caregiving_12","downloads/Psychological_Science/10117709567976241279203.grobid.tei.xml","; HILDA: b = 0.14, 99% CI (-0.04, 0.33), p = .042","p = .042","exact",0.042,TRUE,NA
+"RESULTS__Moderators of the effects of time spent on caregiving_13","downloads/Psychological_Science/10117709567976241279203.grobid.tei.xml","b = -0.25, 99% CI (-0.50, -0.0002), p = .00994","p = .00994","exact",0.00994,TRUE,NA
+"RESULTS__Moderators of the effects of time spent on caregiving_14","downloads/Psychological_Science/10117709567976241279203.grobid.tei.xml","SOEP: b = -0.28, 99% CI (-0.48, -0.08), p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Relationship status and the Big Five personality traits_11","downloads/Psychological_Science/10117709567976241286865.grobid.tei.xml","4; -0.06), p = .004","p = .004","exact",0.004,TRUE,NA
+"RESULTS__Relationship status and the Big Five personality traits_12","downloads/Psychological_Science/10117709567976241286865.grobid.tei.xml","; 5.82), p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Relationship status and the Big Five personality traits_13","downloads/Psychological_Science/10117709567976241286865.grobid.tei.xml","; 3.80), p = .004","p = .004","exact",0.004,TRUE,NA
+"RESULTS__Figure 3_11","downloads/Psychological_Science/10117709567976241286865.grobid.tei.xml","of men, b = 1.74, 99.5% CI (0.09; 3.40), p = .004","p = .004","exact",0.004,TRUE,NA
+"RESULTS__Figure 3_12","downloads/Psychological_Science/10117709567976241286865.grobid.tei.xml","of singles, b = 2.20, 99.5% CI (0.01; 4.39), p = .0048","p = .0048","exact",0.0048,TRUE,NA
+"RESULTS__Relationship status and life satisfaction_11","downloads/Psychological_Science/10117709567976241286865.grobid.tei.xml"," 0.27), p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Relationship status and life satisfaction_12","downloads/Psychological_Science/10117709567976241286865.grobid.tei.xml","; 6.01), p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Relationship status and life satisfaction_13","downloads/Psychological_Science/10117709567976241286865.grobid.tei.xml"," 3.67), p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Relationship status and life satisfaction_14","downloads/Psychological_Science/10117709567976241286865.grobid.tei.xml"," -0.02), p = .004","p = .004","exact",0.004,TRUE,NA
+"RESULTS__Relationship status and life satisfaction_15","downloads/Psychological_Science/10117709567976241286865.grobid.tei.xml","at p < .05","p < .05","limit",0.05,TRUE,NA
+"RESULTS__Referent selection_11","downloads/Psychological_Science/10117709567976241287732.grobid.tei.xml","βgiven= -6.738, p = .012","p = .012","exact",0.012,TRUE,NA
+"RESULTS__Referent selection_12","downloads/Psychological_Science/10117709567976241287732.grobid.tei.xml","β= -12.712, p = .005","p = .005","exact",0.005,TRUE,NA
+"RESULTS__Referent selection_13","downloads/Psychological_Science/10117709567976241287732.grobid.tei.xml"," βfocus = 6.593, p = .005","p = .005","exact",0.005,TRUE,NA
+"RESULTS__Results_1115","downloads/Psychological_Science/10117709567976241287732.grobid.tei.xml","β =-2.904, p = .012","p = .012","exact",0.012,TRUE,NA
+"RESULTS__Results_1213","downloads/Psychological_Science/10117709567976241287732.grobid.tei.xml","β = 4.06, p = .077","p = .077","exact",0.077,TRUE,NA
+"RESULTS__Results_1310","downloads/Psychological_Science/10117709567976241287732.grobid.tei.xml","β = 3.863, p = .046","p = .046","exact",0.046,TRUE,NA
+"RESULTS__Results_144","downloads/Psychological_Science/10117709567976241287732.grobid.tei.xml","β = 7.805, p < .001","p < .001","limit",0.001,TRUE,NA
+"RESULTS__Results_153","downloads/Psychological_Science/10117709567976241287732.grobid.tei.xml","β = 0.794, p = .59","p = .59","exact",0.59,TRUE,NA
+"RESULTS__Results_163","downloads/Psychological_Science/10117709567976241287732.grobid.tei.xml","β = -0.54, p = .707","p = .707","exact",0.707,TRUE,NA
