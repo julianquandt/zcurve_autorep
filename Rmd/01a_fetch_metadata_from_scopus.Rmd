@@ -25,6 +25,7 @@ if (!require(kableExtra)) {
   install.packages("kableExtra")
   library(kableExtra)
 }
+here::i_am("Rmd/02_file_downloader.Rmd")
 ```
 
 # About

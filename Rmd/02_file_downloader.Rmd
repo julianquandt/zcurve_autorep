@@ -26,7 +26,7 @@ if (!require(kableExtra)) {
   install.packages("kableExtra")
   library(kableExtra)
 }
-
+here::i_am("Rmd/02_file_downloader.Rmd")
 source(here::here("secret_vars.R")) # this needs to be activated and the file created
 ```
 
@@ -186,7 +186,7 @@ download_file <- function(row, journal_path = "", download_dir = "downloads",
   doi_filename <- gsub("[^[:alnum:]]", "", row$doi)
 
   # Ensure journal directory exists
-  dir.create(file.path(download_dir, journal_path), recursive = TRUE, showWarnings = FALSE)
+  dir.create(here::here(download_dir, journal_path), recursive = TRUE, showWarnings = FALSE)
 
   # Skip download if file already exists
   if (file_already_downloaded(download_dir, journal_path, doi_filename)) {
@@ -323,7 +323,7 @@ for (name in names(pubdata_dfs)) {
 
 ```{r}
 
-pubdata_dfs <- read.csv("data/PS_2024_metadata.csv") 
+pubdata_dfs <- read.csv(here::here("data/PS_2024_metadata_backup.csv")) 
 bib <- pubdata_dfs
 
 download_dir = here::here("downloads") # you want to change this to the path where you want to parent folder of the journal folders with the files to be downloaded to. Make sure to have a trailing slash (because I am currently to lazy to deal with R's file handling)

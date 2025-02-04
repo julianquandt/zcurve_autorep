@@ -21,6 +21,7 @@ if (!require(kableExtra)) {
   library(kableExtra)
 }
 library(XML)
+here::i_am("Rmd/02_file_downloader.Rmd")
 ```
 
 # Get overview of potential missing conversions

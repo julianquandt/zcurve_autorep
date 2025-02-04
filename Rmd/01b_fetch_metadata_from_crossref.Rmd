@@ -25,6 +25,7 @@ The following function serves to do exactly that.
 First we define a few convenience functions that will be used later on.
 
 ```{r}	
+here::i_am("Rmd/02_file_downloader.Rmd")
 # Install and load the rcrossref package if not already done
 if (!require(rcrossref)) {
   install.packages("rcrossref")

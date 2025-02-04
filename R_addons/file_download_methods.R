@@ -143,12 +143,12 @@ selenium_api_dl <- function(doi, res, download_dir, journal_path){
     if(.Platform$OS.type == "windows"){
       # start selenium server
       Sys.setenv(PYTHONUTF8 = "1")
-      p <- process$new(here::here(".venv/Scripts/python.exe"), c("./python/selenium_server.py"), 
+      p <- process$new(here::here(".venv/Scripts/python.exe"), c(here::here("python/selenium_server.py")), 
                  stdout = "selenium.log", stderr = "selenium.log", supervise = TRUE, cleanup = FALSE)
     } else {
       # start selenium server
       Sys.setenv(PYTHONUTF8 = "1")
-      p <- process$new(here::here(".venv/bin/python3"), c("./python/selenium_server.py"), 
+      p <- process$new(here::here(".venv/bin/python3"), c(here::here("python/selenium_server.py")), 
                  stdout = "selenium.log", stderr = "selenium.log", supervise = TRUE, cleanup = FALSE)
     }
 

@@ -18,3 +18,6 @@ python/json_files*
 extracted_data*.json
 python/oai_key.py
 python/extract_statistics_GPT-o1_mini.ipynb
+.Rproj.user
+.Rhistory
+.Rprofile
