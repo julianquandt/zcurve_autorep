@@ -16,6 +16,9 @@ from pypdf import PdfReader
 from pypdf.errors import PdfReadError
 import re
 
+# change the value below to False if you want to run the script without using NordVPN (e.g. with your own VPN but without rotation)
+activate_rotate_vpn = True
+
 def extract_doi(url: str) -> str:
     """
     Extracts a DOI from a given URL using a regular expression.
@@ -260,6 +263,7 @@ async def init_browser():
     """Initializes or reinitializes the browser after VPN rotation."""
     global browser
     global last_vpn_rotation
+    global activate_rotate_vpn
 
     if browser:
         try:
@@ -268,7 +272,8 @@ async def init_browser():
             pass  # Ignore if it's already closed
 
     # Rotate VPN
-    rotate_VPN(vpn_instr, google_check=0)
+    if activate_rotate_vpn:
+        rotate_VPN(vpn_instr, google_check=0)
     last_vpn_rotation = time.time()
 
     # Start a new browser session
@@ -381,7 +386,7 @@ async def download_pdf(url: str, doi_filename: str = Query(..., description="Fil
         - The VPN is rotated only if 10 minutes have passed since the last rotation.
     """
     """Download PDF and wait until it finishes before responding."""
-    global last_vpn_rotation, current_page_url
+    global last_vpn_rotation, current_page_url, activate_rotate_vpn
     if not browser:
         return HTTPException(status_code=500, detail="Browser not initialized")
 
@@ -400,7 +405,8 @@ async def download_pdf(url: str, doi_filename: str = Query(..., description="Fil
         # **Check if CAPTCHA is triggered and rotate VPN if needed**
         print("captcah")
         if await is_captcha_triggered():
-            rotate_VPN(vpn_instr, google_check=1)
+            if activate_rotate_vpn:
+                rotate_VPN(vpn_instr, google_check=1)
             last_vpn_rotation = time.time()
             return {"status": "VPN rotated due to CAPTCHA"}
 
