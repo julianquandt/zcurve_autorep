@@ -117,6 +117,8 @@ Then try the above again, and it should work.
 Should somewhere during installation an error occur, this might be because you dont have Rtools (for Windows); for unix it should not be a problem.
 You can download Rtools from the [Rtools website](https://cran.r-project.org/bin/windows/Rtools/).
 
+Before you can run any of thes scripts, you will also need to create your `secret_vars.R` file in the root folder of this project. 
+For this, use the secret_vars_template.R, and fill in the necessary information and rename it to secret_vars.R 
 
 ## Setting up Python
 
